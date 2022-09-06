@@ -10,7 +10,7 @@ if($_SESSION['u_email'] == false){
 ?>
 <!-- header-user.php -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <!-- Required meta tags -->

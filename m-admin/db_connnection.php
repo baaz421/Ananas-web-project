@@ -39,4 +39,5 @@ if(in_array($file_directry_product,$ex_link)){
 
 require_once "$file_back../config.php";
 $conn = mysqli_connect(HOST,USER,PASSWORD,DATABASE) or die("Connection failed to DATABASE!");
+mysqli_set_charset($conn, 'utf8');
 ?>

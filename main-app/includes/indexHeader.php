@@ -44,16 +44,20 @@ require_once "../langs/" . $_SESSION['lang'] . ".php" ;
 
     <link rel="stylesheet" href="build/css/intlTelInput.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <style type="text/css">
+   .myAlert-bottom{
+      position: fixed;
+      z-index:99999;
+      /*top: 5px;*/
+      bottom: 5px;
+      left:2%;
+      width: 96%;
+    }
+</style>
     
 </head>
 
 <body>
-<!-- ERROR MESSAGE DIV-->
-<div id="error-message-header">
-</div>
-<div id="success-message-header">
-</div>
-<!-- ERROR MESSAGE DIV CLOSE-->
      <?php
     if(isset($_SESSION['u_email'])){
         @$email = $_SESSION['u_email'];
@@ -63,7 +67,7 @@ require_once "../langs/" . $_SESSION['lang'] . ".php" ;
             $fetch = mysqli_fetch_assoc($run_verify);
             $vstatus = $fetch['vstatus'];
             if($vstatus == "notverified"){
-  
+                $user_status = "notverified";
             echo"<div>
                     <div class='alert alert-dismissible fade show alert-primary mb-1 rounded text-dark' role='alert'>
                         You account not verified, please verify you account. <a href='dashboard/verification.php'> Click Here</a>
@@ -73,6 +77,8 @@ require_once "../langs/" . $_SESSION['lang'] . ".php" ;
                     </div>
                   </div>";
    
+            }else{
+                $user_status = "verified";
             }
         }
     }
@@ -244,7 +250,7 @@ require_once "../langs/" . $_SESSION['lang'] . ".php" ;
                                                 </div><!-- End .cart-product -->
                                                 <div class="dropdown-cart-action">
                                                     <a href="cart.php" class="btn btn-primary"><?php echo $english['view_holds']; ?></a>
-                                                    <a href="checkout.php" class="btn btn-outline-primary-2"><span><?php echo $english['participate']; ?></span><i class="icon-long-arrow-right"></i></a>
+                                                    <a href="#" class="btn btn-outline-primary-2" id="participate"><span><?php echo $english['participate']; ?></span><i class="icon-long-arrow-right"></i></a>
                                                 </div><!-- End .dropdown-cart-total -->
                                             </div><!-- End .dropdown-menu -->
                                         </div><!-- End .hold-dropdown ============-->

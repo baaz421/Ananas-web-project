@@ -18,7 +18,7 @@ include "header-user.php";
                       S.no
                     </th>
                     <th>
-                      Pro-ID
+                      Transaction Id
                     </th>
                     <th>
                       Amount
@@ -30,20 +30,21 @@ include "header-user.php";
                 </thead>
                 <tbody>
 <?php 
-$deposite_details = "SELECT * FROM deposite_amount WHERE u_id = 0";
-$run_deposite_details = mysqli_query($conn, $deposite_details);
-if(mysqli_num_rows($run_deposite_details) > 0){
+$checkout_details = "SELECT * FROM checkout WHERE user_id = $u_id";
+$run_checkout_details = mysqli_query($conn, $checkout_details);
+if(mysqli_num_rows($run_checkout_details) > 0){
 	$sno = 1;
 
-	while($row = mysqli_fetch_assoc($run_deposite_details)){
-		$date = DateDisplayWithTime($row['d_date']);
+	while($row = mysqli_fetch_assoc($run_checkout_details)){
+		$date = DateDisplayWithTime($row['created_date']);
+    $current_bal_of_user = current_bal($u_id, $conn);
 		echo "<tr>
-                <td>{$sno}</td>
-                <td>2022{$row["da_id"]}</td>
-                <td>{$row["d_amount"]}</td>
-                <td>{$date}</td>
-              </tr>";
-              $sno ++;
+            <td>{$sno}</td>
+            <td>2022{$row["ID"]}</td>
+            <td><span style='color : red'>-{$row["total"]}.00</span></td>
+            <td>{$date}</td>
+          </tr>";
+          $sno ++;
 	}
 
 }else{

@@ -72,6 +72,131 @@ if(isset($_POST['user_id']) && $_POST['user_id'] != null && isset($_POST['checko
 
 
 // function Progress bar for red, orange, green zone
+function CheckZone($deal_id,$conn,$qty,$per){
+  $deal_sql = "SELECT * FROM deal WHERE DID = {$deal_id}";
+  $run_deal_sql = mysqli_query($conn, $deal_sql);
+    $deal_row     = mysqli_fetch_assoc($run_deal_sql);
+    $zone         = $deal_row['zone'];
+    $d_id         = $deal_row['DID'];
+    $unit_price   = $deal_row['unit_price'];
+    $user_amount  = cal_unit_price_with_qty($unit_price,$qty,$per);
+      if($zone == "red"){ // case red zone
+        // update amount to specific zone
+          $red_amt     = $deal_row['red_am'];
+            if($red_amt == ""){
+              $red_amount = 0;
+            }else{
+              $red_amount = $red_amt;
+            }
+          $update_amount  = $red_amount + $user_amount;
+
+        // update number of members for specific zone
+          $red_members = $deal_row['total_m_red'];
+            if($red_members == ""){
+              $red_member = $qty;
+            }else{
+              $red_member = $red_members + $qty;
+            }
+        $change_red_sql = "UPDATE deal SET red_am = '{$update_amount}', total_m_red = '{$red_member}' WHERE DID ={$d_id}";
+          if(mysqli_query($conn, $change_red_sql)){
+            $output_zone = "red";
+          }else{
+            $output_zone = "error";
+          }
+      }elseif($zone == "orange"){ // case orange zone
+        // update amount to specific zone
+          $orange_amt = $deal_row['oran_am'];        
+            if($orange_amt == ""){
+              $orange_amount = 0;
+            }else{
+              $orange_amount = $orange_amt;
+            }
+          $update_amount = $orange_amount + $user_amount;
+
+        // update number of members for specific zone
+          $orange_members = $deal_row['total_m_oran'];
+            if($orange_members == ""){
+              $orange_member = $qty;
+            }else{
+              $orange_member = $orange_members + $qty;
+            }
+        $change_orange_sql = "UPDATE deal SET oran_am = '{$update_amount}', total_m_oran = '{$orange_member}' WHERE DID ={$d_id}";
+          if(mysqli_query($conn, $change_orange_sql)){
+            $output_zone = "orange";
+          }else{
+            $output_zone = "error";
+          }
+      }elseif($zone == "green"){ // case green zone
+        // update amount to specific zone
+          $green_amt   = $deal_row['green_am'];        
+            if($green_amt == ""){
+              $green_amount = 0;
+            }else{
+              $green_amount = $green_amt;
+            }
+          $update_amount  = $green_amount + $user_amount;
+
+        // update number of members for specific zone
+          $green_members = $deal_row['total_m_green'];
+            if($green_members == ""){
+              $green_member = $qty;
+            }else{
+              $green_member = $green_members + $qty;
+            }
+        $change_green_sql = "UPDATE deal SET green_am = '{$update_amount}', total_m_green = '{$green_member}' WHERE DID ={$d_id}";
+          if(mysqli_query($conn, $change_green_sql)){
+            $output_zone = "green";
+          }else{
+            $output_zone = "error";
+          }
+      }
+  return $output_zone;
+}
+
+// calculate unit price with quantity and if  percentage applies 
+function cal_unit_price_with_qty($unit_price,$qty,$percentage){
+  if($percentage == 0){
+    $amount = $unit_price * $qty;
+  }else{
+    $discount_amount = $unit_price / 100 * $percentage;
+    $multipy_amount = $unit_price - $discount_amount;
+    $amount = $multipy_amount * $qty;
+  }
+  return $amount;
+}
+
+// retrive user's current balance 
+function user_current_bal($u_id, $conn){
+    $check_u_cb = "SELECT * FROM current_balance WHERE u_id ='$u_id'";
+    $run_check_u_cb = mysqli_query($conn,$check_u_cb);
+    if(mysqli_num_rows($run_check_u_cb) > 0){
+        $fetch = mysqli_fetch_assoc($run_check_u_cb);
+        $amount = $fetch['cb_amount'];
+        return $amount;
+    }else{
+        $amount = 0;
+        return $amount;
+    }
+}
+
+// combine cart ids 
+function combine_cart_ids($conn,$user_id){
+  $get_Cartlist = "SELECT * FROM cart WHERE user_id = '{$user_id}'";
+  $run_get_Cartlist = mysqli_query($conn, $get_Cartlist);
+  if(mysqli_num_rows($run_get_Cartlist) > 0){
+    $cart_ids = array();
+    while($row = mysqli_fetch_assoc($run_get_Cartlist)){      
+      $ids_cart = $row['ID'];
+      $cart_ids[]= $ids_cart;         
+      }
+    }
+    return $cart_ids;
+}
+
+
+
+
+// function Progress bar for red, orange, green zone
 // function CheckZone($deal_id,$conn,$qty,$per){
 //   $deal_sql = "SELECT * FROM deal WHERE DID = {$deal_id}";
 //   $run_deal_sql = mysqli_query($conn, $deal_sql);
@@ -162,127 +287,4 @@ if(isset($_POST['user_id']) && $_POST['user_id'] != null && isset($_POST['checko
 //   }
 //   return $output_zone;
 // }
-
-// function Progress bar for red, orange, green zone
-function CheckZone($deal_id,$conn,$qty,$per){
-  $deal_sql = "SELECT * FROM deal WHERE DID = {$deal_id}";
-  $run_deal_sql = mysqli_query($conn, $deal_sql);
-    $deal_row     = mysqli_fetch_assoc($run_deal_sql);
-    $zone         = $deal_row['zone'];
-    $d_id         = $deal_row['DID'];
-    $unit_price   = $deal_row['unit_price'];
-    $user_amount  = cal_unit_price_with_qty($unit_price,$qty,$per);
-      if($zone == "red"){ // case red zone
-        // update amount to specific zone
-          $red_amt     = $deal_row['red_am'];
-            if($red_amt == ""){
-              $red_amount = 0;
-            }else{
-              $red_amount = $red_amt;
-            }
-          $update_amount  = $red_amount + $user_amount;
-
-        // update number of members for specific zone
-          $red_members = $deal_row['total_m_red'];
-            if($red_members == ""){
-              $red_member = $qty;
-            }else{
-              $red_member = $red_members + $qty;
-            }
-        $change_red_sql = "UPDATE deal SET red_am = '{$update_amount}', total_m_red = '{$red_member}' WHERE DID ={$d_id}";
-          if(mysqli_query($conn, $change_red_sql)){
-            $output_zone = "red";
-          }else{
-            $output_zone = "error";
-          }
-      }elseif($zone == "orange"){ // case orange zone
-        // update amount to specific zone
-          $orange_amt = $deal_row['oran_am'];        
-            if($orange_amt == ""){
-              $orange_amount = 0;
-            }else{
-              $orange_amount = $orange_amt;
-            }
-          $update_amount = $orange_amount + $user_amount;
-
-        // update number of members for specific zone
-          $orange_members = $deal_row['total_m_oran'];
-            if($orange_members == ""){
-              $orange_member = $qty;
-            }else{
-              $orange_member = $orange_members + $qty;
-            }
-        $change_orange_sql = "UPDATE deal SET oran_am = '{$update_amount}', total_m_oran = '{$orange_member}' WHERE DID ={$d_id}";
-          if(mysqli_query($conn, $change_orange_sql)){
-            $output_zone = "orange";
-          }else{
-            $output_zone = "error";
-          }
-      }elseif($zone == "green"){ // case green zone
-        // update amount to specific zone
-          $green_amt   = $deal_row['green_am'];        
-            if($green_amt == ""){
-              $green_amount = 0;
-            }else{
-              $green_amount = $green_amt;
-            }
-          $update_amount  = $green_amount + $user_amount;
-
-        // update number of members for specific zone
-          $green_members = $deal_row['total_m_green'];
-            if($green_members == ""){
-              $green_member = $qty;
-            }else{
-              $green_member = $green_members + $qty;
-            }
-        $change_green_sql = "UPDATE deal SET green_am = '{$update_amount}', total_m_green = '{$green_member}' WHERE DID ={$d_id}";
-          if(mysqli_query($conn, $change_green_sql)){
-            $output_zone = "green";
-          }else{
-            $output_zone = "error";
-          }
-      }
-  return $output_zone;
-}
-
-// calculate unit price with quantity and percentage 
-function cal_unit_price_with_qty($unit_price,$qty,$percentage){
-  if($percentage == 0){
-    $amount = $unit_price * $qty;
-  }else{
-    $discount_amount = $unit_price / 100 * $percentage;
-    $multipy_amount = $unit_price - $discount_amount;
-    $amount = $multipy_amount * $qty;
-  }
-  return $amount;
-}
-
-// retrive user's current balance 
-function user_current_bal($u_id, $conn){
-    $check_u_cb = "SELECT * FROM current_balance WHERE u_id ='$u_id'";
-    $run_check_u_cb = mysqli_query($conn,$check_u_cb);
-    if(mysqli_num_rows($run_check_u_cb) > 0){
-        $fetch = mysqli_fetch_assoc($run_check_u_cb);
-        $amount = $fetch['cb_amount'];
-        return $amount;
-    }else{
-        $amount = 0;
-        return $amount;
-    }
-}
-
-// combine cart ids 
-function combine_cart_ids($conn,$user_id){
-  $get_Cartlist = "SELECT * FROM cart WHERE user_id = '{$user_id}'";
-  $run_get_Cartlist = mysqli_query($conn, $get_Cartlist);
-  if(mysqli_num_rows($run_get_Cartlist) > 0){
-    $cart_ids = array();
-    while($row = mysqli_fetch_assoc($run_get_Cartlist)){      
-      $ids_cart = $row['ID'];
-      $cart_ids[]= $ids_cart;         
-      }
-    }
-    return $cart_ids;
-}
-
 

@@ -9,23 +9,15 @@ include "header-user.php";
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Deposite Transactions Details</h4>
+            <h4 class="card-title">Detail Transactions of Deposite's </h4>
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>
-                      S.no
-                    </th>
-                    <th>
-                      ID
-                    </th>
-                    <th>
-                      Amount
-                    </th>
-                    <th>
-                      Date
-                    </th>
+                    <th>S.no</th>
+                    <th>ID</th>
+                    <th>Amount</th>
+                    <th>Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -34,16 +26,18 @@ $deposite_details = "SELECT * FROM deposite_amount WHERE u_id = '$u_id'";
 $run_deposite_details = mysqli_query($conn, $deposite_details);
 if(mysqli_num_rows($run_deposite_details) > 0){
 	$sno = 1;
-
 	while($row = mysqli_fetch_assoc($run_deposite_details)){
+
 		$date = DateDisplayWithTime($row['d_date']);
+    $amount = $row["d_amount"];
 		echo "<tr>
-                <td>{$sno}</td>
-                <td>2022{$row["da_id"]}</td>
-                <td>{$row["d_amount"]}</td>
-                <td>{$date}</td>
-              </tr>";
-              $sno ++;
+            <td>{$sno}</td>
+            <td>2022{$row["da_id"]}</td>
+            <td ><span style='color : green'>+{$amount}.00</span></td>
+            <td>{$date}</td>
+          </tr>";
+          $sno ++;
+          
 	}
 
 }else{

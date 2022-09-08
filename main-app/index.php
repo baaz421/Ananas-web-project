@@ -1108,6 +1108,13 @@ include "includes/indexHeader.php";
     </div><!-- End .container-fluid -->
 </main><!-- End .main -->
 
+<!-- ERROR MESSAGE DIV-->
+  <div id="error-message">
+  </div>
+  <div id="success-message">
+  </div>
+<!-- ERROR MESSAGE DIV CLOSE-->
+
 <?php
  include "includes/indexFooter.php"
 

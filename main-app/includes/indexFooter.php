@@ -191,8 +191,47 @@ $actual_link_footer = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'
 <script src="assets/js/demos/demo-14.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+    // on click join deal button from cart dropdown menu
+    $(document).on("click","#participate",function(participate){
+        var user_status = "<?php echo $user_status; ?>";
+        if(user_status == "notverified"){
+            $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary' role='alert mt-1 mb-2 rounded'>You account not verified, please verify you account. <a href='dashboard/verification.php'> Click Here</a><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+        $("#success-message").slideUp();
+        setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);          
+        }else{
+            $.ajax({
+        url : "all-products-files/load-sub-total-cart.php",
+        success: function(data){
+            if(data == 0){
+                $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary' role='alert mt-1 mb-2 rounded'>Sorry Cart is Empty.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+                $("#success-message").slideUp();
+                setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+            }else{
+                $.ajax({
+                        url : "join-deal-ajax-pages/create-checkout.php",
+                        success : function(data){
+                            if(data == 1){
+                                location.replace("checkout.php");
+                            }else{
+                                $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary' role='alert mt-1 mb-2 rounded'>Oop's Session Timeout, Please Login again...!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+                                $("#success-message").slideUp();
+                                setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+                            }
+                        }
+                    });
+            }
+
+        }
+    }); 
+            
+        }
+
+        participate.preventDefault();
+    });
+
+    // load dorpdown cart for home page
     function loadDropdownCartf(){
-         $.ajax({
+        $.ajax({
             url: "all-products-files/dropdown-cart-show.php",
             success:function(data){
                 $("#show-dropdown-cart").html(data);
@@ -200,50 +239,50 @@ $(document).ready(function(){
         });
     }
 
-loadDropdownCartf();
+    loadDropdownCartf();
 
-$(document).on("click","#login-cart",function(){
-    location.replace("login.php?continue=<?php echo $actual_link_footer; ?>");
-});
-
-// load cart number count
-function loadCartNumberF(){
-    $.ajax({
-        url: "all-products-files/cart-number-display.php",
-        success:function(data){
-            $("#cart-num").text(data);
-        }
+    $(document).on("click","#login-cart",function(link){
+        location.replace("login.php?continue=<?php echo $actual_link_footer; ?>");
+        link.preventDefault();
     });
-}
 
-// remove from cart
-$(document).on("click", "#remove-cartlist", function(){
-    var c_id = $(this).data("c_id");
-    var element = this;
-    $.ajax({
-      url : "all-products-files/cart-list-delete.php",
-      type : "POST",
-      data :{c_id : c_id},
-      success :function(data){
-        if(data == 1){
-          $(element).closest("div").fadeOut();
-          loadDropdownCartf();
-          loadCartNumberF();
-          $("#success-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-success mt-1 mb-2 rounded' role='alert'>successfully removed from Cart List.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
-                 $("#error-message").slideUp();
-          setTimeout(function(){$("#success-message").fadeOut("slow")}, 4000);
-        }else{
-        $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger mt-1 mb-2 rounded' role='alert'>Sorry Can't remove from cart records....!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
-          $("#success-message").slideUp();
-          setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+    // load cart number count
+    function loadCartNumberF(){
+        $.ajax({
+            url: "all-products-files/cart-number-display.php",
+            success:function(data){
+                $("#cart-num").text(data);
+            }
+        });
+    }
 
-        }
+    // remove from cart
+    $(document).on("click", "#remove-cartlist", function(re){
+        var c_id = $(this).data("c_id");
+        var element = this;
+        $.ajax({
+          url : "all-products-files/cart-list-delete.php",
+          type : "POST",
+          data :{c_id : c_id},
+          success :function(data){
+            if(data == 1){
+              $(element).closest("div").fadeOut();
+              loadDropdownCartf();
+              loadCartNumberF();
+              $("#success-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-success mt-1 mb-2 rounded' role='alert'>successfully removed from Cart List.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+                     $("#error-message").slideUp();
+              setTimeout(function(){$("#success-message").fadeOut("slow")}, 4000);
+            }else{
+            $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger mt-1 mb-2 rounded' role='alert'>Sorry Can't remove from cart records....!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+              $("#success-message").slideUp();
+              setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
 
-      }
-     });
+            }
 
-});
-
+          }
+        });
+        re.preventDefault();
+    });
 });
 </script>
 </body>

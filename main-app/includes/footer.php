@@ -186,7 +186,7 @@ $(document).on("click", "#remove-cartlist", function(e){
 e.preventDefault();
 });
 
-// on click 
+// on click join deal button from cart dropdown menu
 	$(document).on("click","#participate",function(participate){
 		var user_status = "<?php echo $user_status; ?>";
 		if(user_status == "notverified"){

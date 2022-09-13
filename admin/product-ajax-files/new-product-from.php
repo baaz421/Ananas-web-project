@@ -52,6 +52,15 @@ require_once "../header.php";
 	                  <div class="col-sm-9">
 	                    <select name="category" class="form-control mb-3" id="cat-box"required>
 	                      <option>Select Category</option>
+	                      <?php 
+				                	$sql_get_categories ="SELECT * FROM categories WHERE status = 1";
+													$result_get_categories = mysqli_query($conn,$sql_get_categories);
+													if(mysqli_num_rows($result_get_categories) > 0){
+														while($cat_row = mysqli_fetch_assoc($result_get_categories)){
+														echo '<option id="selected-cat_id" value="'.$cat_row['ID'].'">'.$cat_row['cat_name'].'</option>';
+														}
+													}
+				                ?>
 	                    </select>
 	                  </div>
 	                </div>
@@ -122,18 +131,18 @@ require_once "../header.php";
     <script src="../js/front.js"></script>
     <script type="text/javascript">
 $(document).ready(function(){
-//load categories 
+// //load categories 
 	
-	$.ajax({
-	url : "load-new-products-category.php",
-	type : "POST",
-	dataType : "JSON",
-	success : function(data){
-	  $.each(data,function(key, value){
-	    $("#cat-box").append("<option value='"+value.ID+"' >"+ value.cat_name +"</option>");
-	  });
-	}
-	});
+// 	$.ajax({
+// 	url : "load-new-products-category.php",
+// 	type : "POST",
+// 	dataType : "JSON",
+// 	success : function(data){
+// 	  $.each(data,function(key, value){
+// 	    $("#cat-box").append("<option value='"+value.ID+"' >"+ value.cat_name +"</option>");
+// 	  });
+// 	}
+// 	});
 	
 		
 

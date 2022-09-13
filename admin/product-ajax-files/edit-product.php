@@ -316,7 +316,20 @@ $product_images_key = array(
               <label class="col-sm-3 form-control-label">Select Category</label>
               <div class="col-sm-9">
                 <select name="category" class="form-control mb-3" id="cat-box"required>
-                  <option value="<?php echo $pro_details['category_id'] ?>" id="selected-cat_id"></option>
+                	<?php 
+                	$sql_get_categories ="SELECT ID,cat_name FROM categories WHERE status = 1";
+									$result_get_categories = mysqli_query($conn,$sql_get_categories);
+									if(mysqli_num_rows($result_get_categories) > 0){
+										while($cat_row = mysqli_fetch_assoc($result_get_categories)){
+											if($pro_details['category_id'] == $cat_row['ID']){
+												$select_cat = "selected";
+											}else{
+												$select_cat = "";
+											}
+										echo '<option id="selected-cat_id" value="'.$cat_row['ID'].'" '.$select_cat.'>'.$cat_row['cat_name'].'</option>';
+										}
+									}
+                	?>
                 </select>
               </div>
             </div>
@@ -524,22 +537,22 @@ deleteImageOneByOne($("#remove_img4"));
 
 //load categories 
 	
-	$.ajax({
-	url : "load-new-products-category.php",
-	type : "POST",
-	dataType : "JSON",
-	success : function(data){
-	  $.each(data,function(key, value){
-	  	var cat_id_sel = $("#selected-cat_id").val();
-	  	if(cat_id_sel == value.ID){
-	  		$("#cat-box").append("<option value='"+value.ID+"' selected >"+ value.cat_name +"</option>");
-	  	}else{
-	  		$("#cat-box").append("<option value='"+value.ID+"' >"+ value.cat_name +"</option>");
-	  	}
+	// $.ajax({
+	// url : "load-new-products-category.php",
+	// type : "POST",
+	// dataType : "JSON",
+	// success : function(data){
+	//   $.each(data,function(key, value){
+	//   	var cat_id_sel = $("#selected-cat_id").val();
+	//   	if(cat_id_sel == value.ID){
+	//   		$("#cat-box").append("<option value='"+value.ID+"' selected >"+ value.cat_name +"</option>");
+	//   	}else{
+	//   		$("#cat-box").append("<option value='"+value.ID+"' >"+ value.cat_name +"</option>");
+	//   	}
 	    
-	  });
-	}
-	});
+	//   });
+	// }
+	// });
 	
 		
 

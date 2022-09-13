@@ -4,8 +4,15 @@
 
 // progres bar 
 function progressBar($prog_percen,$prog_color){
+  if($prog_color == "bg-danger"){
+    $border_color = "border-danger";
+  }elseif($prog_color == "bg-warning"){
+    $border_color = "border-warning";
+  }else{
+    $border_color = "border-success";
+  }
   $p = '
-  <div class="progress" style="height:18px; font-size: 14px" id="deal-progress">
+  <div class="progress border '.$border_color.'" style="height:18px; font-size: 14px" id="deal-progress">
     <div class="progress-bar progress-bar-striped progress-bar-animated '.$prog_color.' text-center" role="progressbar" style="width: '.$prog_percen.'%; height:20px" aria-valuemin="0" aria-valuemax="100"> 
       <span class="font-weight-bold text-dark" style = "position: absolute; right:0; left:0;">'.$prog_percen.' %</span>
     </div>

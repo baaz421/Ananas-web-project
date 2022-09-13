@@ -124,7 +124,7 @@ include "includes/header.php";
     			<span><?php echo $_404['btohg']; ?></span>
     			<i class="icon-long-arrow-right"></i>
     		</a>
-    		<a href="../index.php" class="btn btn-outline-primary-2 btn-minwidth-lg mt-1">
+    		<a href="dashboard" class="btn btn-outline-primary-2 btn-minwidth-lg mt-1">
     			<span>DASHBOARD</span>
     			<i class="icon-long-arrow-right"></i>
     		</a>

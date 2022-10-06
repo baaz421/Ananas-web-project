@@ -30,7 +30,7 @@ include "header-user.php";
                 </thead>
                 <tbody>
 <?php 
-$checkout_details = "SELECT * FROM checkout WHERE user_id = $u_id";
+$checkout_details = "SELECT * FROM checkout WHERE user_id = $u_id AND status = 1";
 $run_checkout_details = mysqli_query($conn, $checkout_details);
 if(mysqli_num_rows($run_checkout_details) > 0){
 	$sno = 1;

@@ -3,6 +3,51 @@
 session_start();
 require_once "../db_connnection.php";
 
+function combineDeal($conn,$user_id){
+	$get_Cartlist = "SELECT * FROM cart WHERE user_id = '{$user_id}'";
+	$run_get_Cartlist = mysqli_query($conn, $get_Cartlist);
+	if(mysqli_num_rows($run_get_Cartlist) > 0){
+	  $deal_ids = array();
+	  while($row = mysqli_fetch_assoc($run_get_Cartlist)){			
+			$ids_deal = $row['deal_id'];
+			$deal_ids[]= $ids_deal;					
+			}
+		}
+		$im_arr = implode("-",$deal_ids);
+		return $im_arr;
+}
+
+function combineQty($conn,$user_id){
+	$get_Cartlist = "SELECT * FROM cart WHERE user_id = '{$user_id}'";
+	$run_get_Cartlist = mysqli_query($conn, $get_Cartlist);
+	if(mysqli_num_rows($run_get_Cartlist) > 0){
+	  $pro_qtys = array();
+	  while($row = mysqli_fetch_assoc($run_get_Cartlist)){
+			$c_qty 	= $row['qty'];
+			$pro_qtys[]= $c_qty;			
+			}
+		}
+		$im_arr = implode("-",$pro_qtys);
+		return $im_arr;
+}
+
+function SubTotal($conn,$user_id){
+	$cart_sub_total = "SELECT * FROM cart WHERE user_id = '{$user_id}'";
+    $run_cart_sub_total = mysqli_query($conn, $cart_sub_total);
+        if(mysqli_num_rows($run_cart_sub_total) > 0){
+        	$sub_total = 0;
+            while($row = mysqli_fetch_assoc($run_cart_sub_total)){
+            	$qty = $row['qty'];
+            	$amount = $row['unit_price'];
+            	$sub_total = $sub_total + ($qty * $amount);
+            } 
+            $sub_total;  
+        }else{
+            $sub_total = 0;
+        }
+    return $sub_total;
+}
+
 if(isset($_SESSION['u_id'])){
 	$user_id = $_SESSION['u_id'];
 	$status  = 0;
@@ -52,49 +97,6 @@ if(isset($_SESSION['u_id'])){
 }
 
 
-function combineDeal($conn,$user_id){
-	$get_Cartlist = "SELECT * FROM cart WHERE user_id = '{$user_id}'";
-	$run_get_Cartlist = mysqli_query($conn, $get_Cartlist);
-	if(mysqli_num_rows($run_get_Cartlist) > 0){
-	  $deal_ids = array();
-	  while($row = mysqli_fetch_assoc($run_get_Cartlist)){			
-			$ids_deal = $row['deal_id'];
-			$deal_ids[]= $ids_deal;					
-			}
-		}
-		$im_arr = implode("-",$deal_ids);
-		return $im_arr;
-}
 
-function combineQty($conn,$user_id){
-	$get_Cartlist = "SELECT * FROM cart WHERE user_id = '{$user_id}'";
-	$run_get_Cartlist = mysqli_query($conn, $get_Cartlist);
-	if(mysqli_num_rows($run_get_Cartlist) > 0){
-	  $pro_qtys = array();
-	  while($row = mysqli_fetch_assoc($run_get_Cartlist)){
-			$c_qty 	= $row['qty'];
-			$pro_qtys[]= $c_qty;			
-			}
-		}
-		$im_arr = implode("-",$pro_qtys);
-		return $im_arr;
-}
-
-function SubTotal($conn,$user_id){
-	$cart_sub_total = "SELECT * FROM cart WHERE user_id = '{$user_id}'";
-    $run_cart_sub_total = mysqli_query($conn, $cart_sub_total);
-        if(mysqli_num_rows($run_cart_sub_total) > 0){
-        	$sub_total = 0;
-            while($row = mysqli_fetch_assoc($run_cart_sub_total)){
-            	$qty = $row['qty'];
-            	$amount = $row['unit_price'];
-            	$sub_total = $sub_total + ($qty * $amount);
-            } 
-            $sub_total;  
-        }else{
-            $sub_total = 0;
-        }
-    return $sub_total;
-}
 
 

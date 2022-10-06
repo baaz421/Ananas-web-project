@@ -162,6 +162,7 @@ if($_SESSION['u_email'] == false){
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="running-deals.php">Running Deals</a></li>
+                <li class="nav-item"> <a class="nav-link" href="completed-deal.php">Completed Deals</a></li>
               </ul>
             </div>
           </li>

@@ -190,10 +190,10 @@ $(document).ready(function(){
             if(data == 1){
               loadTable();
             }else if(data == 2){
-              $("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>Sorry, Can't able to cancel the Deal, Because its not running in red zone<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+              $("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>"+data+"Sorry, Can't able to cancel the Deal, Because its not running in red zone<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
               $("#success-message").slideUp();
             }else{
-               $("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>Sorry, Can't able to cancel the Deal..! <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+               $("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>"+data+"Sorry, Can't able to cancel the Deal..! <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
               $("#success-message").slideUp();
             }
           }

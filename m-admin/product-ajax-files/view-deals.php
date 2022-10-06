@@ -152,13 +152,13 @@ if(mysqli_num_rows($running_res) > 0){
 		$date_create = date("d-m-Y h:i A",strtotime($row_run['create_time']));
 
 		$output_running ="<tr>
-							<th>{$row_run['p_id']}</th>
+							<th>{$row_run['DID']} </th>
 							<td><img src='../../All-Products-images/{$fetch_pro['image_0']}' class='rounded img-thumbnail' width='50px' height='50px' ></td>
 							<td>{$fetch_pro['product_name']}</td>
 							<td>{$row_run['m_value']}</td>
 							<td>{$row_run['e_value']}</td>
 							<td>{$row_run['unit_price']}</td>
-							<td>{$row_run['winner_id']}</td>
+							<td><a href='#' id='winner_id' data-u_id='{$row_run['winner_id']}'>{$row_run['winner_id']}</a></td>
 							<td>{$date_create}</td>
 							<td>{$row_run['update_time']}</td>							
 						  </tr>
@@ -223,7 +223,7 @@ if(mysqli_num_rows($running_res) > 0){
 		$date_create = date("d-m-Y h:i A",strtotime($row_run['create_time']));
 
 		$output_running ="<tr>
-							<th>{$row_run['p_id']}</th>
+							<th>{$row_run['DID']}</th>
 							<td><img src='../../All-Products-images/{$fetch_pro['image_0']}' class='rounded img-thumbnail' width='50px' height='50px' ></td>
 							<td>{$fetch_pro['product_name']}</td>
 							<td>{$row_run['m_value']}</td>
@@ -248,6 +248,88 @@ if(mysqli_num_rows($running_res) > 0){
 				  </div>
 				</div>
 
+								<div class="col-lg-12">
+				  <div class="card">
+				    <div class="card-close">
+						<div class="dropdown">
+						<button type="button" id="closeCard4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+						<div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a></div>
+						</div>
+				    </div>
+				    <div class="card-header d-flex align-items-center">
+				      <h3 class="h4">Fail Deal</h3>
+				    </div>
+				    <div class="card-body">
+				    	<div class="table-responsive">
+				    	<table class="table table-striped table-hover">
+						  <thead>
+						    <tr>
+						      <th scope="col">ID</th>
+						      <th scope="col">#</th>
+						      <th scope="col">Name</th>
+						      <th scope="col">Market</th>
+						      <th scope="col">Estimate</th>
+						      <th scope="col">Unit</th>
+						      <th scope="col">Create</th>
+						      <th scope="col">Deal Closed</th>
+						    </tr>
+						  </thead>
+<?php
+$sql_running = "SELECT * FROM deal WHERE p_id = {$p_id}";
+$running_res = mysqli_query($conn, $sql_running);
+if(mysqli_num_rows($running_res) > 0){
+	while($row_run = mysqli_fetch_assoc($running_res)){
+		$sql_pro_run_view = "SELECT * FROM products WHERE ID = {$p_id}";
+		$pro_run_view_res = mysqli_query($conn, $sql_pro_run_view);
+		$fetch_pro = mysqli_fetch_assoc($pro_run_view_res);
+		if($row_run['zone'] == "fail" ){
+		$date_create = date("d-m-Y h:i A",strtotime($row_run['create_time']));
+
+		$output_running ="<tr>
+							<th>{$row_run['DID']}</th>
+							<td><img src='../../All-Products-images/{$fetch_pro['image_0']}' class='rounded img-thumbnail' width='50px' height='50px' ></td>
+							<td>{$fetch_pro['product_name']}</td>
+							<td>{$row_run['m_value']}</td>
+							<td>{$row_run['e_value']}</td>
+							<td>{$row_run['unit_price']}</td>
+							<td>{$date_create}</td>
+							<td>{$row_run['update_time']}</td>							
+						  </tr>";
+						  echo $output_running;
+
+		}
+				
+	}
+}else{
+	echo "<tr><td colspan = '9'><h2> Records not found.</h2><p>Still no deal created.</p> <td></tr>";
+}
+?>
+						  </tbody>
+						</table>
+					</div>
+				    </div>
+				  </div>
+				</div>
+<!-- MODAL  edit START HERE-->
+			
+				
+					<div class="modal " id="modal">
+					  <div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">
+					       <div class="card-header d-flex align-items-center">
+					          <h3 class="h4">Winner Details</h3>
+					        </div>
+					        <div class="card-body">
+					          <form class="form-inline">
+					          </form>
+					        </div>
+
+					    </div>
+					  </div>
+					</div>									      
+				
+			
+			<!-- MODAL edit CLOSE HERE-->
 				
 			</div>
 		</div>
@@ -270,6 +352,28 @@ if(mysqli_num_rows($running_res) > 0){
 <script type="text/javascript">
 $(document).ready(function(){
 
+//show modal box
+		$(document).on("click", "#winner_id", function(e){
+			$("#modal").show();
+			var w_id = $(this).data("u_id");
+
+				$.ajax({
+					url : "show-user-details.php",
+					type : "POST",
+					data : {id:w_id},
+					success : function(data){
+						$("#modal form").html(data); 
+
+					}
+
+				});
+    e.preventDefault();
+			});
+
+	//close modal  box
+		$(document).on("click", "#close-button", function(){
+			$("#modal").hide();
+			});
 
 })	
 </script>

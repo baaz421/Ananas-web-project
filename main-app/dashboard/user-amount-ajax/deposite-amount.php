@@ -9,8 +9,9 @@ error_reporting(E_ALL);
 	$amount = mysqli_real_escape_string($conn,$_POST['u_dep']);
 	$u_id = mysqli_real_escape_string($conn,$_POST['u_id']);
 	$time = $date;
+	$method = 1;
 
-	$insert_amount = "INSERT INTO deposite_amount (u_id, d_amount, d_date) VALUES('$u_id', '$amount', '$time')";
+	$insert_amount = "INSERT INTO deposite_amount (u_id, d_amount, method, d_date) VALUES('$u_id', '$amount', '{$method}', '$time')";
 	$run_insert_amount = mysqli_query($conn, $insert_amount);
 
 	if($run_insert_amount){

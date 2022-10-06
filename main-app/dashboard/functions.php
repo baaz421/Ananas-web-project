@@ -62,7 +62,21 @@ function cal_unit_price_with_percentage($unit_price,$percentage){
 }
 
 function progressBar($prog_percen,$prog_color){
-  $p = '<div class="progress">
+  if($prog_color == "bg-danger"){
+    $name = "Red Zone";
+    $text_class = "text-danger";
+    $prog_border =  "border-danger";
+  }else if($prog_color == "bg-warning"){
+    $name = "Orange Zone";
+    $text_class = "text-warning";
+    $prog_border = "border-warning";
+  }else{
+    $name = "Green Zone";
+    $text_class = "text-success";
+    $prog_border = "border-success";
+  }
+  $p = '<p class ="'.$text_class.'">'.$name.'</p>
+        <div class="progress border '.$prog_border.'">        
 	        <div class="progress-bar '.$prog_color.'" role="progressbar" style="width: '.$prog_percen.'%"  aria-valuemin="0" aria-valuemax="100">
 	        </div>
 	      </div>
@@ -81,6 +95,7 @@ function zoneProgress($deal_id,$conn,$date){
     $zone = $row['zone'];
     $d_id = $row['DID'];
     $pro_id = $row['p_id'];
+    $winner = $row['winner_id'];
     switch (true) {
       case ($zone == "red"): // case red zone
         $red_method = $row['red_method'];
@@ -219,8 +234,26 @@ function zoneProgress($deal_id,$conn,$date){
           $prog_color = "bg-success";
 
           if($prog_percen >= 100){            
-            $change_green_sql = "UPDATE deal SET zone = '{$change_method}', update_time = '{$date}' WHERE DID ={$d_id}";
-            mysqli_query($conn, $change_green_sql);
+            $change_green_sql = "UPDATE deal SET zone = '{$change_method}', deal_status = 0, update_time = '{$date}' WHERE DID ={$d_id}";
+            if(mysqli_query($conn, $change_green_sql)){
+              $update_pro_sql = "UPDATE products SET deal_check = 0 WHERE ID = {$pro_id}";
+              mysqli_query($conn, $update_pro_sql);
+
+              $sql_participators = "SELECT * FROM participators WHERE deal_id = $deal_id";
+              $run_sql_participators = mysqli_query($conn,$sql_participators);
+              $user_winner_ids = array();
+              while ($row = mysqli_fetch_assoc($run_sql_participators)) {
+                $part_id = $row['part_id'];
+                $sql_update_participator = "UPDATE participators SET status = 0 WHERE part_id = $part_id";
+                mysqli_query($conn,$sql_update_participator);
+                $user_winner_ids[] = $row['user_id'];
+              }
+              $winner_id = $user_winner_ids[0];
+              if($winner == null){
+                $update_winner_id = "UPDATE deal SET winner_id = $winner_id WHERE DID = $d_id";
+                mysqli_query($conn,$update_winner_id);
+              }
+            }
           }
           
         }else{ // Green Time method code
@@ -252,6 +285,22 @@ function zoneProgress($deal_id,$conn,$date){
             if(mysqli_query($conn, $change_green_sql)){
               $update_pro_sql = "UPDATE products SET deal_check = 0 WHERE ID = {$pro_id}";
               mysqli_query($conn, $update_pro_sql);
+
+              $sql_participators = "SELECT * FROM participators WHERE deal_id = $deal_id";
+              $run_sql_participators = mysqli_query($conn,$sql_participators);
+              $user_winner_ids = array();
+              while ($row = mysqli_fetch_assoc($run_sql_participators)) {
+                $part_id = $row['part_id'];
+                $sql_update_participator = "UPDATE participators SET status = 0 WHERE part_id = $part_id";
+                mysqli_query($conn,$sql_update_participator);
+                $user_winner_ids[] = $row['user_id'];
+              }
+              $winner_id = $user_winner_ids[0];
+              if($winner == null){
+                $update_winner_id = "UPDATE deal SET winner_id = $winner_id WHERE DID = $d_id";
+                mysqli_query($conn,$update_winner_id);
+              }
+              
             }
 
 

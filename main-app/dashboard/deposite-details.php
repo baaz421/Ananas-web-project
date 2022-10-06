@@ -17,6 +17,7 @@ include "header-user.php";
                     <th>S.no</th>
                     <th>ID</th>
                     <th>Amount</th>
+                    <th>Method</th>
                     <th>Date</th>
                   </tr>
                 </thead>
@@ -26,14 +27,37 @@ $deposite_details = "SELECT * FROM deposite_amount WHERE u_id = '$u_id'";
 $run_deposite_details = mysqli_query($conn, $deposite_details);
 if(mysqli_num_rows($run_deposite_details) > 0){
 	$sno = 1;
+  $total = 0;
 	while($row = mysqli_fetch_assoc($run_deposite_details)){
 
 		$date = DateDisplayWithTime($row['d_date']);
-    $amount = $row["d_amount"];
+    $db_amount = $row["d_amount"];
+
+    if($row['method'] != null && $row['method'] == 0){
+      $refund = "<span style='color : blue'>Refund</span>";
+    }else if($row['method'] != null && $row['method'] == 2){
+      $refund ="<span style='color : red'>Deduct</span>";
+    }else{
+      $refund ="<span style='color : green'>Deposite</span>";
+    }
+
+    if($row['method'] != null && $row['method'] == 2){
+      $total -= $db_amount;
+      $show_amount = "<span style='color : red'>-{$db_amount}.00</span> <p><u class = font-weight-bold>$total.00</u></p>";
+      
+    }else if($row['method'] != null && $row['method'] == 0){
+      $total += $db_amount;
+      $show_amount ="<span style='color : blue'>+{$db_amount}.00</span><p><u class = font-weight-bold>$total.00</u></p>";
+      
+    }else{
+      $total += $db_amount;
+      $show_amount ="<span style='color : green'>+{$db_amount}.00</span><p><u class = font-weight-bold>$total.00</u></p>";
+    }
 		echo "<tr>
             <td>{$sno}</td>
             <td>2022{$row["da_id"]}</td>
-            <td ><span style='color : green'>+{$amount}.00</span></td>
+            <td>$show_amount</td>
+            <td>$refund</td>
             <td>{$date}</td>
           </tr>";
           $sno ++;

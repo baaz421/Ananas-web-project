@@ -220,7 +220,8 @@ function addPer(percentage,coupon_code){
 	  			var minus_per = total / 100 * data;
 	  			var final_amt = total - minus_per;
 	  			$("#final-total").text(final_amt);	
-	  			console.log(final_amt);	
+	  			console.log(final_amt);
+	  			console.log(data);
 	  			  			
 	  		}
 	  	});

@@ -17,6 +17,7 @@ if(mysqli_num_rows($run_check_row) > 0){
 	$total 				= $sub_total-$discount_amount;
 }
 
+// this is to get coupon ID
 $check_cou_code = "SELECT * FROM coupons WHERE coupon_code = '{$coupon_code}'";
 $run_check_cou_code = mysqli_query($conn, $check_cou_code);
 $row = mysqli_fetch_assoc($run_check_cou_code);

@@ -18,6 +18,15 @@ if(isset($_POST['user_id']) && $_POST['user_id'] != null && isset($_POST['checko
     $user_id 		   = $fetch_checkout_data['user_id'];
     $percentage    = $fetch_checkout_data['coupon_per'];
     $total_amount  = $fetch_checkout_data['total'];
+    $coupon_id     = $fetch_checkout_data['coupon_id'];
+
+    if($percentage == 0){
+      $coupon_percent = $percentage;
+      $cou_id = 0;
+    }else{
+      $coupon_percent = $percentage;
+      $cou_id = $coupon_id;
+    }
 
     $deal_explode       = explode("-",$deal_ids);
     $qtys_explode       = explode("-",$deal_qtys);
@@ -38,8 +47,8 @@ if(isset($_POST['user_id']) && $_POST['user_id'] != null && isset($_POST['checko
               while ($d_qty>=1){
                 // instering participating table for user 
                 $insert_participate = "INSERT INTO 
-                participators(user_id, deal_id, deal_zone, unit_price, status, join_date) 
-                VALUES('{$user_id}','{$d_id}','{$check_dealTable_updated}','{$unit_price_singal}','{$s_f_p}','{$date}')";
+                participators(user_id, deal_id, deal_zone, unit_price, unit_percent, coupon_id, status, join_date) 
+                VALUES('{$user_id}','{$d_id}','{$check_dealTable_updated}','{$unit_price_singal}','{$coupon_percent}','{$cou_id}','{$s_f_p}','{$date}')";
                 mysqli_query($conn,$insert_participate);
                 $d_qty--;
               }            

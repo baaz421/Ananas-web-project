@@ -25,6 +25,24 @@ function current_bal($u_id, $conn)
 	}
 }
 
+function RunningDeals($conn,$u_id){
+  $sql_running_deal = "SELECT DISTINCT deal_id FROM participators WHERE user_id = $u_id AND status = 1";
+  $run_sql_running_deal = mysqli_query($conn,$sql_running_deal);
+  return mysqli_num_rows($run_sql_running_deal);
+}
+
+function TotalDeals($conn,$u_id){
+  $sql_running_deal = "SELECT DISTINCT deal_id FROM participators WHERE user_id = $u_id";
+  $run_sql_running_deal = mysqli_query($conn,$sql_running_deal);
+  return mysqli_num_rows($run_sql_running_deal);
+}
+
+function CompletedDeals($conn,$u_id){
+  $sql_running_deal = "SELECT DISTINCT deal_id FROM participators WHERE user_id = $u_id AND status= 0";
+  $run_sql_running_deal = mysqli_query($conn,$sql_running_deal);
+  return mysqli_num_rows($run_sql_running_deal);
+}
+
 // progres bar 
 // function progressBar($prog_percen,$prog_color){
 //   $p = '
@@ -113,7 +131,7 @@ function zoneProgress($deal_id,$conn,$date){
             $prog_percen = round(($red_live_amt/$red_estimate_amt)*100,2);
             $prog_color = "bg-danger";
             if($prog_percen >= 100){        
-              $change_red_sql = "UPDATE deal SET zone = '{$change_method}', s_time_oran = '{$date}', update_time = '{$date}' WHERE DID ={$d_id}";
+              $change_red_sql = "UPDATE deal SET zone = '{$change_method}',e_time_red = '{$date}', s_time_oran = '{$date}', oran_am = '{$red_live_amt}', update_time = '{$date}' WHERE DID ={$d_id}";
               mysqli_query($conn, $change_red_sql);
               
             }
@@ -140,7 +158,7 @@ function zoneProgress($deal_id,$conn,$date){
                 mysqli_query($conn, $update_pro_sql);
                 }
               }else{          
-              $change_red_sql = "UPDATE deal SET zone = '{$change_method}', s_time_oran = '{$date}', update_time = '{$date}' WHERE DID ={$d_id}";
+              $change_red_sql = "UPDATE deal SET zone = '{$change_method}', e_time_red = '{$date}', s_time_oran = '{$date}', oran_am = '{$red_amt}', update_time = '{$date}' WHERE DID ={$d_id}";
               mysqli_query($conn, $change_red_sql);
               }
             }
@@ -173,7 +191,7 @@ function zoneProgress($deal_id,$conn,$date){
           $prog_percen = round(($oran_live_amt/$orange_amount)*100,2);
           $prog_color = "bg-warning";
           if($prog_percen >= 100){            
-            $change_oran_sql = "UPDATE deal SET zone = '{$change_method}', s_time_green = '{$date}', update_time = '{$date}' WHERE DID ={$d_id}";
+            $change_oran_sql = "UPDATE deal SET zone = '{$change_method}', e_time_oran = '{$date}', s_time_green = '{$date}', green_am = '{$orange_amount}', update_time = '{$date}' WHERE DID ={$d_id}";
             mysqli_query($conn, $change_oran_sql);
           }
 
@@ -183,6 +201,8 @@ function zoneProgress($deal_id,$conn,$date){
           $days = $row['oran_days'];
           $add_days = "+$days day";
           $end_date = date('d-m-Y H:i',strtotime($add_days,$start_date));
+
+          $oran_amt = $row['oran_am'];
 
           $orange_end_date = $row['e_time_oran'];
           if($orange_end_date == ""){
@@ -202,7 +222,7 @@ function zoneProgress($deal_id,$conn,$date){
           $prog_color = "bg-warning";
 
           if($prog_percen >= 100){            
-            $change_oran_sql = "UPDATE deal SET zone = '{$change_method}', s_time_green = '{$date}', update_time = '{$date}' WHERE DID ={$d_id}";
+            $change_oran_sql = "UPDATE deal SET zone = '{$change_method}', s_time_green = '{$date}', green_am='{$oran_amt}', update_time = '{$date}' WHERE DID ={$d_id}";
             mysqli_query($conn, $change_oran_sql);
           }
           
@@ -234,12 +254,12 @@ function zoneProgress($deal_id,$conn,$date){
           $prog_color = "bg-success";
 
           if($prog_percen >= 100){            
-            $change_green_sql = "UPDATE deal SET zone = '{$change_method}', deal_status = 0, update_time = '{$date}' WHERE DID ={$d_id}";
+            $change_green_sql = "UPDATE deal SET zone = '{$change_method}', e_time_green = '{$date}', deal_status = 0, update_time = '{$date}' WHERE DID ={$d_id}";
             if(mysqli_query($conn, $change_green_sql)){
               $update_pro_sql = "UPDATE products SET deal_check = 0 WHERE ID = {$pro_id}";
               mysqli_query($conn, $update_pro_sql);
 
-              $sql_participators = "SELECT * FROM participators WHERE deal_id = $deal_id";
+              $sql_participators = "SELECT * FROM participators WHERE deal_id = $deal_id AND status = 1";
               $run_sql_participators = mysqli_query($conn,$sql_participators);
               $user_winner_ids = array();
               while ($row = mysqli_fetch_assoc($run_sql_participators)) {
@@ -248,10 +268,16 @@ function zoneProgress($deal_id,$conn,$date){
                 mysqli_query($conn,$sql_update_participator);
                 $user_winner_ids[] = $row['user_id'];
               }
+              shuffle($user_winner_ids);
               $winner_id = $user_winner_ids[0];
               if($winner == null){
                 $update_winner_id = "UPDATE deal SET winner_id = $winner_id WHERE DID = $d_id";
                 mysqli_query($conn,$update_winner_id);
+                while ($pa10 = mysqli_fetch_assoc($run_sql_participators)) {
+                  $part_id = $pa['part_id'];
+                  $sql_update_participator = "UPDATE participators SET status = 10 WHERE part_id = $part_id";
+                  mysqli_query($conn,$sql_update_participator);
+                }
               }
             }
           }
@@ -286,7 +312,7 @@ function zoneProgress($deal_id,$conn,$date){
               $update_pro_sql = "UPDATE products SET deal_check = 0 WHERE ID = {$pro_id}";
               mysqli_query($conn, $update_pro_sql);
 
-              $sql_participators = "SELECT * FROM participators WHERE deal_id = $deal_id";
+              $sql_participators = "SELECT * FROM participators WHERE deal_id = $deal_id AND status = 1";
               $run_sql_participators = mysqli_query($conn,$sql_participators);
               $user_winner_ids = array();
               while ($row = mysqli_fetch_assoc($run_sql_participators)) {
@@ -295,10 +321,17 @@ function zoneProgress($deal_id,$conn,$date){
                 mysqli_query($conn,$sql_update_participator);
                 $user_winner_ids[] = $row['user_id'];
               }
+              shuffle($user_winner_ids);
               $winner_id = $user_winner_ids[0];
               if($winner == null){
                 $update_winner_id = "UPDATE deal SET winner_id = $winner_id WHERE DID = $d_id";
                 mysqli_query($conn,$update_winner_id);
+
+                while ($pa10 = mysqli_fetch_assoc($run_sql_participators)) {
+                  $part_id = $pa['part_id'];
+                  $sql_update_participator = "UPDATE participators SET status = 10 WHERE part_id = $part_id";
+                  mysqli_query($conn,$sql_update_participator);
+                }
               }
               
             }

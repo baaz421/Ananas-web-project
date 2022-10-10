@@ -52,7 +52,8 @@ include '../deals-ajax-files/deals-functions.php';
 						      <th scope="col">Market</th>
 						      <th scope="col">Estimate</th>
 						      <th scope="col">Unit</th>
-						      <th scope="col">Zone</th>
+						      <th scope="col">Amount</th>
+						      <th scope="col">Members</th>
 						      <th scope="col">Create</th>
 						      <th scope="col">Last Update</th>
 						    </tr>
@@ -67,32 +68,70 @@ if(mysqli_num_rows($running_res) > 0){
 		$pro_run_view_res = mysqli_query($conn, $sql_pro_run_view);
 		$fetch_pro = mysqli_fetch_assoc($pro_run_view_res);
 		if($row_run['deal_status'] > 0 ){
-		// echo "<br>".$row_run['p_id'];
-		// echo "<br>".$row_run['zone'];
-		// echo "<br>".$row_run['deal_status'];
-		// echo "<br>".$row_run['m_value'];
-		// echo "<br>".$row_run['e_value'];
-		// echo "<br>".$row_run['unit_price'];
-		// echo "<br>".$row_run['create_time'];
-		// echo "<br>".$row_run['update_time'];
-		// echo "<br>".$fetch_pro['image_0'];
-		// echo "<br>".$fetch_pro['product_name'];
+
 		$deal_id = $row_run['DID'];
 		$date_create = date("d-m-Y h:i A",strtotime($row_run['create_time']));
 
+		// total members and ther individual zones 
+		$red_m = $row_run['total_m_red'];
+		$orange_m = $row_run['total_m_oran'];
+		$green_m = $row_run['total_m_green'];
+
+		// amounts collected from user individual zones and members
+		if($row_run['zone'] == "red"){
+			$amount = $row_run['red_am'];
+			$red_price = "<span class='text-danger'><u>{$amount}.00</u></span><br>";
+			$orange_price ="";
+			$green_price = "";
+
+			$red_member = "<span class='text-danger'><u>{$red_m}</u></span><br>";
+			$orange_member = "";
+			$green_member = "";
+		}elseif($row_run['zone'] == "orange"){
+			$amount = $row_run['oran_am'];
+			$red_price = "<span class='text-danger'><u>{$row_run['red_am']}.00</u></span><br>";
+			$orange_price = "<span class='text-warning'><u>{$amount}.00</u></span><br>";
+			$green_price = "";
+
+			$red_member = "<span class='text-danger'><u>{$red_m}</u></span><br>";
+			$orange_member = "<span class='text-warning'><u>{$orange_m}</u></span><br>";
+			$green_member = "";
+		}else{
+			$amount = $row_run['green_am'];
+			$red_price = "<span class='text-danger'><u>{$row_run['red_am']}.00</u></span><br>";
+			$orange_price = "<span class='text-warning'><u>{$row_run['oran_am']}.00</u></span><br>";
+			$green_price = "<span class='text-success'><u>{$amount}.00</u></span><br>";
+
+			$red_member = "<span class='text-danger'><u>{$red_m}</u></span><br>";
+			$orange_member = "<span class='text-warning'><u>{$orange_m}</u></span><br>";
+			$green_member = "<span class='text-success'><u>{$green_m}</u></span>";
+		}
+
+		
+
+
 		$output_running ="<tr>
-							<th>{$row_run['p_id']}</th>
+							<th>{$deal_id}</th>
 							<td><img src='../../All-Products-images/{$fetch_pro['image_0']}' class='rounded img-thumbnail' width='50px' height='50px' ></td>
 							<td>{$fetch_pro['product_name']}</td>
-							<td>{$row_run['m_value']}</td>
-							<td>{$row_run['e_value']}</td>
-							<td>{$row_run['unit_price']}</td>
-							<td>{$row_run['zone']}</td>
+							<td>{$row_run['m_value']}.00</td>
+							<td>{$row_run['e_value']}.00</td>
+							<td>{$row_run['unit_price']}.00</td>
+							<td>
+								$red_price
+								$orange_price
+								$green_price
+							</td>
+							<td>
+								$red_member
+								$orange_member
+								$green_member
+							</td>
 							<td>{$date_create}</td>
 							<td>{$row_run['update_time']}</td>							
 						  </tr>
 						  <tr>
-						  	<td colspan = '9' id = 'progress'>
+						  	<td colspan = '10' id = 'progress'>
 								".$progress = zoneProgress($deal_id,$conn,$date)."
 							</td>
 						  </tr>";
@@ -102,7 +141,7 @@ if(mysqli_num_rows($running_res) > 0){
 				
 	}
 }else{
-	echo "<tr><td colspan = '9'><h2> Records not found.</h2><p>Still no deal created.</p> <td></tr>";
+	echo "<tr><td colspan = '10'><h2> Records not found.</h2><p>Still no deal created.</p> <td></tr>";
 }
 ?>
 						  </tbody>
@@ -135,6 +174,8 @@ if(mysqli_num_rows($running_res) > 0){
 						      <th scope="col">Estimate</th>
 						      <th scope="col">Unit</th>
 						      <th scope="col">Winner</th>
+						      <th scope="col">Amount</th>
+						      <th scope="col">Qty</th>
 						      <th scope="col">Create</th>
 						      <th scope="col">Deal Closed</th>
 						    </tr>
@@ -150,7 +191,7 @@ if(mysqli_num_rows($running_res) > 0){
 		$fetch_pro = mysqli_fetch_assoc($pro_run_view_res);
 		if($row_run['zone'] == "completed" ){
 		$date_create = date("d-m-Y h:i A",strtotime($row_run['create_time']));
-
+		$members = $row_run['total_m_red']+$row_run['total_m_oran']+$row_run['total_m_green'];
 		$output_running ="<tr>
 							<th>{$row_run['DID']} </th>
 							<td><img src='../../All-Products-images/{$fetch_pro['image_0']}' class='rounded img-thumbnail' width='50px' height='50px' ></td>
@@ -159,13 +200,15 @@ if(mysqli_num_rows($running_res) > 0){
 							<td>{$row_run['e_value']}</td>
 							<td>{$row_run['unit_price']}</td>
 							<td><a href='#' id='winner_id' data-u_id='{$row_run['winner_id']}'>{$row_run['winner_id']}</a></td>
+							<td>{$row_run['green_am']}.00</td>
+							<td>{$members}</td>
 							<td>{$date_create}</td>
 							<td>{$row_run['update_time']}</td>							
 						  </tr>
 						  <tr>
-						  	<td colspan = '9'>
+						  	<td colspan = '11'>
 								<div class='progress'>
-								  <div class='progress-bar progress-bar-striped progress-bar-animated bg-success' role='progressbar' style='width: 100%'> This Product Deal Completed</div>
+								  <div class='progress-bar progress-bar-striped progress-bar-animated bg-success' role='progressbar' style='width: 100%'> This Deal Completed</div>
 								</div>
 							</td>
 						  </tr>";
@@ -175,7 +218,7 @@ if(mysqli_num_rows($running_res) > 0){
 				
 	}
 }else{
-	echo "<tr><td colspan = '9'><h2> Records not found.</h2><p>Still no deal created.</p> <td></tr>";
+	echo "<tr><td colspan = '11'><h2> Records not found.</h2><p>Still no deal created.</p> <td></tr>";
 }
 ?>
 						  </tbody>

@@ -163,21 +163,16 @@ if($_SESSION['u_email'] == false){
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="running-deals.php">Running Deals</a></li>
                 <li class="nav-item"> <a class="nav-link" href="completed-deal.php">Completed Deals</a></li>
+                <li class="nav-item"> <a class="nav-link" href="all-deals.php">All Deals</a></li>
+                <li class="nav-item"> <a class="nav-link" href="cancelled-deals.php">Cancelled Deals</a></li>
               </ul>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#d_details" aria-expanded="false" aria-controls="tables">
+            <a class="nav-link"  href="deposite-details.php">
               <i class="ti-list menu-icon"></i>
               <span class="menu-title">Transactions</span>
-              <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="d_details">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="deposite-details.php">Deposite details</a></li>
-                 <li class="nav-item"> <a class="nav-link" href="transaction-details.php">Transaction details</a></li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../">

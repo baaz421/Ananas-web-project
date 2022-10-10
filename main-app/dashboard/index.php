@@ -69,7 +69,7 @@ if(isset($_SESSION['u_email'])){
               <div class="card-body">
                 <p class="mb-4">Current Balance</p>
                 <p class="fs-30 mb-2"><?php echo current_bal($u_id,$conn); ?></p>
-                <p><a href="add-amount.php" class="text-white"><u>Deposite Amount.</u></a></p>
+                <p><a href="add-amount.php" class="text-white"><u>Deposite More.</u></a></p>
               </div>
             </div>
           </div>
@@ -77,8 +77,8 @@ if(isset($_SESSION['u_email'])){
             <div class="card card-dark-blue">
               <div class="card-body">
                 <p class="mb-4">Total Deals</p>
-                <p class="fs-30 mb-2">O</p>
-                <p>More Details</p>
+                <p class="fs-30 mb-2"><?php echo TotalDeals($conn,$u_id) ?></p>
+                <p><a href="all-deals.php" class="text-white"><u>More Details</u></a></p>
               </div>
             </div>
           </div>
@@ -88,17 +88,17 @@ if(isset($_SESSION['u_email'])){
             <div class="card card-light-blue">
               <div class="card-body">
                 <p class="mb-4">Running Deals</p>
-                <p class="fs-30 mb-2">0</p>
-                <p>More Details</p>
+                <p class="fs-30 mb-2"><?php echo RunningDeals($conn,$u_id) ?></p>
+                <p><a href="running-deals.php" class="text-white"><u>More Details</u></a></p>
               </div>
             </div>
           </div>
           <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
             <div class="card card-light-danger">
               <div class="card-body">
-                <p class="mb-4">Cancelled Deals</p>
-                <p class="fs-30 mb-2">0</p>
-                <p>More Details</p>
+                <p class="mb-4">Completed Deals</p>
+                <p class="fs-30 mb-2"><?php echo CompletedDeals($conn,$u_id) ?></p>
+                <p><a href="completed-deal.php" class="text-white"><u>More Details</u></a></p>
               </div>
             </div>
           </div>

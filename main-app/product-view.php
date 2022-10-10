@@ -516,7 +516,19 @@ $(document).on("click","#join-deal-button",function(jdD){
     // if(this.id == "join-deal-button" ){
         if($("#add-to-cart").hasClass("isDisabled")){
             $(this).addClass("isDisabled");
-            setTimeout(function(){location.replace("checkout.php")}, 1000);
+            $.ajax({
+                url : "join-deal-ajax-pages/create-checkout.php",
+                success : function(data){
+                    if(data == 1){
+                        location.replace("checkout.php");
+                    }else{
+                        $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary' role='alert mt-1 mb-2 rounded'>Oop's Session Timeout, Please Login again...!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+                        $("#success-message").slideUp();
+                        setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+                    }
+                }
+            });
+            // setTimeout(function(){location.replace("checkout.php")}, 1000);
             // location.replace("checkout.php");
         }else{
         var button = $(this);
@@ -526,8 +538,22 @@ $(document).on("click","#join-deal-button",function(jdD){
         var qty = $("#qty").val();
         $("#add-to-cart").addClass("isDisabled");
         AddToCartProductView(button,p_id,deal_id,user_id,qty);
+        setTimeout(function(){
+            $.ajax({
+            url : "join-deal-ajax-pages/create-checkout.php",
+            success : function(data){
+                if(data == 1){
+                    location.replace("checkout.php");
+                }else{
+                    $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary' role='alert mt-1 mb-2 rounded'>Oop's Session Timeout, Please Login again...!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+                    $("#success-message").slideUp();
+                    setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+                }
+            }
+        });
+        }, 1000);
         // location.replace("checkout.php");
-        setTimeout(function(){location.replace("checkout.php")}, 2000);
+        // setTimeout(function(){location.replace("checkout.php")}, 2000);
         }  
     // }
 jdD.preventDefault();

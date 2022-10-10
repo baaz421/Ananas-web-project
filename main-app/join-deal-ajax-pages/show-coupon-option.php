@@ -22,7 +22,7 @@ if(mysqli_num_rows($run_above_sql) > 0){
         		<div class="input-group">
 	        		<input type="text" class="form-control" required placeholder="coupon code" id="coupon-code" >
 	        		<div class="input-group-append">
-						<button class="form-control btn btn-outline-warning" type="submit" id="submit-coupon"><i class="icon-long-arrow-right"></i></button>
+						<button class="form-control btn btn-outline-warning bg-secondary" type="submit" id="submit-coupon"><i class="icon-long-arrow-right"></i></button>
 					</div>
     			</div>
 	        </form>
@@ -46,7 +46,7 @@ if(mysqli_num_rows($run_above_sql) > 0){
         		<div class="input-group">
 	        		<input type="text" class="form-control" required placeholder="coupon code" id="coupon-code" >
 	        		<div class="input-group-append">
-						<button class="form-control btn btn-outline-warning" type="submit" id="submit-coupon"><i class="icon-long-arrow-right"></i></button>
+						<button class="form-control btn btn-outline-warning bg-secondary" type="submit" id="submit-coupon"><i class="icon-long-arrow-right"></i></button>
 					</div>
     			</div>
 	        </form>

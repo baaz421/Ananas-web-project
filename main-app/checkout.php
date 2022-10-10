@@ -262,7 +262,7 @@ function MainTotalDisplay(){
 	      data :{c_code:cou_code},
 	      success :function(data){
 	        if(data > 0){
-	        	
+	        	console.log(data+"from below");
 	        	addPer(data,cou_code);
 	        	setTimeout(function(){loadCouponField()}, 1000);
 	        	

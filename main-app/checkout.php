@@ -220,11 +220,12 @@ function addPer(percentage,coupon_code){
 	  			var minus_per = total / 100 * data;
 	  			var final_amt = total - minus_per;
 	  			$("#final-total").text(final_amt);	
-	  			console.log(final_amt);		  			
+	  			console.log(final_amt);	
+	  			  			
 	  		}
 	  	});
       }
-    });
+    });	
 }
 
 // final total amount dispaly
@@ -248,7 +249,6 @@ function MainTotalDisplay(){
 }
 
 
-
   // submit coupon code
 	$(document).on("click","#submit-coupon",function(cou){
 		cou.preventDefault();
@@ -261,12 +261,17 @@ function MainTotalDisplay(){
 	      data :{c_code:cou_code},
 	      success :function(data){
 	        if(data > 0){
+	        	
 	        	addPer(data,cou_code);
+	        	setTimeout(function(){loadCouponField()}, 1000);
+	        	
+	        	
 
-	        	setTimeout(function(){loadCouponField().fadeIn("slow")}, 1000);        		    	
-	        	// loadCouponField();
+	        	// setTimeout(function(){loadCouponField().fadeIn("slow")}, 1000);
+	        	// loadCouponField(); 	
+	        	
 	          $("#success-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-success mt-1 mb-2 rounded' role='alert'>successfully Applied Coupon code.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
-	                 $("#error-message").slideUp();
+	          $("#error-message").slideUp();
 	          setTimeout(function(){$("#success-message").fadeOut("slow")}, 4000);
 	        }else if(data == -1){
 	        $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert mt-1 mb-2 rounded'>sorry this code is Expied.!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();

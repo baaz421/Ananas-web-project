@@ -20,4 +20,25 @@ function TotalProducts($conn){
     return $cou_pro;
 }
 
+
+function LoadCategories($conn,$lang){
+    $sql_get_categories = "SELECT * FROM categories WHERE status = 1";
+    $run_sql_get_categories = mysqli_query($conn, $sql_get_categories);
+    if(mysqli_num_rows($run_sql_get_categories) > 0){
+        while($cat_row = mysqli_fetch_assoc($run_sql_get_categories)){
+            $cat_link = "category-products.php";
+            $cat_id = $cat_row['ID'];
+            $link_cat = $cat_link."?c_id=".$cat_id;
+            if($lang == "en"){
+              $cat_name = $cat_row['cat_name']; 
+            }else{
+              $cat_name = $cat_row['cat_name_arabic']; 
+            }
+            
+            $show_cat = "<li><a href='{$link_cat}' class='text-uppercase'>{$cat_name}</a></li>";
+            echo $show_cat;
+        }
+    }
+}
+
 ?>

@@ -8,6 +8,7 @@ $ex_link = explode("/", $uri);
 $file_directry_login            ="login-ajax-files";
 $file_directry_products         ="all-products-files";
 $file_directry_join_deal        ="join-deal-ajax-pages";
+$file_directry_home_page_ajax   ="home-page-ajax";
 
 
 
@@ -18,6 +19,8 @@ if(in_array($file_directry_login,$ex_link)){
 }else if(in_array($file_directry_products,$ex_link)){
   $file_back= "../";
 }else if(in_array($file_directry_join_deal,$ex_link)){
+  $file_back= "../";
+}else if(in_array($file_directry_home_page_ajax,$ex_link)){
   $file_back= "../";
 }else{
   $file_back= "";

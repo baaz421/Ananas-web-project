@@ -255,19 +255,9 @@ if($_SESSION['lang'] == "ar"){
                                 <li>
                                     <a href="catagories.php" class="sf-with-ul"><?php echo $english['categories']; ?></a>
                                         <ul>
-                                            <li><a href="#"><i class="icon-laptop"></i> <?php echo $english['electronics']; ?></a></li>
-                                            <li><a href="#"><i class="icon-couch"></i> <?php echo $english['furniture']; ?></a></li>
-                                            <li><a href="#"><i class="icon-magic"></i> <?php echo $english['accessoires']; ?></a></li>
-                                            <li><a href="#"><i class="icon-tshirt"></i> <?php echo $english['clothing']; ?></a></li>
-                                            <li><a href="#"><i class="icon-blender"></i> <?php echo $english['home_appliances']; ?></a></li>
-                                            <li><a href="#"><i class="icon-heartbeat"></i> <?php echo $english['healthy_beauty']; ?></a></li>
-                                            <li><a href="#"><i class="icon-shoe-prints"></i> <?php echo $english['shoes_boots']; ?></a></li>
-                                            <li><a href="#"><i class="icon-map-signs"></i> <?php echo $english['travel_outdoor']; ?></a></li>
-                                            <li><a href="#"><i class="icon-mobile-alt"></i> <?php echo $english['smart_phones']; ?></a></li>
-                                            <li><a href="#"><i class="icon-tv"></i> <?php echo $english['tv_audio']; ?></a></li>
-                                            <li><a href="#"><i class="icon-shopping-bag"></i> <?php echo $english['backpack_bag']; ?></a></li>
-                                            <li><a href="#"><i class="icon-music"></i> <?php echo $english['musical_instruments']; ?></a></li>
-                                            <li><a href="#"><i class="icon-gift"></i> <?php echo $english['gift_ideas']; ?></a></li>
+                                            <?php
+                                              LoadCategories($conn,$_SESSION['lang']);
+                                            ?>
                                         </ul>
                                 </li>
                                 <li>
@@ -278,13 +268,11 @@ if($_SESSION['lang'] == "ar"){
                                                     <div class="menu col-12 p-4">
                                                         <div class="menu-title w-100"><strong><?php echo $english['product_zone_details']; ?></strong><!-- End .menu-title -->
                                                         <ul class="w-100">
-                                                            <li><a href="#" class="bg-danger text-white text-center rounded-lg border border-light mb-1"><?php echo $english['red_zone_products']; ?></a></li>
-                                                            <li><a href="#" class="bg-warning text-dark text-center rounded-lg border border-light mb-1"><?php echo $english['orange_zone_products']; ?></a></li>
-                                                            <li><a href="#" class="bg-success text-white text-center rounded-lg border border-light mb-1"><?php echo $english['green_zone_products']; ?></a></li>
-                                                            <li>
-                                                                <a href="#" class="text-white bg-primary text-center rounded-lg border border-light mb-1"><?php echo $english['completed_products_zone']; ?> </a>
-                                                            </li>
-                                                            <li><a href="#" class="text-white bg-info text-center rounded-lg border border-light"><?php echo $english['incompleted_products_zone']; ?></a></li>
+                                                            <li><a href="zones.php?zone=red" class="bg-danger text-white text-center rounded-lg border border-light mb-1"><?php echo $english['red_zone_products']; ?></a></li>
+                                                            <li><a href="zones.php?zone=orange" class="bg-warning text-dark text-center rounded-lg border border-light mb-1"><?php echo $english['orange_zone_products']; ?></a></li>
+                                                            <li><a href="zones.php?zone=green" class="bg-success text-white text-center rounded-lg border border-light mb-1"><?php echo $english['green_zone_products']; ?></a></li>
+                                                            <!-- <li><a href="#" class="text-white bg-primary text-center rounded-lg border border-light mb-1"><?php //echo $english['completed_products_zone']; ?> </a></li> -->
+                                                            <!-- <li><a href="#" class="text-white bg-info text-center rounded-lg border border-light"><?php //echo $english['incompleted_products_zone']; ?></a></li> -->
                                                         </ul>
                                                         </div>
                                                     </div><!-- End .menu-col -->

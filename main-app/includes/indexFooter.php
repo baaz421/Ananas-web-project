@@ -143,34 +143,6 @@ $actual_link_footer = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'
 ?>
 <!-- ===================================== mobile view modal close here============================== -->
 
-     <script src="build/js/intlTelInput.js"></script>
-  <script>
-    var input = document.querySelector("#phone");
-    window.intlTelInput(input, {
-      // allowDropdown: false,
-      // autoHideDialCode: false,
-      // autoPlaceholder: "off",
-      // dropdownContainer: document.body,
-      // excludeCountries: ["us"],
-      // formatOnDisplay: false,
-      // geoIpLookup: function(callback) {
-      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-      //     var countryCode = (resp && resp.country) ? resp.country : "";
-      //     callback(countryCode);
-      //   });
-      // },
-      // hiddenInput: "full_number",
-      // initialCountry: "auto",
-      // localizedCountries: { 'de': 'Deutschland' },
-      // nationalMode: false,
-      // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-      // placeholderNumberType: "MOBILE",
-       preferredCountries: ['qa'],
-      // separateDialCode: true,
-      utilsScript: "build/js/utils.js",
-    });
-  </script>
- 
 
 <!-- Plugins JS File -->
 <script src="assets/js/jquery.min.js"></script>
@@ -188,9 +160,26 @@ $actual_link_footer = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'
 <script src="assets/js/jquery.elevateZoom.min.js"></script>
 <!-- Main JS File -->
 <script src="assets/js/main.js"></script>
+
 <script src="assets/js/demos/demo-14.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+  //   // load Green zone products
+  // function load_green_zone_products(){
+  //   $.ajax({
+  //     url: "home-page-ajax/load-green-zone.php",
+  //       success:function(data){
+  //           // let load_green_pro = document.getElementById("green-zone-pro").innerHTML;
+  //          // load_green_pro.insertAdjacentHTML("afterend", data);
+  //          console.log(data);
+  //          // load_green_pro.html(data);
+  //         $("#green-zone-pro").;
+  //         // $("#green-zone-pro").html(data);
+  //       }
+  //   });
+  // }
+    // load_green_zone_products();
+
     // on click join deal button from cart dropdown menu
     $(document).on("click","#participate",function(participate){
         var user_status = "<?php echo $user_status; ?>";
@@ -283,9 +272,94 @@ $(document).ready(function(){
         });
         re.preventDefault();
     });
+
+    // Product quickView popup
+    function owlCarousels($wrap, options) {
+      if ( $.fn.owlCarousel ) {
+        var owlSettings = {
+          items: 1,
+          loop: true,
+          margin: 0,
+          responsiveClass: true,
+          nav: true,
+          navText: ['<i class="icon-angle-left">', '<i class="icon-angle-right">'],
+          dots: true,
+          smartSpeed: 400,
+          autoplay: false,
+          autoplayTimeout: 15000
+        };
+        if (typeof $wrap == 'undefined') {
+            $wrap = $('body');
+        }
+        if (options) {
+            owlSettings = $.extend({}, owlSettings, options);
+        }
+
+        // Init all carousel
+        $wrap.find('[data-toggle="owl"]').each(function () {
+          var $this = $(this),
+          newOwlSettings = $.extend({}, owlSettings, $this.data('owl-options'));
+
+          $this.owlCarousel(newOwlSettings);
+            
+        });   
+      }
+    }
+    $(document).on('click','.q-view',function (q) {
+      function quantityInputsInside() {
+        if ( $.fn.inputSpinner ) {
+          $(".qty").inputSpinner({
+              decrementButton: '<i class="icon-minus"></i>',
+              incrementButton: '<i class="icon-plus"></i>',
+              groupClass: 'input-spinner',
+              buttonsClass: 'btn-spinner',
+              buttonsWidth: '26px'
+          });
+        }
+      }
+      var ajaxUrl = $(this).attr('href');
+      if ( $.fn.magnificPopup ) {
+        setTimeout(function () {
+          $.magnificPopup.open({
+            type: 'ajax',
+            mainClass: "mfp-ajax-product",
+            tLoading: '',
+            preloader: false,
+            removalDelay: 350,
+            items: {
+              src: ajaxUrl
+              },
+            callbacks: {
+              ajaxContentAdded: function () {
+                owlCarousels($('.quickView-content'), {
+                  onTranslate: function(e) {
+                    var $this = $(e.target),
+                        currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
+                    $('.quickView-content .carousel-dot').eq(currentIndex).addClass('active').siblings().removeClass('active');
+                  }
+                });
+                quantityInputsInside();
+              },
+              open: function() {
+                $('body').css('overflow-x', 'visible');
+                $('.sticky-header.fixed').css('padding-right', '1.7rem');
+              },
+              close: function() {
+                $('body').css('overflow-x', 'hidden');
+                $('.sticky-header.fixed').css('padding-right', '0');
+              }
+            },
+
+            ajax: {
+                tError: '',
+            }
+          }, 0);
+        }, 500);
+
+        q.preventDefault();
+      }
+    });
 });
 </script>
 </body>
-
-<!-- molla/index-14.html  22 Nov 2019 09:59:54 GMT -->
 </html>

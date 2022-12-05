@@ -218,3 +218,30 @@ function DisableCartButton($user_id,$p_id,$conn){
     }
     return $c_disable;
 }
+
+// get product data by its id
+function GetProductData($conn, $pro_id){
+    $sql = "SELECT * FROM products WHERE ID = $pro_id";
+    $run = mysqli_query($conn, $sql);
+    return $run;
+}
+// get deal data by it id
+function GetDealData($conn, $deal_id){
+    $sql = "SELECT * FROM deal WHERE DID = $deal_id";
+    $run = mysqli_query($conn, $sql);
+    return $run;
+}
+
+// get deal data by it status and zone
+function GetDealDataByZone($conn, $zone, $limit = 5){
+    $sql = "SELECT * FROM deal WHERE deal_status = 1 AND zone = '{$zone}' LIMIT {$limit}";
+    $run = mysqli_query($conn, $sql);
+    return $run;
+}
+
+// get ending deal data less than 1 day
+function GetEndDealData($conn, $zone, $limit = 2){
+    $sql = "SELECT * FROM deal WHERE zone = '{$zone}' AND e_time_green != null LIMIT {$limit}";
+    $run = mysqli_query($conn, $sql);
+    return $run;
+}

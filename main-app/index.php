@@ -503,7 +503,57 @@ if(isset($_SESSION['u_id'])){
                 <div class="row">
                 <!-- ==== side winner board starts here ==== -->
                     <div id="winner-details" class="col-sm-6 col-xl-12">
-                        
+                        <div class="widget widget-products">
+                            <h4 class="widget-title"><span> Recent Winners </span></h4><!-- End .widget-title -->
+
+                            <div class="products">
+                                <?php
+                                $sql_get_deal_data = "SELECT * FROM deal WHERE winner_id != '' ORDER BY STR_TO_DATE(update_time, '%d-%m-%Y %H:%i') DESC LIMIT 4"; 
+                                $run_sql_get_deal_data = mysqli_query($conn,$sql_get_deal_data);
+                                if(mysqli_num_rows($run_sql_get_deal_data) > 0){
+                                    while($row = mysqli_fetch_assoc($run_sql_get_deal_data)){
+                                        $product_id     = $row['p_id'];
+                                        $sql_get_product_details = "SELECT * FROM products WHERE ID = $product_id ";
+                                        $run_sql_get_product_details = mysqli_query($conn, $sql_get_product_details);
+                                        $get_pro = mysqli_fetch_assoc($run_sql_get_product_details);
+                                        // $winner_date     = $row['EndDate'];
+                                        $winner_date    = $row['update_time'];
+                                        $convert_date   = strtotime($winner_date);
+                                        $img_name       = $get_pro['image_0'];
+                                        $pro_link       = "product-view.php?p_id=".$product_id;
+                                        $code           = date("Ymd",$convert_date);
+                                        $user_info      = "User-ID -".$code.$row['winner_id'];
+                                        $unit_price     = $row['unit_price'].".00";             
+                                        $closing_time   = date("jS \of F Y",$convert_date);
+                                        echo winner_small_product_show($img_name,$pro_link,$user_info,$unit_price,$closing_time);
+                                    }
+                                }else{
+                                    // if data not found
+                                    echo "<h5>Sorry, No winner announced.</h5>";
+                                }
+                                    function winner_small_product_show($img_name,$pro_link,$user_info,$unit_price,$closing_time){
+                                        // $img_src = "assets/images/demos/demo-14/products/small/".$img_name;
+                                        $img_src = "../All-Products-images/".$img_name;
+                                        $show = "
+                                        <div class='product product-sm'>
+                                            <figure class='product-media'>
+                                                <a href='{$pro_link}'>
+                                                    <img src='{$img_src}' alt='Product image' class='product-image'>
+                                                </a>
+                                            </figure>
+                                            <div class='product-body'>
+                                                <h5 class='product-title'><a href='{$pro_link}'>{$user_info}</a></h5>
+                                                <div class='product-price'>{$unit_price}</div>
+                                                <div class='product-price'>{$closing_time}</div>
+                                            </div>
+                                        </div>
+                                        ";
+                                        return $show;
+                                    }                               
+                                ?>
+
+                            </div><!-- End .products -->
+                        </div><!-- End .widget widget-products -->
                     </div><!-- End .col-sm-6 col-xl-12 -->
                 <!-- ==== side winner board close here ==== -->
 
@@ -623,7 +673,6 @@ if(isset($_SESSION['u_id'])){
   <div id="success-message">
   </div>
 <!-- ERROR MESSAGE DIV CLOSE-->
-<script src="home-page-ajax/ajax-js.js"></script>
 <script src="home-page-ajax/whishlist-ajax.js"></script>
 <script src="home-page-ajax/add-to-cart-ajax.js"></script>
 <script type="text/javascript">

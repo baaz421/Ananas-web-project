@@ -1,6 +1,7 @@
 <?php 
 // join-deal-final-stage.php
 require_once "../db_connnection.php";
+include('../../smtp/simple.php');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -63,17 +64,37 @@ if(isset($_POST['user_id']) && $_POST['user_id'] != null && isset($_POST['checko
           mysqli_query($conn, $insert_amount);
 
           // udate check out table with balance and status
-          $status = 1;
-          $update_checkout_data = "UPDATE checkout SET current_bal = '{$user_current_bal}',   available_bal = '{$user_new_bal}', status = '{$status}', created_date = '{$date}' WHERE ID ={$checkout_id}";
-          mysqli_query($conn,$update_checkout_data);
-
-          // remove from cart table
-          $all_cart_ids = combine_cart_ids($conn,$user_id);
-            foreach ($all_cart_ids as $cart_id){
-              $remove_from_cart = "DELETE FROM cart WHERE ID = {$cart_id}";
-              mysqli_query($conn,$remove_from_cart);
-            }
+            $status = 1;
+            $update_checkout_data = "UPDATE checkout SET current_bal = '{$user_current_bal}',   available_bal = '{$user_new_bal}', status = '{$status}', created_date = '{$date}' WHERE ID ={$checkout_id}";
+            mysqli_query($conn,$update_checkout_data);
             echo 0; // deal successfully confirmed
+          // sending email to user
+          $user_info = Get_User_Email_And_Name($user_id,$conn);
+          $user_email = $user_info['email'];
+          $subject = "Deal confirmed, Your successfully joined the deal";
+          $email_template = DealConfirmEmail($user_info,$conn,"https://ananas.com.co/All-Products-images/", $checkout_id,$date);
+          $mail = smtp_mailer($user_email, $subject,$email_template);
+          
+          if($mail == 0){
+              // remove from cart table
+              $all_cart_ids = combine_cart_ids($conn,$user_id);
+              foreach ($all_cart_ids as $cart_id){
+                $remove_from_cart = "DELETE FROM cart WHERE ID = {$cart_id}";
+                mysqli_query($conn,$remove_from_cart);
+              }
+              
+            }else{
+              // remove from cart table
+              $all_cart_ids = combine_cart_ids($conn,$user_id);
+              foreach ($all_cart_ids as $cart_id){
+                $remove_from_cart = "DELETE FROM cart WHERE ID = {$cart_id}";
+                mysqli_query($conn,$remove_from_cart);
+              }
+              echo 0; // deal successfully confirmed
+            }
+          
+
+            
         }
     }else{
       echo -1; // not enough balance
@@ -225,4 +246,13 @@ function get_unit_price($deal_id,$conn,$percentage){
     }
       
   return $amount;
+}
+
+// get user name , email and user id 
+
+function Get_User_Email_And_Name($user_id,$conn){
+  $get_email_sql = "SELECT id,email, name FROM users WHERE id = $user_id";
+  $run_get_email_sql = mysqli_query($conn, $get_email_sql);
+  $email = mysqli_fetch_assoc($run_get_email_sql);
+  return $email;
 }

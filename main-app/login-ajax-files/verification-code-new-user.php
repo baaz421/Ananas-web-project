@@ -2,6 +2,7 @@
 // verification-code-new-user.php
 session_start();
 require_once "../db_connnection.php";
+include('../../smtp/simple.php');
 
  
    if(isset($_POST['u_otp'])){
@@ -16,6 +17,8 @@ require_once "../db_connnection.php";
         	$time = $date;
 			$code = 0;
 			$status = 'verified';
+            $fetch_m_code = $fetch_data['countrycode'];
+            $fetch_m_num = $fetch_data['mobile'];
         	$update_verify = "UPDATE users SET vcode = $code, vstatus = '$status', updatetime = '$time' WHERE email = '$email'";
 			$run_query = mysqli_query($conn, $update_verify);
 
@@ -25,7 +28,18 @@ require_once "../db_connnection.php";
             $_SESSION['u_country']      = $fetch_data['country'];
             $_SESSION['u_name']         = $fetch_data['name'];
 
-            echo 3; //redirect to previous page
+            $subject = "Registration completed successfully.";
+            $msg_mobile = "Registration completed successfully.Thank you.";
+            $msg_email = WelcomeEmail($fetch_data['name']);
+
+            $number = $fetch_m_code.$fetch_m_num;                 
+            $sms = send_sms($number, $msg_mobile);
+            $mail = smtp_mailer($email, $subject, $msg_email); 
+                if($mail == 0 || $sms != false){
+                    $_SESSION['u_email'] = $email;
+                    echo 3; // redirect to verifying code page
+                    exit();
+                }
             exit();
         	}
         }else{

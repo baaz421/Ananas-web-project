@@ -160,6 +160,9 @@ if(@$_GET['continue'] == ""){
         
     </div><!-- End .login-page section-bg -->
 </main><!-- End .main -->
+<div class="backlayer" style="display: none;">
+  <span class="loader"></span>
+</div>
 <script src="build/js/intlTelInput.js"></script>
 <script>
 var input = document.querySelector("#phone"),
@@ -262,9 +265,8 @@ $(document).ready(function(){
                     url : "login-ajax-files/user-signup.php",
                     type : "POST",
                     data : {u_name:u_name,u_email:u_email,u_pass:u_pass,u_phone:u_phone,u_ccode:u_ccodez,u_cname:u_cname,u_dob:u_dob},
-                    beforesend: function(){
-                        $("#success-message").html("<div class='alert alert-dismissible fade show alert-info mt-1 rounded' role='alert'>Please wait while signup....<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
-                        $("#error-message").slideUp();
+                    beforeSend: function () {
+                      $(".backlayer").show();
                     },
                     success : function(data){
                         if(data == 3){
@@ -286,6 +288,9 @@ $(document).ready(function(){
                             $("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded ' role='alert'>"+data+"Failed while sign up please try again.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
                             $("#success-message").slideUp();
                         }
+                    },
+                    complete: function () {
+                      $(".backlayer").hide();
                     }
                  });
             }

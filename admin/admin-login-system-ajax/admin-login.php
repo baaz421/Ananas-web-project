@@ -27,12 +27,21 @@ session_start();
                 //     header('location: dashboard.php');
                 // }
                 header("location: ../index.php");
+                if(isset($_SESSION['e_msg'])){
+                  unset($_SESSION['e_msg']);
+                }
                 exit();
             }else{
                 echo 1; // "Incorrect email or password!";
+                $error_message = "Incorrect email or password!";
+                $_SESSION['e_msg'] = $error_message;
+                header("location: ../login.php");
             }
         }else{
             echo 2; // "It's look like you're not yet a member! Click on the bottom link to signup.";
+            $error_message = "It's look like you're not yet a member!";
+            $_SESSION['e_msg'] = $error_message;
+            header("location: ../login.php");
         }
     }
 

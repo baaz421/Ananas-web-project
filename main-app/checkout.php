@@ -15,6 +15,53 @@ if(isset($_SESSION['checkout_id'])){
 }
 
 ?>
+<style type="text/css">
+	.backlayer{
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		filter: alpha(opacity=80);
+		opacity: 0.8;
+
+	}
+.loader {
+  margin: 300px 50%;
+  width: 48px;
+  height: 48px;
+  border: 3px solid #FFF;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+} 
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-bottom-color: #FF3D00;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+</style>
 
 <main class="main">
 	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
@@ -119,6 +166,11 @@ if(isset($_SESSION['checkout_id'])){
   <div id="success-message">
   </div>
 <!-- ERROR MESSAGE DIV CLOSE-->
+<div class="backlayer" style="display: none;">
+	<span class="loader"></span>
+</div>
+
+
 
 <?php 
 include "includes/footer.php";
@@ -144,23 +196,29 @@ join.preventDefault();
 	      url : "join-deal-ajax-pages/join-deal-final-stage.php",
 	      type : "POST",
 	      data :{user_id:user_id,checkout_id:checkout_id},
+	      beforeSend: function () {
+	      	$(".backlayer").show();
+	      },
 	      success :function(data){
 	      	if(data == 0){
 	      		location.replace("deal-success.php");
 	      	}else if(data == -2){
 	      		$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert mt-1 mb-2 rounded'>Sorry, insufficient wallet balance.!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
 	          $("#success-message").slideUp();
-	          setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+	          // setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
 	      	}else if(data == -3){
 	      		$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert mt-1 mb-2 rounded'>Sorry, Data Not Updated. Please try again.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
 	          $("#success-message").slideUp();
-	          setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+	          // setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
 	      	}else{
 	      		$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert mt-1 mb-2 rounded'>"+data+"Sorry, Something went wrong or server problem.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
 	          $("#success-message").slideUp();
-	          setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+	          // setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
 	      	}
-	      }
+	      },
+	      complete: function () {
+					$(".backlayer").hide();
+					}
 	  	});
 
 	}

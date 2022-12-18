@@ -21,7 +21,7 @@ include('../../smtp/simple.php');
 	    if($run_query){
 		    $subject = "Forgot password Verification Code";
 		    $msg_mobile = "Forgot password verification code is $code";
-		    $msg_email = EmailTemplateVerification($code);
+		    $msg_email = ForgotPasswordEmail($code);
 
 		    $number = $fetch_m_code.$fetch_m_num;                 
 		    $sms = send_sms($number, $msg_mobile);

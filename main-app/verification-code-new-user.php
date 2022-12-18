@@ -79,6 +79,9 @@ if(@$_GET['continue'] == ""){
     	</div><!-- End .container -->
     </div><!-- End .login-page section-bg -->
 </main><!-- End .main -->
+<div class="backlayer" style="display: none;">
+  <span class="loader"></span>
+</div>
 <?php 
 include "includes/footer.php";
 ?>
@@ -104,10 +107,9 @@ $(document).ready(function(){
 			 	url : "login-ajax-files/verification-code-new-user.php",
 			 	type : "POST",
 			 	data : {u_otp:v_code},
-			 	beforesend: function(){
-			 		$("#success-message").html("<div class='alert alert-dismissible fade show alert-info mt-1 rounded' role='alert'>Please wait for verifying.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
-            		$("#error-message").slideUp();
-			 	},
+			 	beforeSend: function () {
+		          $(".backlayer").show();
+		        },
 			 	success : function(data){
 			 		if(data == 3){
 			 		$("#success-message").html("<div class='alert alert-dismissible fade show alert-success mt-1 rounded' role='alert'>Successfully verified thank you.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
@@ -122,7 +124,10 @@ $(document).ready(function(){
 			 			$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded ' role='alert'>Code Doesn't match OR Incorrect code.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
             			$("#success-message").slideUp();
 			 		}
-			 	}
+			 	},
+			 	complete: function () {
+		          $(".backlayer").hide();
+		        }
 			 });
 
 		}

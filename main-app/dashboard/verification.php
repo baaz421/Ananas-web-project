@@ -14,7 +14,7 @@ if(isset($_SESSION['u_email'])){
         $vstatus = $fetch['vstatus'];
         if($vstatus == "notverified"){
 
-        echo"<div id='success-message'>
+        echo"<div id='error-message'>
                 <div class='alert alert-dismissible fade show alert-warning mb-1 rounded text-dark' role='alert'>
                     You account not verified, please verify you account. <a href='verification.php' class='ti-arrow-down'>Here</a>
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -27,6 +27,7 @@ if(isset($_SESSION['u_email'])){
     }
 }
 ?>
+
     	<!-- ERROR MESSAGE DIV-->
       	<div id="error-message">
       		<!-- <div class='alert alert-dismissible fade show alert-danger mt-1 rounded ' role='alert'>Please enter your Username.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div> -->
@@ -58,6 +59,9 @@ if(isset($_SESSION['u_email'])){
     <!-- content-wrapper ends -->
 </div>
   <!-- main-panel ends -->
+<div class="backlayer" style="display: none;">
+  <span class="loader"></span>
+</div>
 <?php
 include "footer-user.php";
 ?>
@@ -79,24 +83,26 @@ $(document).ready(function(){
         	setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
 		}else{
 			$.ajax({
-			 	url : "user-amount-ajax/verify-user.php",
+			 	url : "../login-ajax-files/verification-code-new-user.php",
 			 	type : "POST",
 			 	data : {u_otp:v_code},
-			 	beforesend: function(){
-			 		$("#success-message").html("<div class='alert alert-dismissible fade show alert-info mt-1 rounded' role='alert'>Please wait for verification....<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
-            		$("#error-message").slideUp();
-			 	},
+			 	beforeSend: function () {
+          $(".backlayer").show();
+        },
 			 	success : function(data){
 			 		if(data == 3){
 			 		$("#success-message").html("<div class='alert alert-dismissible fade show alert-success mt-1 rounded' role='alert'>Successfully verified thank you.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
             		$("#error-message").slideUp();	
             		$('#submit-user-verify').trigger("reset");
-            		setTimeout(function(){location.replace("index.php")}, 4000);
+            		setTimeout(function(){location.replace("index.php")}, 2000);
             	}else{
 			 			$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded ' role='alert'>"+data+"Code Doesn't match OR Incorrect code.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
             			$("#success-message").slideUp();
 			 		}
-			 	}
+			 	},
+        complete: function () {
+          $(".backlayer").hide();
+          }
 			 });
 
 		}

@@ -1,3 +1,11 @@
+<?php
+session_start();
+if(isset($_SESSION['e_msg'])){
+  $error_msg = $_SESSION['e_msg'];
+}else{
+  $error_msg = "";
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -47,6 +55,7 @@
               <div class="form d-flex align-items-center">
                 <div class="content" id="admin-login-form" >
                   <form method="post" action="admin-login-system-ajax/admin-login.php" class="form-validate">
+                    <div class="text-danger"><?php echo  $error_msg; ?></div><br>
 
                     <div class="form-group">
                       <input id="admin-users" type="text" name="admin-user" required data-msg="Please enter your username" class="input-material">

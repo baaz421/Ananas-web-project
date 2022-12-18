@@ -1,6 +1,15 @@
 <?php
 //deal-success.php
+ob_start();
 include "includes/header.php";
+
+if($_SESSION['u_email'] == false){
+  header('Location: ../login.php');
+}else{
+  $user_email = $_SESSION['u_email'];
+}
+
+
 ?>
 <style type="text/css">
 	
@@ -119,7 +128,8 @@ include "includes/header.php";
 			</svg>
 
 
-    		<p>Congratulations your deal is confirm and Thank you for paticipating.</p>
+        <p>Congratulations your deal is confirm and Thank you for paticipating.</p>
+    		<p>Deal deatils sent to your email : <span class="text-primary"><u><?php echo $user_email; ?></u></span>.</p>
     		<a href="../index.php" class="btn btn-outline-primary-2 btn-minwidth-lg mt-1">
     			<span><?php echo $_404['btohg']; ?></span>
     			<i class="icon-long-arrow-right"></i>

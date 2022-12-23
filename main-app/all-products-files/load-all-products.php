@@ -49,7 +49,7 @@ if(isset($_POST["limit"], $_POST["start"])){
 					$token_amt = $deal_check['unit_price'];// unit price
 					$label = "<span class='product-label label-new'>ON DEAL</span>";
 					$p_bar = zoneProgress($deal_id,$conn,$date);
-					$prod_price = "Token Price: ".$token_amt;
+					$prod_price = "Unit Price: ".$token_amt;
 					$c_disable = $cart_disable;
 					// $p_bar = progressBarHtml();
 				}else{

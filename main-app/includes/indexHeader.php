@@ -213,8 +213,8 @@ require_once "../langs/" . $_SESSION['lang'] . ".php" ;
                                 <i class="icon-bars"></i>
                             </button>
 
-                            <a href="index.php" class="logo">
-                                <img src="assets/images/demos/demo-14/logo.png" alt="Molla Logo" width="105" height="25">
+                            <a href="index.php" class="logo mb-1 mt-1">
+                                <img src="assets/images/demos/demo-14/web-logo.png" alt="Molla Logo" width="150" height="30">
                             </a>
                             <!-- ==================== logo here ^ ============================== -->
                         </div><!-- End .col-xl-3 col-xxl-2 -->

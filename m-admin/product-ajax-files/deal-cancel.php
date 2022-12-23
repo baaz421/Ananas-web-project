@@ -27,7 +27,7 @@ if($deal_data['zone'] == "red"){
 	    		while ($row = mysqli_fetch_assoc($run_sql_participators)) {
 	    			$unit_price = $row['unit_price'];
 	    			$user_id = $row['user_id'];
-	    			$method = 0;
+	    			$method = 0;//refund method
 	    			$p_id = $row['part_id'];
 
 	    			$insert_amount = "INSERT INTO deposite_amount (u_id, d_amount, refund_amount,method, d_date) VALUES('$user_id', '$unit_price', '$unit_price','$method', '$current_date')";

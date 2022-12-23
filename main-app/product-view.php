@@ -303,7 +303,7 @@ if (!isset($get_zone)){
 
                           $bc_disable = DisableCartButton($user_id,$pro_id,$conn);
 
-                          $check_pro_deal = "SELECT * FROM deal WHERE p_id ='$pro_id'";
+                          $check_pro_deal = "SELECT * FROM deal WHERE p_id ='$pro_id' AND deal_status = 1";
                           $run_check_pro_deal = mysqli_query($conn, $check_pro_deal);
                             if(mysqli_num_rows($run_check_pro_deal) > 0){
                               while($deal_check = mysqli_fetch_assoc($run_check_pro_deal)){
@@ -327,7 +327,8 @@ if (!isset($get_zone)){
                                 $label = "<span class='product-label label-top'>UPCOMING DEAL</span>";
                                 $p_bar = "";
                                 $buttom_cart_disable = "isDisabled";
-                                $deal_id = "";                                
+                                $deal_id = "";
+                                $unit_price = null;
                             }
                 ?> 
                 <div class="product product-7 text-center">

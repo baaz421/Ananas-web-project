@@ -79,7 +79,7 @@ if(mysqli_num_rows($run_check_pro_deal_main) > 0){
 if(!isset($token_amt)){
     $amount = "Market Price: ".$p_amt;
 }else{
-    $amount = "Token Price : ".$token_amt;
+    $amount = "Unit Price : ".$token_amt;
 }
 //end here get token amount 
 
@@ -313,11 +313,13 @@ if (!isset($get_zone)){
                                     // $p_bar = progressBarHtml();
                                     $p_bar = zoneProgress($deal_id,$conn,$date);
                                     $buttom_cart_disable = $bc_disable;
+                                    $unit_price = $deal_check['unit_price'];
                                 }else{
                                     $label = "<span class='product-label label-top'>UPCOMING DEAL</span>";
                                     $p_bar = "";
                                     $buttom_cart_disable = "isDisabled";
                                     $deal_id = "";
+                                    $unit_price = null;
 
                                 }
                               }
@@ -359,7 +361,14 @@ if (!isset($get_zone)){
                         </div><!-- End .product-cat -->
                         <h3 class="product-title"><a href="product-view.php?p_id=<?php echo $pro_id; ?>"><?php echo $p_name; ?></a></h3><!-- End .product-title -->
                         <div class="product-price">
-                            <?php echo $p_amt; ?>
+                            <?php
+                            if($unit_price != null){
+                              $amt = "Unit Price: ".$unit_price;
+                            }else{
+                              $amt = "Market Price: ".$p_amt; 
+                            }
+                            echo $amt;
+                            ?>
                         </div>
                         <?php echo $p_bar; ?>
                     </div><!-- End .product-body -->

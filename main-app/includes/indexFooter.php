@@ -34,7 +34,8 @@ $actual_link_footer = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'
                 <div class="row">
                     <div class="col-sm-12 col-lg-4">
                         <div class="widget widget-about">
-                            <img src="assets/images/demos/demo-14/logo-footer.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                            <!-- logo footer -->
+                            <img src="assets/images/demos/demo-14/web-logo.png" class="footer-logo" alt="Footer Logo" width="170" height="40">
                             <p><?php echo $english['footer_des']; ?></p>
                             
                             <div class="widget-about-info">

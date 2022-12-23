@@ -8,7 +8,7 @@ $actual_link_footer = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'
 	            	<div class="row">
 	            		<div class="col-sm-6 col-lg-3">
 	            			<div class="widget widget-about">
-	            				<img src="assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+	            				<img src="assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="170" height="40">
 	            				<p><?php echo $english['footer_des']; ?></p>
 
 	            				<div class="social-icons">

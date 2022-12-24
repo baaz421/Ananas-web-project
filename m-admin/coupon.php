@@ -10,7 +10,7 @@ $exp_date = explode(" ",$current_date);
   <!-- Page Header-->
   <header class="page-header">
     <div class="container-fluid">
-      <h2 class="no-margin-bottom">Categories</h2>
+      <h2 class="no-margin-bottom">Coupons</h2>
     </div>
   </header>
   <!-- Breadcrumb-->

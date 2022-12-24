@@ -85,8 +85,8 @@ require_once "admin-function.php";
               <!-- Navbar Header-->
               <div class="navbar-header">
                 <!-- Navbar Brand --><a href="../m-admin" class="navbar-brand d-none d-sm-inline-block">
-                  <div class="brand-text d-none d-lg-inline-block"><span>MOLLA MASTER ADMIN-</span><strong>Dashboard</strong></div>
-                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>MMA</strong></div></a>
+                  <div class="brand-text d-none d-lg-inline-block"><span>ANANAS MASTER ADMIN-</span><strong>Dashboard</strong></div>
+                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>AMA</strong></div></a>
                 <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
               </div>
               <!-- Navbar Menu -->
@@ -163,6 +163,7 @@ require_once "admin-function.php";
             <li><a href="<?php echo $file_back; ?>all-admins.php"> <i class="fa fa-address-book-o"></i>Admin's</a></li>
             <li><a href="<?php echo $file_back; ?>view-all-deals.php"> <i class="icon-presentation"></i>View Deals</a></li>            
             <li><a href="<?php echo $file_back; ?>deal-setting.php"> <i class="icon-bill"></i>Deal Setting</a></li>
+            <li><a href="<?php echo $file_back; ?>product-delivery.php"> <i class="icon-bill"></i>Product Delivery</a></li>
             <li><a href="<?php echo $file_back; ?>coupon.php"> <i class="icon-bill"></i>Coupon's</a></li>
           </ul><span class="heading">Extras</span>
           <ul class="list-unstyled">

@@ -137,8 +137,8 @@ if(isset($_SESSION['checkout_id'])){
             							<td>&nbsp</td>
             							<td id="sub-total"></td>
             						</tr><!-- End .summary-subtotal -->
-            						<tr id="coupon-show">
-            						</tr>
+            						<!-- <tr id="coupon-show">
+            						</tr> -->
                 				
             						<tr class="summary-total">
             							<td>Total:</td>
@@ -250,15 +250,15 @@ function SubTotal(){
 }
 
 
-// load coupon field 
-function loadCouponField(){
-	$.ajax({
-		url : "join-deal-ajax-pages/show-coupon-option.php",
-		success: function(data){
-			$("#coupon-show").html(data);
-		}
-	});
-}
+// // load coupon field 
+// function loadCouponField(){
+// 	$.ajax({
+// 		url : "join-deal-ajax-pages/show-coupon-option.php",
+// 		success: function(data){
+// 			$("#coupon-show").html(data);
+// 		}
+// 	});
+// }
 
 
 // update coupon percentage

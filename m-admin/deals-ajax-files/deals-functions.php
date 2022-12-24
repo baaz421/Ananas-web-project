@@ -31,6 +31,8 @@ function zoneProgress($deal_id,$conn,$date){
     $zone = $row['zone'];
     $d_id = $row['DID'];
     $pro_id = $row['p_id'];
+    $admin_id = $row['a_id'];
+    $create_time = $row['create_time'];    
     $winner = $row['winner_id'];
     switch (true) {
       case ($zone == "red"): // case red zone
@@ -80,9 +82,7 @@ function zoneProgress($deal_id,$conn,$date){
               mysqli_query($conn, $change_red_sql);
               }
             }
-          }
-
-          
+          }          
         break;
 
       case ($zone == "orange"): // case orange zone
@@ -168,14 +168,18 @@ function zoneProgress($deal_id,$conn,$date){
           $green_amount = $oran_live_amt+(($green_per/100)*$oran_live_amt);
           $prog_percen = round(($green_live_amt/$green_amount)*100,2);
           $prog_color = "bg-success";
-
-          if($prog_percen >= 100){            
+          // if amount reached 100% this proccess
+          if($prog_percen >= 100){ 
+          // updating deal zone to completed in deal table           
             $change_green_sql = "UPDATE deal SET zone = '{$change_method}', deal_status = 0, update_time = '{$date}' WHERE DID ={$d_id}";
+
+            // if deal table change done then in product table update
             if(mysqli_query($conn, $change_green_sql)){
               $update_pro_sql = "UPDATE products SET deal_check = 0 WHERE ID = {$pro_id}";
               mysqli_query($conn, $update_pro_sql);
 
-              $sql_participators = "SELECT * FROM participators WHERE deal_id = $deal_id AND status = 1";
+              // now get data from participator table to get winner
+              $sql_participators = "SELECT * FROM participators WHERE deal_id = $d_id AND status = 1";
               $run_sql_participators = mysqli_query($conn,$sql_participators);
               $user_winner_ids = array();
               while ($row = mysqli_fetch_assoc($run_sql_participators)) {
@@ -186,14 +190,16 @@ function zoneProgress($deal_id,$conn,$date){
               }
                 shuffle($user_winner_ids);
                 $winner_id = $user_winner_ids[0];
+
+                // after winner get update deal table for winner.
                 if($winner == null){
                   $update_winner_id = "UPDATE deal SET winner_id = $winner_id WHERE DID = $d_id";
-                  mysqli_query($conn,$update_winner_id);
-                  while ($pa10 = mysqli_fetch_assoc($run_sql_participators)) {
-                  $part_id = $pa['part_id'];
-                  $sql_update_participator = "UPDATE participators SET status = 10 WHERE part_id = $part_id";
-                  mysqli_query($conn,$sql_update_participator);
-                }
+                  
+                  // inserting into winner table.
+                  if(mysqli_query($conn,$update_winner_id)){
+                    $winner_sql = "INSERT INTO winner (user_id, admin_id, deal_id, start_date, end_date, user_confirm, vendor_confirm, status, created_date) VALUES ('$winner_id','$admin_id','$d_id','$create_time','{$date}',1,1,1,'{$date}')";
+                    mysqli_query($conn,$winner_sql);
+                  }
                 }
               
             }
@@ -223,12 +229,18 @@ function zoneProgress($deal_id,$conn,$date){
           $prog_percen = $calculation;
           $prog_color = "bg-success";
 
-          if($prog_percen >= 100){            
+          // if time reached 100% this proccess
+          if($prog_percen >= 100){
+            // updating deal zone to completed in deal table          
             $change_green_sql = "UPDATE deal SET zone = '{$change_method}', deal_status = 0, update_time = '{$date}' WHERE DID ={$d_id}";
+
+            // if deal table change done then in product table update
             if(mysqli_query($conn, $change_green_sql)){
               $update_pro_sql = "UPDATE products SET deal_check = 0 WHERE ID = {$pro_id}";
               mysqli_query($conn, $update_pro_sql);
-              $sql_participators = "SELECT * FROM participators WHERE deal_id = $deal_id AND status = 1";
+
+              // now get data from participator table to get winner
+              $sql_participators = "SELECT * FROM participators WHERE deal_id = $d_id AND status = 1";
               $run_sql_participators = mysqli_query($conn,$sql_participators);
               $user_winner_ids = array();
               while ($row = mysqli_fetch_assoc($run_sql_participators)) {
@@ -239,22 +251,20 @@ function zoneProgress($deal_id,$conn,$date){
               }
                 shuffle($user_winner_ids);
                 $winner_id = $user_winner_ids[0];
+
+                // after winner get update deal table for winner.
                 if($winner == null){
                   $update_winner_id = "UPDATE deal SET winner_id = $winner_id WHERE DID = $d_id";
-                  mysqli_query($conn,$update_winner_id);
-                  while ($pa10 = mysqli_fetch_assoc($run_sql_participators)) {
-                  $part_id = $pa['part_id'];
-                  $sql_update_participator = "UPDATE participators SET status = 10 WHERE part_id = $part_id";
-                  mysqli_query($conn,$sql_update_participator);
-                }
+
+                  // inserting into winner table.
+                  if(mysqli_query($conn,$update_winner_id)){
+                    $winner_sql = "INSERT INTO winner (user_id, admin_id, deal_id, start_date, end_date, user_confirm, vendor_confirm, status, created_date) VALUES ('$winner_id','$admin_id','$d_id','$create_time','{$date}',1,1,1,'{$date}')";
+                    mysqli_query($conn,$winner_sql);
+                  }
                 }
               
             }
-
-
-          } 
-          
-          
+          }          
         }
         break;
     }

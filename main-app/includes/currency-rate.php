@@ -19,7 +19,6 @@ if (!isset($_COOKIE['cur'])){
 			// set cookie for currency rate
 		setcookie("curRate",1,$expiry,"/");
 		setcookie("cur","USD",$expiry,"/");
-		echo "S-USD";
 	}else if ($_GET['curType'] == "QAR"){
 		$want_cur = $_GET['curType'];
 		$cur_rate = CallCurrencyAPI($want_cur);

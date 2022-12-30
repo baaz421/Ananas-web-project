@@ -245,3 +245,17 @@ function GetEndDealData($conn, $zone, $limit = 2){
     $run = mysqli_query($conn, $sql);
     return $run;
 }
+
+// function for multipling amount with api rates
+function convertPrice($rate,$unit_price){
+
+    if($rate == 1){
+        $mul = $rate * $unit_price;
+        $out = "$ ".number_format($mul,2,'.',',');
+    }else{
+        $mul = $rate * $unit_price;
+        $out = number_format($mul,2,'.',',')." QAR";
+    }
+    
+    return $out;
+}

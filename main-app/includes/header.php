@@ -3,6 +3,7 @@ $actual_link = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 //echo $actual_link;
 require "initial.php";
 require "../langs/" . $_SESSION['lang'] . ".php" ;
+require_once "includes/currency-rate.php";
 @$u_id = $_SESSION['u_id'];
 
 if($_SESSION['lang'] == "ar"){
@@ -10,6 +11,19 @@ if($_SESSION['lang'] == "ar"){
 }else{
     $langdir ='ltr';
 }
+if(isset($_SESSION['currency']) || isset($_COOKIE['cur'])){
+    $cur_name = isset($_SESSION['currency']) ? $_SESSION['currency'] : $_COOKIE['cur'];
+    $cur_link = "?curType=$cur_name";
+}else{
+    $cur_name = "Currency";
+    $cur_link = "#";
+}
+if(isset($_SESSION['currency']) || isset($_COOKIE['curRate'])){
+    $cur_rate = isset($_SESSION['cur_rate']) ? $_SESSION['cur_rate'] : $_COOKIE['curRate'];
+}else{
+    $cur_rate = 1;
+}
+
 
 ?>
 
@@ -52,98 +66,98 @@ if($_SESSION['lang'] == "ar"){
     <link rel="stylesheet" href="build/css/intlTelInput.css">
     
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-<style type="text/css">
-   .myAlert-bottom{
-      position: fixed;
-      z-index:99999;
-      /*top: 5px;*/
-      bottom: 5px;
-      left:2%;
-      width: 96%;
-    }
-    .isDisabled {
-      color: currentColor;
-      cursor: not-allowed;
-      opacity: 0.5;
-      text-decoration: none;
-    }
-    .minus-span {cursor:pointer; }
-    .number {
+    <style type="text/css">
+       .myAlert-bottom{
+          position: fixed;
+          z-index:99999;
+          /*top: 5px;*/
+          bottom: 5px;
+          left:2%;
+          width: 96%;
+        }
+        .isDisabled {
+          color: currentColor;
+          cursor: not-allowed;
+          opacity: 0.5;
+          text-decoration: none;
+        }
+        .minus-span {cursor:pointer; }
+        .number {
+            width: 100%;
+        }
+        .minus, .plus{
+          width:25%;
+          height:34px;
+          background:#f2f2f2;
+          border-radius:4px;
+          padding:8px 5px 8px 5px;
+          border:1px solid #ddd;
+          display: inline-block;
+          vertical-align: middle;
+          text-align: center;
+        }
+        .plus-minus-text{
+            margin-top: -2px ;
+        }
+        .input-num-format{
+          height:34px;
+          width: 40%;
+          text-align: center;
+          font-size: 20px;
+          border:1px solid #fcb941;
+          border-radius:4px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+    </style>
+    <style type="text/css">
+      .backlayer{
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
         width: 100%;
-    }
-    .minus, .plus{
-      width:25%;
-      height:34px;
-      background:#f2f2f2;
-      border-radius:4px;
-      padding:8px 5px 8px 5px;
-      border:1px solid #ddd;
+        height: 100%;
+        background-color: black;
+        filter: alpha(opacity=80);
+        opacity: 0.8;
+
+      }
+    .loader {
+      margin: 300px 50%;
+      width: 48px;
+      height: 48px;
+      border: 3px solid #FFF;
+      border-radius: 50%;
       display: inline-block;
-      vertical-align: middle;
-      text-align: center;
-    }
-    .plus-minus-text{
-        margin-top: -2px ;
-    }
-    .input-num-format{
-      height:34px;
-      width: 40%;
-      text-align: center;
-      font-size: 20px;
-      border:1px solid #fcb941;
-      border-radius:4px;
-      display: inline-block;
-      vertical-align: middle;
+      position: relative;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    } 
+    .loader::after {
+      content: '';  
+      box-sizing: border-box;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-bottom-color: #FF3D00;
     }
 
-</style>
-<style type="text/css">
-  .backlayer{
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    filter: alpha(opacity=80);
-    opacity: 0.8;
-
-  }
-.loader {
-  margin: 300px 50%;
-  width: 48px;
-  height: 48px;
-  border: 3px solid #FFF;
-  border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-} 
-.loader::after {
-  content: '';  
-  box-sizing: border-box;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 3px solid transparent;
-  border-bottom-color: #FF3D00;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} 
-</style>
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    } 
+    </style>
 </head>
 
 <body>
@@ -212,11 +226,11 @@ if($_SESSION['lang'] == "ar"){
                 <div class="container">
                     <div class="header-left">
                         <div class="header-dropdown">
-                            <a href="#">QAR</a>
+                            <a href="<?php echo $cur_link;?>"><?php echo $cur_name;?></a>
                             <div class="header-menu">
                                 <ul>
-                                    <li><a href="#">QAR</a></li>
-                                    <li><a href="#">USD</a></li>
+                                    <li><a href="?curType=QAR">QAR</a></li>
+                                    <li><a href="?curType=USD">USD</a></li>
                                 </ul>
                             </div><!-- End .header-menu -->
                         </div><!-- End .header-dropdown -->

@@ -4,8 +4,21 @@ require "initial.php";
 $actual_link = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 require_once "../langs/" . $_SESSION['lang'] . ".php" ;
+require_once "includes/currency-rate.php";
 @$u_id = $_SESSION['u_id'];
 
+if(isset($_SESSION['currency']) || isset($_COOKIE['cur'])){
+    $cur_name = isset($_SESSION['currency']) ? $_SESSION['currency'] : $_COOKIE['cur'];
+    $cur_link = "?curType=$cur_name";
+}else{
+    $cur_name = "Currency";
+    $cur_link = "#";
+}
+if(isset($_SESSION['currency']) || isset($_COOKIE['curRate'])){
+    $cur_rate = isset($_SESSION['cur_rate']) ? $_SESSION['cur_rate'] : $_COOKIE['curRate'];
+}else{
+    $cur_rate = 1;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,7 +142,7 @@ require_once "../langs/" . $_SESSION['lang'] . ".php" ;
             <div class="header-top">
                 <div class="container">
                     <div class="header-left">
-                        <a href="<?php echo $indexheader['call']; ?>"><i class="icon-phone"></i><?php echo $english['tel']; ?></a>                           
+                        <a href="#"><i class="icon-phone"></i><?php echo $english['tel']; ?></a>                           
                     </div><!-- End .header-left -->
 
                     <div class="header-right">
@@ -140,11 +153,11 @@ require_once "../langs/" . $_SESSION['lang'] . ".php" ;
                                 <ul class="menus">
                                     <li>
                                         <div class="header-dropdown">
-                                            <a href="#">QAR</a>
+                                            <a href="<?php echo $cur_link;?>"><?php echo $cur_name;?></a>
                                             <div class="header-menu">
                                                 <ul>
-                                                    <li><a href="<?php echo $indexheader['curqar']; ?>">QAR</a></li>
-                                                    <li><a href="<?php echo $indexheader['curusd']; ?>">USD</a></li>
+                                                    <li><a href="?curType=QAR">QAR</a></li>
+                                                    <li><a href="?curType=USD">USD</a></li>
                                                 </ul>
                                             </div><!-- End .header-menu -->
                                         </div><!-- End .header-dropdown -->
@@ -276,7 +289,7 @@ require_once "../langs/" . $_SESSION['lang'] . ".php" ;
                                                 <div class="dropdown-cart-total">
                                                     <span>Current Balance</span>
 
-                                                    <span class="cart-total-price"><?php echo current_bal($u_id,$conn); ?>.0</span>
+                                                    <span class="cart-total-price"><?php echo current_bal($u_id,$conn); ?></span>
                                                 </div><!-- End .dropdown-cart-total -->
 
                                                 <div class="dropdown-cart-action">

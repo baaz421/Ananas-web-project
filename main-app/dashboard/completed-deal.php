@@ -99,7 +99,7 @@ if(mysqli_num_rows($run_get_deal_info) > 0){
       </td>
         <td class='text-center'><u>$msg</u></td>
         <td class='text-center'><u>".CountQty($conn,$u_id,$deal_ids)."</u></td>
-        <td class='text-center'><u>".sumAmount($conn,$u_id,$deal_ids).".00</u></td>
+        <td class='text-center'><u>".sumAmount($conn,$u_id,$deal_ids)."</u></td>
       </tr>";
       echo $out_put;
 
@@ -147,8 +147,8 @@ if(mysqli_num_rows($run_get_deal_info) > 0){
   <!-- partial:partials/_footer.html -->
   <footer class="footer">
     <div class="d-sm-flex justify-content-center justify-content-sm-between">
-      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022.<a href="../" target="_blank">Ananas.com.co</a>. All rights reserved.</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Baaz Designer <i class="ti-heart text-danger ml-1"></i></span>
     </div>
   </footer>
   <!-- partial -->

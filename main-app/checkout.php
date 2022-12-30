@@ -91,7 +91,7 @@ if(isset($_SESSION['checkout_id'])){
             					<thead>
             						<tr>
             							<th class="font-italic" >Available Balance</th>
-            							<th class="font-weight-bold" ><?php echo current_bal($u_id,$conn); ?>.00</th>
+            							<th class="font-weight-bold" ><?php echo current_bal($u_id,$conn); ?></th>
             							<input type="text" value="<?php echo current_bal($u_id,$conn); ?>" id="current-bal" hidden>
             						</tr>
             						

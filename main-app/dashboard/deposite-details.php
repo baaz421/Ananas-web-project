@@ -43,15 +43,15 @@ if(mysqli_num_rows($run_deposite_details) > 0){
 
     if($row['method'] != null && $row['method'] == 2){
       $total -= $db_amount;
-      $show_amount = "<span style='color : red'>-{$db_amount}.00</span> <p><u class = font-weight-bold>$total.00</u></p>";
+      $show_amount = "<span style='color : red'>-{$db_amount}</span> <p><u class = font-weight-bold>".number_format(round((float)$total,2),2)."</u></p>";
       
     }else if($row['method'] != null && $row['method'] == 0){
       $total += $db_amount;
-      $show_amount ="<span style='color : blue'>+{$db_amount}.00</span><p><u class = font-weight-bold>$total.00</u></p>";
+      $show_amount ="<span style='color : blue'>+{$db_amount}</span><p><u class = font-weight-bold>".number_format(round((float)$total,2),2)."</u></p>";
       
     }else{
       $total += $db_amount;
-      $show_amount ="<span style='color : green'>+{$db_amount}.00</span><p><u class = font-weight-bold>$total.00</u></p>";
+      $show_amount ="<span style='color : green'>+{$db_amount}</span><p><u class = font-weight-bold>".number_format(round((float)$total,2),2)."</u></p>";
     }
 		echo "<tr>
             <td>{$sno}</td>

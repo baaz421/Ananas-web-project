@@ -11,7 +11,7 @@ if(isset($_SESSION['e_msg'])){
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Material Admin by Bootstrapious.com</title>
+    <title>Ananas | Login </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
@@ -71,7 +71,7 @@ if(isset($_SESSION['e_msg'])){
 
                     <!-- This should be submit button but I replaced it with <a> for demo purposes-->
                   </form>
-                  <a id="fgp" href="#"  class="forgot-pass">Forgot Password?</a>
+                  <a id="fgp" href="admin-login-system-ajax/forgot-admin-password.php"  class="forgot-pass">Forgot Password?</a>
                   <br>
                   <small>Do not have an account? </small><a href="admin-register.php" class="signup">Signup</a>
                 </div>
@@ -81,9 +81,7 @@ if(isset($_SESSION['e_msg'])){
         </div>
       </div>
       <div class="copyrights text-center">
-        <p>Design by <a href="https://bootstrapious.com/p/admin-template" class="external">Bootstrapious</a>
-          <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-        </p>
+        <p>Design by <a href="#" class="external">Baaz Designer</a></p>
       </div>
     </div>
     <!-- JavaScript files-->

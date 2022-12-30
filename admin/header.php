@@ -4,6 +4,10 @@ session_start();
 ini_set('display_errors', 1); 
 error_reporting(E_ALL);
 
+$title = "Dashboard";
+require_once "db_connnection.php";
+require_once "admin-function.php";
+
 $uri = $_SERVER['REQUEST_URI'];
 $ex_link = explode("/", $uri);
 $file_directry ="product-ajax-files";
@@ -16,16 +20,46 @@ if(in_array($file_directry,$ex_link)){
 
 if(!isset($_SESSION['a_id'])){
   header("location: {$file_back}login.php");
+}else{
+  $get_img_sql = "SELECT a_profilepic, a_vstatus FROM admin WHERE AID = ".$_SESSION['a_id'];
+  $run_get_img = mysqli_query($conn,$get_img_sql);
+  $get_admin_pic = mysqli_fetch_assoc($run_get_img);
+  $a_pro_pic =  $get_admin_pic['a_profilepic'];
+  $vstatus   =  $get_admin_pic['a_vstatus'];
+  if($a_pro_pic == "male-avatar.jpg" || $a_pro_pic == "female-avatar.jpg" ){
+    $fav_img  = "admin-profile-details/admin-profile-images/logo-icon.png";
+  }else{
+    $fav_img = "admin-profile-details/admin-profile-images/".$a_pro_pic;
+  }
+  if($vstatus == "notverified"){
+    $user_status = "notverified";
+    $alert_for_verify = "
+          <div>
+            <div class='alert alert-dismissible fade show alert-warning mb-1 rounded text-dark' role='alert'>
+                You account is not verified, please verify you account. <a href='admin-login-system-ajax/admin-signup-verification.php'> Click Here</a>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+          </div>";
+    }else{
+        $user_status = "verified";
+        $alert_for_verify = "";
+    }
+
 }
 
+if(isset($_SESSION['u_email'])){
+        @$email = $_SESSION['u_email'];
+        $check_verify = "SELECT * FROM users WHERE email = '$email'";
+        $run_verify = mysqli_query($conn, $check_verify);
+        if(mysqli_num_rows($run_verify) > 0){
+            $fetch = mysqli_fetch_assoc($run_verify);
+            $vstatus = $fetch['vstatus'];
+            
+        }
+    }
 
-
-
-
-
-$title = "Dashboard";
-require_once "db_connnection.php";
-require_once "admin-function.php";
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +67,7 @@ require_once "admin-function.php";
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin MOLLA <?php echo $title; ?></title>
+    <title>ANANAS | Admin <?php echo $title; ?></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
@@ -56,7 +90,7 @@ require_once "admin-function.php";
     <link rel="stylesheet" href="<?php echo $file_back; ?>build/css/intlTelInput.css">
 
     <!-- Favicon-->
-    <link rel="shortcut icon" href="<?php echo $file_back; ?>img/my-pic.jpg">
+    <link rel="shortcut icon" href="<?php echo $file_back.$fav_img; ?>">
 
 
     <!-- new link for jquery crop image -->
@@ -74,6 +108,9 @@ require_once "admin-function.php";
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
   </head>
+  <?php
+    echo $alert_for_verify;
+  ?>
   <body>
     <div class="page">
       <!-- Main Navbar-->
@@ -92,8 +129,8 @@ require_once "admin-function.php";
               <!-- Navbar Header-->
               <div class="navbar-header">
                 <!-- Navbar Brand --><a href="../admin" class="navbar-brand d-none d-sm-inline-block">
-                  <div class="brand-text d-none d-lg-inline-block"><span>MOLLA ADMIN-</span><strong>Dashboard</strong></div>
-                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                  <div class="brand-text d-none d-lg-inline-block"><span>ANANAS ADMIN-</span><strong>Dashboard</strong></div>
+                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>AAD</strong></div></a>
                 <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
               </div>
               <!-- Navbar Menu -->

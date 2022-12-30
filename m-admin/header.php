@@ -54,7 +54,7 @@ require_once "admin-function.php";
     <link rel="stylesheet" href="<?php echo $file_back; ?>build/css/intlTelInput.css?v=1">
 
     <!-- Favicon-->
-    <link rel="shortcut icon" href="<?php echo $file_back; ?>img/my-pic.jpg">
+    <link rel="shortcut icon" href="<?php echo $file_back; ?>img/logo-icon.png">
 
 
     

@@ -1,9 +1,9 @@
 <?php 
 require "../db_connnection.php";
 //require "../../config/functions.php";
+error_reporting(E_ALL);
 session_start();
 
- if(isset($_POST['admin-signup'])){
 	$admin_name 		=mysqli_real_escape_string($conn, $_POST['admin-r-name']);
 	$admin_username 	=mysqli_real_escape_string($conn, $_POST['admin-r-username']);
 	$admin_email 		=mysqli_real_escape_string($conn, $_POST['admin-r-email']);
@@ -27,13 +27,11 @@ session_start();
         $pic = "female-avatar.jpg";
     }
 
-	// echo $admin_name."-".$admin_email ."-".$admin_gender ."-".$admin_password ."-".$admin_phone ."-".$admin_phone_code."-". $admin_country ."-".$admin_dateofbirth;
-
     $email_check = "SELECT * FROM admin WHERE a_email = '$admin_email'";
     $res_check = mysqli_query($conn, $email_check);
     if(mysqli_num_rows($res_check) > 0){
-        echo 0; //Email that you have entered is already exist!
-        header('location: ../admin-register.php');
+        echo 1; //Email that you have entered is already exist!
+        // header('location: ../admin-register.php');
         die();
     }else{
         $encpass = password_hash($admin_password, PASSWORD_BCRYPT);
@@ -41,8 +39,9 @@ session_start();
         $vstatus = "notverified";
         $insert_data = "INSERT INTO admin (a_username,a_fullname,a_email,a_gender,a_password,a_phone,a_phonecode,a_country,a_vcode,a_vstatus,a_status,a_dateofbirth,a_createtime,a_updatetime,a_profilepic)
                         values('$admin_username', '$admin_name', '$admin_email', '$admin_gender', '$encpass', '$admin_phone', '$admin_phone_code', '$admin_country','$vcode', '$vstatus','$admin_status', '$newDate_format', '$create_time', '$update_time','$pic')";
-        $data_check = mysqli_query($conn, $insert_data);
-        if($data_check){
+        // $data_check = mysqli_query($conn, $insert_data);
+
+        if(mysqli_query($conn, $insert_data)){
             $last_id = mysqli_insert_id($conn);
             // $subject = "Email new Admin Verification Code";
             // $message = "Your new Admin verification code is $code";
@@ -50,26 +49,18 @@ session_start();
             // $sms = send_sms($number,$message);
             // $mail = send_mail($admin_email, $subject, $message); 
             // if($mail || $sms){
-                $info = "We've sent a verification code to your email - $email & $number";
-                $_SESSION['a_info']     = $info;
                 $_SESSION['a_email']    = $admin_email;
                 $_SESSION['a_password'] = $admin_password;
                 $_SESSION['a_id']       = $last_id;
-                header('location: ../index.php');
+                echo 0;
+                // header('location: ../index.php');
                 exit();
             // }else{
                 // echo 1; //Failed while sending code!;
             // }
         }else{
             echo 2;  //Failed while sign up please fill all fields!
-
         }
     }
-
-}
-
-
-
-	//AID,a_username,a_fullname,a_email,a_gender,a_password,a_phone,a_phonecode,a_country,a_vcode,a_vstatus,a_status,a_dateofbirth,a_createtime,a_updatetime
 
 ?>

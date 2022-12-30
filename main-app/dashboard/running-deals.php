@@ -56,13 +56,13 @@ if(mysqli_num_rows($run_get_deal_info) > 0){
 
     // comparing unit price for discounted or not
     if($u_price_for_p == $u_price_for_d){
-      $unit_price = "<p><u>$u_price_for_p.00</u></p>";
+      $unit_price = "<p><u>$u_price_for_p</u></p>";
     }else{
       $unit_discount_amount = $u_price_for_d - $u_price_for_p;
       $unit_price = "
-                    <span>{$u_price_for_d}.00</span><br>
+                    <span>{$u_price_for_d}</span><br>
                     <span class='text-success'>$unit_percent% Dis: -$unit_discount_amount.00</span><br class='mb-1'>
-                    <span class='font-weight-bold border-bottom border-top border-dark'>$u_price_for_p.00</span>
+                    <span class='font-weight-bold border-bottom border-top border-dark'>$u_price_for_p</span>
                     ";
     }
 
@@ -99,8 +99,8 @@ if(mysqli_num_rows($run_get_deal_info) > 0){
   <!-- partial:partials/_footer.html -->
   <footer class="footer">
     <div class="d-sm-flex justify-content-center justify-content-sm-between">
-      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022.<a href="../" target="_blank">Ananas.com.co</a>. All rights reserved.</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Baaz Designer <i class="ti-heart text-danger ml-1"></i></span>
     </div>
   </footer>
   <!-- partial -->

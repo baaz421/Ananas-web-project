@@ -54,7 +54,7 @@ if(mysqli_num_rows($run_get_Cartlist) > 0){
 	            </h3>
 	        </div>
 	    </td>
-	    <td class="price-col" id="cart-id" data-cart_id="'.$c_id.'">'.$p_amt.'.0</td>
+	    <td class="price-col" id="cart-id" data-cart_id="'.$c_id.'">'.$p_amt.'</td>
 	    
 	    <td class="quantity-col">	     
 	      	<div class="number">
@@ -69,7 +69,7 @@ if(mysqli_num_rows($run_get_Cartlist) > 0){
 	    </td>
 	    <td class="total-col text-center" id="total-col">
 	    	<input type="text" id="total-amount" value="'.$total_amount.'" hidden />
-	    		'.$total_amount.'.0
+	    		'.$total_amount.'
 	    </td>
 	    
 	    <td class="remove-col">

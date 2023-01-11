@@ -1,5 +1,6 @@
 <?php
 //products-functions.php
+// $cur_rate = 1;
 
 // all products view html code 
 function LoadProducts($label,$p_id,$img_src,$p_cat,$p_name,$p_bar,$p_amt,$w_disable,$c_disable,$deal_id){

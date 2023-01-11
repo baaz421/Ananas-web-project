@@ -1,29 +1,17 @@
 <?php 
+@$u_id = $_SESSION['u_id'];
 $actual_link = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 //echo $actual_link;
 require "initial.php";
 require "../langs/" . $_SESSION['lang'] . ".php" ;
 require_once "includes/currency-rate.php";
-@$u_id = $_SESSION['u_id'];
+
 
 if($_SESSION['lang'] == "ar"){
     $langdir ='rtl';
 }else{
     $langdir ='ltr';
 }
-if(isset($_SESSION['currency']) || isset($_COOKIE['cur'])){
-    $cur_name = isset($_SESSION['currency']) ? $_SESSION['currency'] : $_COOKIE['cur'];
-    $cur_link = "?curType=$cur_name";
-}else{
-    $cur_name = "Currency";
-    $cur_link = "#";
-}
-if(isset($_SESSION['currency']) || isset($_COOKIE['curRate'])){
-    $cur_rate = isset($_SESSION['cur_rate']) ? $_SESSION['cur_rate'] : $_COOKIE['curRate'];
-}else{
-    $cur_rate = 1;
-}
-
 
 ?>
 
@@ -162,7 +150,7 @@ if(isset($_SESSION['currency']) || isset($_COOKIE['curRate'])){
 
 <body>
 
-    <?php
+  <?php
     if(isset($_SESSION['u_email'])){
         @$email = $_SESSION['u_email'];
         $check_verify = "SELECT * FROM users WHERE email = '$email'";
@@ -218,172 +206,170 @@ if(isset($_SESSION['currency']) || isset($_COOKIE['curRate'])){
     }
 
     
-    ?>
-    <div class="page-wrapper">
-    <!-- =========================header starts here======================-->
-        <header class="header">
-            <div class="header-top">
-                <div class="container">
-                    <div class="header-left">
-                        <div class="header-dropdown">
-                            <a href="<?php echo $cur_link;?>"><?php echo $cur_name;?></a>
-                            <div class="header-menu">
+  ?>
+<div class="page-wrapper">
+<!-- =========================header starts here======================-->
+  <header class="header">
+    <div class="header-top">
+      <div class="container">
+        <div class="header-left">
+          <div class="header-dropdown">
+            <a href="#"><?php echo $currency; ?></a>
+            <div class="header-menu">
+              <ul>
+                <?php
+                  echo displayCurrency($currency);
+                ?>
+              </ul>
+            </div><!-- End .header-menu -->
+          </div><!-- End .header-dropdown -->
+          <div>
+              <?php
+                if($_SESSION['lang'] == "ar"){
+                    $langname ='<a href="?lang=en">'.$english['english'].'</a>';
+                }else{
+                    $langname ='<a href="?lang=ar">'.$english['arabic'].'</a>';
+                }
+                echo "&nbsp &nbsp &nbsp &nbsp".$langname;
+              ?>
+          </div><!-- End .header-dropdown -->
+          <div class="ml-5">
+            <a href="#">
+              <?php
+                if(@$_SESSION['u_email'] != false){                              
+                  @$email = $_SESSION['u_email'];
+                  $u_name_sql = "SELECT * FROM users WHERE email = '$email'";
+                  $run_u_name = mysqli_query($conn,$u_name_sql);
+                  $fetch_name = mysqli_fetch_assoc($run_u_name);
+                  $name= $fetch_name['name'];
+                  echo "Welcome ".$name;
+                }
+              ?>
+            </a>
+          </div>
+        </div><!-- End .header-left -->
+
+        <div class="header-right">
+            <ul class="top-menu">
+                <li>
+                    <a href="#"><?php echo $english['quick_links']; ?></a>
+                    <ul>
+                        <li><a href="tel:+97444880655"><i class="icon-phone"></i><?php echo $english['tel']; ?></a></li>
+
+                        <li><a href="wishlist.php"><i class="icon-heart-o"></i><?php echo $english['wishlist']; ?> <span id='wishlist-num'>(<?php echo $wish_count; ?>)</span></a></li>
+                        <?php
+                        if(@$_SESSION['u_email'] != false){                                
+                        ?>
+                        <li><a href="dashboard">Dashboard</a></li>
+                        <?php } ?>
+                        <li><a href="about.php"><?php echo $english['about']; ?></a></li>
+                        <li><a href="contact.php"><?php echo $english['contact']; ?></a></li>
+                    <?php 
+                    if(@$_SESSION['u_email'] == false){
+                    ?>
+                        <li><a href="login.php?continue=<?php echo $actual_link; ?>"><i class="icon-user"></i><?php echo $english['login']; ?></a></li>
+                        <li><a href="signup.php?continue=<?php echo $actual_link; ?>"><i class="icon-user"></i><?php echo $english['signup']; ?></a></li>
+                        <?php
+                    }else{
+                        ?>
+                        <li><a href="logout.php"><i class="icon-user"></i><?php echo "Sign out"; ?></a></li>
+                        <?php
+                        }
+                    ?>
+                    </ul>
+                </li>
+            </ul><!-- End .top-menu -->
+        </div><!-- End .header-right -->
+      </div><!-- End .container -->
+    </div><!-- End .header-top -->
+
+    <div class="header-middle sticky-header">
+        <div class="container">
+            <div class="header-left">
+                <button class="mobile-menu-toggler"> 
+                    <span class="sr-only">Toggle mobile menu</span>
+                    <i class="icon-bars"></i>
+                </button>
+                <a href="index.php" class="logo">
+                    <img src="assets/images/logo.png" alt="Molla Logo" width="150" height="30">
+                </a>
+
+                <nav class="main-nav">
+                    <ul class="menu sf-arrows">
+                        <li class="megamenu-container active">
+                            <a href="../"><?php echo $english['home']; ?></a>
+                        </li>
+                        <li>
+                            <a href="catagories.php" class="sf-with-ul"><?php echo $english['categories']; ?></a>
                                 <ul>
-                                    <li><a href="?curType=QAR">QAR</a></li>
-                                    <li><a href="?curType=USD">USD</a></li>
-                                </ul>
-                            </div><!-- End .header-menu -->
-                        </div><!-- End .header-dropdown -->
-
-                        <div>
-                            <?php
-                            if($_SESSION['lang'] == "ar"){
-                                $langname ='<a href="?lang=en">'.$english['english'].'</a>';
-                            }else{
-                                $langname ='<a href="?lang=ar">'.$english['arabic'].'</a>';
-                            }
-
-                            ?>
-                           &nbsp &nbsp &nbsp &nbsp<?php echo $langname; ?>
-                        </div><!-- End .header-dropdown -->
-                        <div class="ml-5">
-                            <a href="#">
-                                <?php
-                                if(@$_SESSION['u_email'] != false){
-                                
-                                    @$email = $_SESSION['u_email'];
-                                    $u_name_sql = "SELECT * FROM users WHERE email = '$email'";
-                                    $run_u_name = mysqli_query($conn,$u_name_sql);
-                                    $fetch_name = mysqli_fetch_assoc($run_u_name);
-                                    $name= $fetch_name['name'];
-                                    echo "Welcome ".$name;
-                                }
-                                ?>
-                            </a>
-                        </div>
-                    </div><!-- End .header-left -->
-
-                    <div class="header-right">
-                        <ul class="top-menu">
-                            <li>
-                                <a href="#"><?php echo $english['quick_links']; ?></a>
-                                <ul>
-                                    <li><a href="tel:+97444880655"><i class="icon-phone"></i><?php echo $english['tel']; ?></a></li>
-
-                                    <li><a href="wishlist.php"><i class="icon-heart-o"></i><?php echo $english['wishlist']; ?> <span id='wishlist-num'>(<?php echo $wish_count; ?>)</span></a></li>
                                     <?php
-                                    if(@$_SESSION['u_email'] != false){                                
+                                      LoadCategories($conn,$_SESSION['lang']);
                                     ?>
-                                    <li><a href="dashboard">Dashboard</a></li>
-                                    <?php } ?>
-                                    <li><a href="about.php"><?php echo $english['about']; ?></a></li>
-                                    <li><a href="contact.php"><?php echo $english['contact']; ?></a></li>
-                                <?php 
-                                if(@$_SESSION['u_email'] == false){
-                                ?>
-                                    <li><a href="login.php?continue=<?php echo $actual_link; ?>"><i class="icon-user"></i><?php echo $english['login']; ?></a></li>
-                                    <li><a href="signup.php?continue=<?php echo $actual_link; ?>"><i class="icon-user"></i><?php echo $english['signup']; ?></a></li>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <li><a href="logout.php"><i class="icon-user"></i><?php echo "Sign out"; ?></a></li>
-                                    <?php
-                                    }
-                                ?>
                                 </ul>
-                            </li>
-                        </ul><!-- End .top-menu -->
-                    </div><!-- End .header-right -->
-                </div><!-- End .container -->
-            </div><!-- End .header-top -->
+                        </li>
+                        <li>
+                            <a href="#" class="sf-with-ul"><?php echo $english['zones']; ?></a>
 
-            <div class="header-middle sticky-header">
-                <div class="container">
-                    <div class="header-left">
-                        <button class="mobile-menu-toggler"> 
-                            <span class="sr-only">Toggle mobile menu</span>
-                            <i class="icon-bars"></i>
-                        </button>
-                        <a href="index.php" class="logo">
-                            <img src="assets/images/logo.png" alt="Molla Logo" width="150" height="30">
-                        </a>
+                             <div class="megamenu megamenu-sm">
+                                    <div class="row no-gutters">
+                                            <div class="menu col-12 p-4">
+                                                <div class="menu-title w-100"><strong><?php echo $english['product_zone_details']; ?></strong><!-- End .menu-title -->
+                                                <ul class="w-100">
+                                                    <li><a href="zones.php?zone=red" class="bg-danger text-white text-center rounded-lg border border-light mb-1"><?php echo $english['red_zone_products']; ?></a></li>
+                                                    <li><a href="zones.php?zone=orange" class="bg-warning text-dark text-center rounded-lg border border-light mb-1"><?php echo $english['orange_zone_products']; ?></a></li>
+                                                    <li><a href="zones.php?zone=green" class="bg-success text-white text-center rounded-lg border border-light mb-1"><?php echo $english['green_zone_products']; ?></a></li>
+                                                    <!-- <li><a href="#" class="text-white bg-primary text-center rounded-lg border border-light mb-1"><?php //echo $english['completed_products_zone']; ?> </a></li> -->
+                                                    <!-- <li><a href="#" class="text-white bg-info text-center rounded-lg border border-light"><?php //echo $english['incompleted_products_zone']; ?></a></li> -->
+                                                </ul>
+                                                </div>
+                                            </div><!-- End .menu-col -->
+                                        
+                                    </div><!-- End .row -->
+                                </div><!-- End .megamenu megamenu-sm -->
+                        </li>
+                        <li>
+                            <a href="productsvall.php"><?php echo $english['products']; ?></a>
+                        </li>
+                        <li>
+                            <a href="faq.php"><?php echo $english['faq']; ?></a>
+                        </li>
+                    </ul><!-- End .menu -->
+                </nav><!-- End .main-nav -->
+            </div><!-- End .header-left -->
 
-                        <nav class="main-nav">
-                            <ul class="menu sf-arrows">
-                                <li class="megamenu-container active">
-                                    <a href="../"><?php echo $english['home']; ?></a>
-                                </li>
-                                <li>
-                                    <a href="catagories.php" class="sf-with-ul"><?php echo $english['categories']; ?></a>
-                                        <ul>
-                                            <?php
-                                              LoadCategories($conn,$_SESSION['lang']);
-                                            ?>
-                                        </ul>
-                                </li>
-                                <li>
-                                    <a href="#" class="sf-with-ul"><?php echo $english['zones']; ?></a>
+            <div class="header-right">
+                <div class="header-search">
+                    <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
+                    <form action="#" method="get">
+                        <div class="header-search-wrapper">
+                            <label for="q" class="sr-only"><?php echo $english['search']; ?></label>
+                            <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                        </div><!-- End .header-search-wrapper -->
+                    </form>
+                </div><!-- End .header-search -->
 
-                                     <div class="megamenu megamenu-sm">
-                                            <div class="row no-gutters">
-                                                    <div class="menu col-12 p-4">
-                                                        <div class="menu-title w-100"><strong><?php echo $english['product_zone_details']; ?></strong><!-- End .menu-title -->
-                                                        <ul class="w-100">
-                                                            <li><a href="zones.php?zone=red" class="bg-danger text-white text-center rounded-lg border border-light mb-1"><?php echo $english['red_zone_products']; ?></a></li>
-                                                            <li><a href="zones.php?zone=orange" class="bg-warning text-dark text-center rounded-lg border border-light mb-1"><?php echo $english['orange_zone_products']; ?></a></li>
-                                                            <li><a href="zones.php?zone=green" class="bg-success text-white text-center rounded-lg border border-light mb-1"><?php echo $english['green_zone_products']; ?></a></li>
-                                                            <!-- <li><a href="#" class="text-white bg-primary text-center rounded-lg border border-light mb-1"><?php //echo $english['completed_products_zone']; ?> </a></li> -->
-                                                            <!-- <li><a href="#" class="text-white bg-info text-center rounded-lg border border-light"><?php //echo $english['incompleted_products_zone']; ?></a></li> -->
-                                                        </ul>
-                                                        </div>
-                                                    </div><!-- End .menu-col -->
-                                                
-                                            </div><!-- End .row -->
-                                        </div><!-- End .megamenu megamenu-sm -->
-                                </li>
-                                <li>
-                                    <a href="productsvall.php"><?php echo $english['products']; ?></a>
-                                </li>
-                                <li>
-                                    <a href="faq.php"><?php echo $english['faq']; ?></a>
-                                </li>
-                            </ul><!-- End .menu -->
-                        </nav><!-- End .main-nav -->
-                    </div><!-- End .header-left -->
+                <div class="dropdown cart-dropdown">
+                    <a href="cart.php" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        <i class="icon-shopping-cart"></i>
+                        <span class="cart-count" id="cart-num"><?php echo $cart_count; ?></span>
+                    </a>
 
-                    <div class="header-right">
-                        <div class="header-search">
-                            <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
-                                <div class="header-search-wrapper">
-                                    <label for="q" class="sr-only"><?php echo $english['search']; ?></label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
-                                </div><!-- End .header-search-wrapper -->
-                            </form>
-                        </div><!-- End .header-search -->
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-cart-products" id="show-dropdown-cart">
+                            
+                        </div><!-- End .cart-product -->
 
-                        <div class="dropdown cart-dropdown">
-                            <a href="cart.php" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="icon-shopping-cart"></i>
-                                <span class="cart-count" id="cart-num"><?php echo $cart_count; ?></span>
-                            </a>
+                        <!-- ======= cart bottons ======== -->
+                        <div class="dropdown-cart-action">
+                            <a href="cart.php" class="btn btn-primary"><?php echo $english['view_holds']; ?></a>
+                            <a href="#" class="btn btn-outline-primary-2" id="participate"><span><?php echo $english['participate']; ?></span><i class="icon-long-arrow-right"></i></a>
+                        </div><!-- End .dropdown-cart-total -->
 
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="dropdown-cart-products" id="show-dropdown-cart">
-                                    
-                                </div><!-- End .cart-product -->
-
-                                <!-- ======= cart bottons ======== -->
-                                <div class="dropdown-cart-action">
-                                    <a href="cart.php" class="btn btn-primary"><?php echo $english['view_holds']; ?></a>
-                                    <a href="#" class="btn btn-outline-primary-2" id="participate"><span><?php echo $english['participate']; ?></span><i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .dropdown-cart-total -->
-
-                            </div><!-- End .dropdown-menu -->
-                        </div><!-- End .cart-dropdown -->
-                    </div><!-- End .header-right -->                    
-                </div><!-- End .container -->                
-            </div><!-- End .header-middle -->
-        </header><!-- End .header -->
-    <!-- =========================header close here======================-->
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .cart-dropdown -->
+            </div><!-- End .header-right -->                    
+        </div><!-- End .container -->                
+    </div><!-- End .header-middle -->
+  </header><!-- End .header -->
+<!-- =========================header close here======================-->
 

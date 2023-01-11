@@ -13,11 +13,7 @@ if(isset($_SESSION['u_id'])){
 }else{
 	$user_id ="";
 }
-if(isset($_SESSION['currency']) || isset($_COOKIE['curRate'])){
-    $cur_rate = isset($_SESSION['cur_rate']) ? $_SESSION['cur_rate'] : $_COOKIE['curRate'];
-}else{
-    $cur_rate = 1;
-}
+
 
 
 // <span class="product-label label-new">New</span>

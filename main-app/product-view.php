@@ -77,9 +77,9 @@ if(mysqli_num_rows($run_check_pro_deal_main) > 0){
 
 // get token amount
 if(!isset($token_amt)){
-    $amount = "Market Price: ".$p_amt;
+    $amount = "Market Price:&nbsp&nbsp ".convertPrice($cur_rate,$p_amt);
 }else{
-    $amount = "Unit Price : ".$token_amt;
+    $amount = "Unit Price :&nbsp&nbsp ".convertPrice($cur_rate,$token_amt);
 }
 //end here get token amount 
 
@@ -364,9 +364,9 @@ if (!isset($get_zone)){
                         <div class="product-price">
                             <?php
                             if($unit_price != null){
-                              $amt = "Unit Price: ".$unit_price;
+                              $amt = "Unit Price:&nbsp ".convertPrice($cur_rate,$unit_price);
                             }else{
-                              $amt = "Market Price: ".$p_amt; 
+                              $amt = "Market Price:&nbsp ".convertPrice($cur_rate,$p_amt); 
                             }
                             echo $amt;
                             ?>

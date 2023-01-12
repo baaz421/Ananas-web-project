@@ -13,6 +13,11 @@ if(isset($_SESSION['checkout_id'])){
 	unset($_SESSION["checkout_id"]);
 	header("location: login.php");
 }
+if($currency != "USD"){
+	$covert_amt = "no";
+}else{
+	$covert_amt = "yes";
+}
 
 ?>
 <style type="text/css">
@@ -28,39 +33,39 @@ if(isset($_SESSION['checkout_id'])){
 		opacity: 0.8;
 
 	}
-.loader {
-  margin: 300px 50%;
-  width: 48px;
-  height: 48px;
-  border: 3px solid #FFF;
-  border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-} 
-.loader::after {
-  content: '';  
-  box-sizing: border-box;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 3px solid transparent;
-  border-bottom-color: #FF3D00;
-}
+	.loader {
+	  margin: 300px 50%;
+	  width: 48px;
+	  height: 48px;
+	  border: 3px solid #FFF;
+	  border-radius: 50%;
+	  display: inline-block;
+	  position: relative;
+	  box-sizing: border-box;
+	  animation: rotation 1s linear infinite;
+	} 
+	.loader::after {
+	  content: '';  
+	  box-sizing: border-box;
+	  position: absolute;
+	  left: 50%;
+	  top: 50%;
+	  transform: translate(-50%, -50%);
+	  width: 56px;
+	  height: 56px;
+	  border-radius: 50%;
+	  border: 3px solid transparent;
+	  border-bottom-color: #FF3D00;
+	}
 
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} 
+	@keyframes rotation {
+	  0% {
+	    transform: rotate(0deg);
+	  }
+	  100% {
+	    transform: rotate(360deg);
+	  }
+	} 
 </style>
 
 <main class="main">
@@ -91,7 +96,7 @@ if(isset($_SESSION['checkout_id'])){
             					<thead>
             						<tr>
             							<th class="font-italic" >Available Balance</th>
-            							<th class="font-weight-bold" ><?php echo current_bal($u_id,$conn); ?></th>
+            							<th class="font-weight-bold" ><?php echo current_bal($u_id,$conn); ?> USD</th>
             							<input type="text" value="<?php echo current_bal($u_id,$conn); ?>" id="current-bal" hidden>
             						</tr>
             						
@@ -132,20 +137,21 @@ if(isset($_SESSION['checkout_id'])){
             						</tr> -->
             						<!-- </tr> -->
             						<tr class="summary-subtotal">
-            							<td>Subtotal:</td>
-            							<td>&nbsp</td>
+            							<td>Total: </td>
+            							<td>&nbsp<input type="text" id="main-total" hidden></td>
             							<td>&nbsp</td>
             							<td id="sub-total"></td>
             						</tr><!-- End .summary-subtotal -->
+            						
             						<!-- <tr id="coupon-show">
             						</tr> -->
                 				
-            						<tr class="summary-total">
+            						<!-- <tr class="summary-total">
             							<td>Total:</td>
             							<td>&nbsp</td>
             							<td>&nbsp</td>
             							<td id="final-total"></td>
-            						</tr><!-- End .summary-total -->
+            						</tr> --><!-- End .summary-total -->
             					</tbody>
             				</table><!-- End .table table-summary -->
 
@@ -184,8 +190,8 @@ join.preventDefault();
 	var checkout_id = $("#checkout-id").val();
 	var user_id = "<?php echo $u_id ?>";
 	var current_balance = parseInt($("#current-bal").val());
-	var mainTotalAmount = parseInt($("#final-total").text());
-	console.log(checkout_id,"---",user_id,"---",current_balance);
+	var mainTotalAmount = parseInt($("#main-total").val());
+	console.log(checkout_id,"---",user_id,"---",current_balance,"---",mainTotalAmount);
 	if(mainTotalAmount >= current_balance){
 		$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary' role='alert mt-1 mb-2 rounded'>Sorry, insufficient wallet balance .<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
 	  $("#success-message").slideUp();
@@ -231,9 +237,11 @@ function LoadProductDetails(){
 		url : "join-deal-ajax-pages/load-cart-review.php",
 		success : function(data){
 			$("#load-pro-details > tbody").prepend(data);
+			CartTotal();
 			SubTotal();
-			loadCouponField();
-			MainTotalDisplay();
+			
+			// loadCouponField();
+			// MainTotalDisplay();
 		}		
 	})
 }
@@ -244,7 +252,26 @@ function SubTotal(){
 	$.ajax({
 		url : "all-products-files/load-sub-total-cart.php",
 		success: function(data){
-			$("#sub-total").text(data+".0");
+			// $("#sub-total").html(data);
+			var check_u_cur = "<?php echo $covert_amt ?>";
+			if(check_u_cur == "no"){
+				var show_usd = $("#main-total").val();
+				$("#sub-total").html(data+"<p>In USD "+show_usd+" </p>");
+			}else{
+				$("#sub-total").html(data);
+			}
+			
+		}
+	});
+}
+
+// load sub total 
+function CartTotal(){
+	$.ajax({
+		url : "all-products-files/cart-total-amount.php",
+		success: function(data){
+			$("#cart-total").html(data);
+			$("#main-total").val(data);
 		}
 	});
 }
@@ -277,9 +304,7 @@ function addPer(percentage,coupon_code){
 	  			
 	  			var minus_per = total / 100 * data;
 	  			var final_amt = total - minus_per;
-	  			$("#final-total").text(final_amt);	
-	  			console.log(final_amt);
-	  			console.log(data);
+	  			$("#final-total").text(final_amt);
 	  			  			
 	  		}
 	  	});
@@ -289,23 +314,26 @@ function addPer(percentage,coupon_code){
 
 // final total amount dispaly
 
-function MainTotalDisplay(){
-	$.ajax({
-  		url : "all-products-files/load-sub-total-cart.php",
-  		success: function(sub_total){
-  			$.ajax({
-		  		url : "join-deal-ajax-pages/final-amt.php",
-		  		success: function(percentage){
-		  			var minus_per = sub_total / 100 * percentage;
-		  			var final_amt = sub_total - minus_per;
-		  			$("#final-total").text(final_amt);
+// function MainTotalDisplay(){
+// 	$.ajax({
+//   		url : "all-products-files/load-sub-total-cart.php",
+//   		success: function(sub_total){
+//   			$.ajax({
+// 		  		url : "join-deal-ajax-pages/final-amt.php",
+// 		  		success: function(percentage){
+// 		  			// var sub_tot = html(sub_total);
+// 		  			var minus_per = sub_total / 100 * percentage;
+// 		  			var final_amt = sub_total - minus_per;
+// 		  			console.log(minus_per+"--"+final_amt);
+// 		  			console.log(sub_total);
+// 		  			$("#final-total").text(final_amt);
 		  			  			
-		  		}
-		  	});		
-  		}
-  	});
+// 		  		}
+// 		  	});		
+//   		}
+//   	});
 
-}
+// }
 
 
   // submit coupon code

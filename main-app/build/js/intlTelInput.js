@@ -929,7 +929,10 @@
                     this.selectedFlag.setAttribute("title", title);
 
                     var titlec = title.split("+");
-                    var cname = title.split(":");
+                    var cname = title.split(":"); 
+                    var twoalphcode =  this.selectedCountryData.iso2;
+                    document.getElementById('twoalph').value = twoalphcode;                 
+
                     document.getElementById('cname').value = cname[0];
                     document.getElementById('ccodez').value=titlec[1];
 

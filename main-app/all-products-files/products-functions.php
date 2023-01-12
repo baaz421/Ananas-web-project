@@ -1,5 +1,6 @@
 <?php
 //products-functions.php
+// $cur_rate = 1;
 
 // all products view html code 
 function LoadProducts($label,$p_id,$img_src,$p_cat,$p_name,$p_bar,$p_amt,$w_disable,$c_disable,$deal_id){
@@ -251,10 +252,10 @@ function convertPrice($rate,$unit_price){
 
     if($rate == 1){
         $mul = $rate * $unit_price;
-        $out = "$ ".number_format($mul,2,'.',',');
+        $out = "<u>".number_format($mul,2,'.',',')."</u>&nbsp".$_SESSION['currency'];
     }else{
         $mul = $rate * $unit_price;
-        $out = number_format($mul,2,'.',',')." QAR";
+        $out = "<u> ".number_format($mul,2,'.',',')."</u>&nbsp".$_SESSION['currency'];
     }
     
     return $out;

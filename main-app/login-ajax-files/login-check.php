@@ -18,6 +18,7 @@ require_once "../db_connnection.php";
                 $_SESSION['u_id']           = $fetch['id'];
                 $_SESSION['u_country']      = $fetch['country'];
                 $_SESSION['u_name']         = $fetch['name'];
+
                 //$status = $fetch['vstatus'];
                 // if($status == 'verified'){
                 //   $_SESSION['email'] = $email;

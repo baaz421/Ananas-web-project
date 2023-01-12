@@ -2,6 +2,7 @@
 // load-products.php
 require "db_connnection.php";
 require "products-functions.php";
+require "currency-set.php";
 require "../m-admin/deals-ajax-files/deals-functions.php";
 
  $query_s  = "SELECT * FROM products WHERE ID = '{$_GET['p_id']}'";

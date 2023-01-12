@@ -1,5 +1,6 @@
-<?php 
-// load-sub-total-cart.php
+<?php
+// cart-total-amount.php
+
 session_start();
 require "../db_connnection.php";
 require "products-functions.php";
@@ -25,4 +26,5 @@ if(isset($_SESSION['u_id'])){
     $sub_total = 0;
 }
 
-echo convertPrice($cur_rate,$sub_total);
+echo number_format($sub_total,2,'.',',');
+// echo $sub_total;

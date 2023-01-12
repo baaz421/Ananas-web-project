@@ -3,6 +3,8 @@
 session_start();
 require "../db_connnection.php";
 require "products-functions.php";
+require "currency-set.php";
+
 if(isset($_SESSION['u_id'])){
 	$user_id = $_SESSION['u_id'];
 }else{
@@ -22,6 +24,7 @@ if($user_id != ""){
 			$c_id 	= $row['ID'];
 			$c_qty 	= $row['qty'];
 			$p_s 	= 1;
+			$unit_price = $row['unit_price'];
 
 			$get_pro_detail = "SELECT * FROM products WHERE ID = '{$pro_id}' AND p_status = '$p_s'";
 			$run_get_pro_details = mysqli_query($conn, $get_pro_detail);
@@ -43,9 +46,9 @@ if($user_id != ""){
 					            </h4>
 
 					            <span class="cart-product-info">
-					                <span class="cart-product-qty">Quantity - '.$c_qty.'</span>
+					                <span class="cart-product-qty">Quantity: '.$c_qty.'</span>
 					                <br>
-					                <span class="cart-product-qty">Market Value - '.$p_m_price.'</span>
+					                <span class="cart-product-qty">Unit Price:  '.convertPrice($cur_rate,$unit_price).'</span>
 					            </span>
 					        </div>
 

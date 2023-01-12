@@ -24,7 +24,7 @@ if(@$_GET['continue'] == ""){
     			<div class="form-tab">
         			<ul class="nav nav-pills nav-fill" role="tablist">
 					    <li class="nav-item">
-					        <a class="nav-link active" >Forgot Password</a>
+					        <a class="nav-link active" >Verification Code</a>
 
 					    </li>
 					    

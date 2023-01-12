@@ -222,7 +222,7 @@ if(isset($_SESSION['u_id'])){
 																		</div><!-- End .product-cat -->
 																		<h3 class="product-title"><a href="product-view.php?p_id=<?php echo $pro_id; ?>"><?php echo $p_name; ?></a></h3><!-- End .product-title -->
 																		<div class="product-price font-weight-bold">
-																			 UNIT PRICE: <?php echo convertPrice($cur_rate,$u_price); ?>
+																			 UNIT PRICE:&nbsp&nbsp <?php echo convertPrice($cur_rate,$u_price); ?>
 																		</div><!-- End .product-price -->
 																		<?php echo zoneProgress($deal_id,$conn,$date)?>
 																</div><!-- End .product-body -->
@@ -321,7 +321,7 @@ if(isset($_SESSION['u_id'])){
 																		</div><!-- End .product-cat -->
 																		<h3 class="product-title"><a href="product-view.php?p_id=<?php echo $pro_id; ?>"><?php echo $p_name; ?></a></h3><!-- End .product-title -->
 																		<div class="product-price font-weight-bold">
-																			 UNIT PRICE: <?php echo convertPrice($cur_rate,$u_price); ?>
+																			 UNIT PRICE:&nbsp&nbsp <?php echo convertPrice($cur_rate,$u_price); ?>
 																		</div><!-- End .product-price -->
 																		<?php echo zoneProgress($deal_id,$conn,$date)?>
 																</div><!-- End .product-body -->
@@ -419,7 +419,7 @@ if(isset($_SESSION['u_id'])){
 																		</div><!-- End .product-cat -->
 																		<h3 class="product-title"><a href="product-view.php?p_id=<?php echo $pro_id; ?>"><?php echo $p_name; ?></a></h3><!-- End .product-title -->
 																		<div class="product-price font-weight-bold">
-																			 UNIT PRICE: <?php echo convertPrice($cur_rate,$u_price) ?>
+																			 UNIT PRICE:&nbsp&nbsp <?php echo convertPrice($cur_rate,$u_price) ?>
 																		</div><!-- End .product-price -->
 																		<?php echo zoneProgress($deal_id,$conn,$date)?>
 																</div><!-- End .product-body -->
@@ -545,8 +545,8 @@ if(isset($_SESSION['u_id'])){
 																						</figure>
 																						<div class='product-body'>
 																								<h5 class='product-title'><a href='{$pro_link}'>{$user_info}</a></h5>
-																								<div class='product-price'>{$unit_price}</div>
-																								<div class='product-price'>{$closing_time}</div>
+																								<div class='product-price'>Unit Price:&nbsp&nbsp {$unit_price}</div>
+																								<div class='product-title'>{$closing_time}</div>
 																						</div>
 																				</div>
 																				";
@@ -632,7 +632,7 @@ if(isset($_SESSION['u_id'])){
 															</div><!-- End .product-cat -->
 															<h3 class="product-title mt-0"><a href="product-view.php?p_id=<?php echo $pro_id; ?>"><?php echo $p_name; ?></a></h3><!-- End .product-title -->
 															<div class="product-price">
-																<span class="new-price">UNIT PRICE: <?php echo convertPrice($cur_rate,$u_price); ?></span>
+																<span class="new-price">UNIT PRICE:&nbsp&nbsp <?php echo convertPrice($cur_rate,$u_price); ?></span>
 															</div><!-- End .product-price -->
 														</div><!-- End .product-body -->
 

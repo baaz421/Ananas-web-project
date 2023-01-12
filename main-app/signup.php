@@ -104,6 +104,7 @@ if(@$_GET['continue'] == ""){
                                     <span id="valid-msg" class="hide">✓ Valid</span>
                                     <span id="error-msg" class="hide"></span>
                                     <input type="text" class="form-control" id="ccodez" name="ccodez" hidden >
+                                    <input type="text" class="form-control" id="twoalph" name="twoalph" hidden >
                                     <input type="text" class="form-control" id="cname" name="cname"  hidden>
                                 </div><!-- End .form-group -->
                                 <div class="form-group">
@@ -165,60 +166,63 @@ if(@$_GET['continue'] == ""){
 </div>
 <script src="build/js/intlTelInput.js"></script>
 <script>
-var input = document.querySelector("#phone"),
-errorMsg = document.querySelector("#error-msg"),
-validMsg = document.querySelector("#valid-msg");
+  var input = document.querySelector("#phone"),
+  errorMsg = document.querySelector("#error-msg"),
+  validMsg = document.querySelector("#valid-msg");
 
-// here, the index maps to the error code returned from getValidationError - see readme
-var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+  // here, the index maps to the error code returned from getValidationError - see readme
+  var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
 
-// initialise plugin
-var iti = window.intlTelInput(input, {
-//nationalMode: true,
-initialCountry: "auto",
-geoIpLookup: function(callback) {
-  $.get('https://ipinfo.io/', function() {}, "jsonp").always(function(resp) {
-    var countryCode = (resp && resp.country) ? resp.country : "qa";
-    console.log(resp.country);
-    callback(countryCode);
+  // initialise plugin
+  var iti = window.intlTelInput(input, {
+  //nationalMode: true,
+  initialCountry: "auto",
+  geoIpLookup: function(callback) {
+    $.get('https://ipinfo.io/', function() {}, "jsonp").always(function(resp) {
+      var countryCode = (resp && resp.country) ? resp.country : "qa";
+      console.log(resp.country);
+      callback(countryCode);
+    });
+  },
+  separateDialCode: true,
+  utilsScript: "build/js/utils.js"
   });
-},
-separateDialCode: true,
-utilsScript: "build/js/utils.js"
-});
 
-var reset = function() {
-  input.classList.remove("error");
-  errorMsg.innerHTML = "";
-  errorMsg.classList.add("hide");
-  validMsg.classList.add("hide");
-};
+  var reset = function() {
+    input.classList.remove("error");
+    errorMsg.innerHTML = "";
+    errorMsg.classList.add("hide");
+    validMsg.classList.add("hide");
+  };
 
-// on blur: validate
-  input.addEventListener('blur', function() {
-    reset();
-    if (input.value.trim()) {
-      if (iti.isValidNumber()) {
-        validMsg.classList.remove("hide");
-      } else {
-        input.classList.add("error");
-        var errorCode = iti.getValidationError();
-        errorMsg.innerHTML = errorMap[errorCode];
-        errorMsg.classList.remove("hide");
+  // on blur: validate
+    input.addEventListener('blur', function() {
+      reset();
+      if (input.value.trim()) {
+        if (iti.isValidNumber()) {
+          validMsg.classList.remove("hide");
+        } else {
+          input.classList.add("error");
+          var errorCode = iti.getValidationError();
+          errorMsg.innerHTML = errorMap[errorCode];
+          errorMsg.classList.remove("hide");
+        }
       }
-    }
-  });
+      // console.log($("#twoalph").val());
+      // console.log($("#ccodez").val());
+      
+    });
 
-// on keyup / change flag: reset
-input.addEventListener('change', reset);
-input.addEventListener('keyup', reset);
-
+  // on keyup / change flag: reset
+  input.addEventListener('change', reset);
+  input.addEventListener('keyup', reset);
 </script>
 <?php 
 include "includes/footer.php";
 ?>
 <script type="text/javascript">
 $(document).ready(function(){
+
 
 // show and hide password
     $(document).ready(function(){
@@ -242,6 +246,8 @@ $(document).ready(function(){
         var u_ccodez    = $("#ccodez").val();
         var u_cname     = $("#cname").val();
         var u_dob       = $("#dob").val();
+        var u_iso2      = $("#twoalph").val();
+        // console.log($("#twoalph").val());
 
 
         // closes
@@ -264,7 +270,7 @@ $(document).ready(function(){
                 $.ajax({
                     url : "login-ajax-files/user-signup.php",
                     type : "POST",
-                    data : {u_name:u_name,u_email:u_email,u_pass:u_pass,u_phone:u_phone,u_ccode:u_ccodez,u_cname:u_cname,u_dob:u_dob},
+                    data : {u_name:u_name,u_email:u_email,u_pass:u_pass,u_phone:u_phone,u_ccode:u_ccodez,u_cname:u_cname,u_dob:u_dob, u_iso2:u_iso2},
                     beforeSend: function () {
                       $(".backlayer").show();
                     },
@@ -285,7 +291,7 @@ $(document).ready(function(){
                             $("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded ' role='alert'>Failed while sending code!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
                             $("#success-message").slideUp();
                         }else{
-                            $("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded ' role='alert'>"+data+"Failed while sign up please try again.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+                            $("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded ' role='alert'>Failed while sign up please try again.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
                             $("#success-message").slideUp();
                         }
                     },

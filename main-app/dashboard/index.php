@@ -11,8 +11,10 @@ if(isset($_SESSION['u_email'])){
     $check_verify = "SELECT * FROM users WHERE email = '$email'";
     $run_verify = mysqli_query($conn, $check_verify);
     if(mysqli_num_rows($run_verify) > 0){
-        $fetch = mysqli_fetch_assoc($run_verify);
-        $vstatus = $fetch['vstatus'];
+        $fetch      = mysqli_fetch_assoc($run_verify);
+        $vstatus    = $fetch['vstatus'];
+        $u_name     = $fetch['name'];
+        $u_country  = $fetch['country'];
         if($vstatus == "notverified"){
 
         echo"<div id='success-message'>
@@ -32,7 +34,7 @@ if(isset($_SESSION['u_email'])){
       <div class="col-md-12 grid-margin">
         <div class="row">
           <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-            <h3 class="font-weight-bold">Welcome <?php echo $_SESSION['u_name'] ?></h3>
+            <h3 class="font-weight-bold">Welcome <?php echo $u_name ?></h3>
             <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
           </div>
           <div class="col-12 col-xl-4">
@@ -55,7 +57,7 @@ if(isset($_SESSION['u_email'])){
             <div class="weather-info">
               <div class="d-flex">
                 <div class="ml-2">
-                  <h3 class="font-weight-normal"><?php echo $_SESSION['u_country'] ?></h3>
+                  <h3 class="font-weight-normal"><?php echo $u_country ?></h3>
                 </div>
               </div>
             </div>

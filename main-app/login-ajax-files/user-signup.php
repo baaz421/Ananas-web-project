@@ -13,6 +13,7 @@ if(isset($_POST['u_email'])){
     $mobileCode     = $_POST['u_ccode'];
     $countryname    = $_POST['u_cname'];
     $birthdate      = $_POST['u_dob'];
+    $u_iso2         = strtoupper($_POST['u_iso2']);   
     $time           = $date;
     $update         = null; 
     $u_status       = 1;
@@ -36,8 +37,10 @@ if(isset($_POST['u_email'])){
         $encpass = password_hash($password, PASSWORD_BCRYPT);
         $code = rand(999999, 111111);
         $status = "notverified";
-        $insert_data = "INSERT INTO users (name, email, password, country, countrycode, mobile, dob, vcode, vstatus, createtime, updatetime, u_status)
-                        values('$name', '$email', '$encpass', '$countryname', '$mobileCode', '$mobile', '$birthdate', '$code', '$status', '$time', '$update', '$u_status')";
+        $currency = CountryCurrencyCode($conn,$u_iso2);
+
+        $insert_data = "INSERT INTO users (name, email, password, country, countrycode, mobile, dob, vcode, vstatus, currency, iso, createtime, updatetime, u_status)
+                        values('$name', '$email', '$encpass', '$countryname', '$mobileCode', '$mobile', '$birthdate', '$code', '$status','$currency', '$u_iso2', '$time', '$update', '$u_status')";
         //echo $insert_data;                
         $data_check = mysqli_query($conn, $insert_data);
         if($data_check){
@@ -49,19 +52,32 @@ if(isset($_POST['u_email'])){
             $sms = send_sms($number,$msg_mobile);
             $mail = smtp_mailer($email, $subject,$msg_email); 
             if($mail == 0 || $sms != false){
+                $_SESSION['u_id'] = mysqli_insert_id($conn);
                 $_SESSION['u_email'] = $email;
                 $_SESSION['u_password'] = $password;
+                // $_SESSION['currency'] = $currency;
                 echo 3;
                 exit();
-
             }else{
                 echo 4; // Failed while sending code!
             }
+            // $_SESSION['u_id'] = mysqli_insert_id($conn);
+            // $_SESSION['u_email'] = $email;
+            // $_SESSION['u_password'] = $password;
+            echo 3;
         }else{
             echo 5; // Failed while sign up please fill all fields!
         }
     }
 
+}
+
+function CountryCurrencyCode($conn,$iso2){
+  $sql = "SELECT * FROM countries WHERE iso = '{$iso2}'";
+  $run = mysqli_query($conn, $sql);
+  $get = mysqli_fetch_assoc($run);
+  $output = $get['currency'];
+  return $output;
 }
 
 //============================================

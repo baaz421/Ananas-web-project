@@ -2,6 +2,8 @@
 // load-cart-review.php
 session_start();
 require_once "../db_connnection.php";
+require "../all-products-files/products-functions.php";
+require "../all-products-files/currency-set.php";
 
 if(isset($_SESSION['u_id'])){
 	$user_id = $_SESSION['u_id'];
@@ -34,9 +36,9 @@ if(mysqli_num_rows($run_get_Cartlist) > 0){
 
 			echo "<tr>
 				<td><a href='$link'>$p_name</a></td>
-				<td class='text-center'>$u_price</td>
+				<td class='text-center'>".convertPrice($cur_rate,$u_price)."</td>
 				<td class='text-center'>$c_qty</td>
-				<td>$to_price</td>
+				<td>".convertPrice($cur_rate,$to_price)."</td>
 				
 			</tr>";
 

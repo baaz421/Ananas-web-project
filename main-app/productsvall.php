@@ -483,7 +483,6 @@ function loadCartNumber(){
                 method:"POST",
                 data:{p_id:p_id, d_id:d_id, u_id:user_id},
                 success:function(data){
-
                     if(data == 1){
                      $("#success-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-success mt-1 mb-2 rounded' role='alert'>successfully added to Cart.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
                      $("#error-message").slideUp();
@@ -492,9 +491,9 @@ function loadCartNumber(){
                      loadCartNumber();
                      loadDropdownCart();
                     }else{
-                     $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary mt-1 mb-2 rounded' role='alert'>it's already added to Cart .<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+                     $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary mt-1 mb-2 rounded' role='alert'>"+data+"it's already added to Cart .<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
                      $("#success-message").slideUp();
-                     setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+                     // setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
                      button.addClass("isDisabled");
                     }
                   

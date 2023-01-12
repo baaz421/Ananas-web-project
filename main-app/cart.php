@@ -1,6 +1,7 @@
 
 <?php 
 include "includes/header.php";
+require "all-products-files/products-functions.php";
 ?>
 <main class="main">
 	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
@@ -111,7 +112,7 @@ $(document).ready(function(){
 	  	$.ajax({
 	  		url : "all-products-files/load-sub-total-cart.php",
 	  		success: function(data){
-	  			$("#sub-total-display").text(data+".0");
+	  			$("#sub-total-display").html(data);
 	  		}
 	  	});
 	  }

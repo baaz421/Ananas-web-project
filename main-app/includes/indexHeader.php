@@ -1,13 +1,10 @@
 <?php
-@$u_id = $_SESSION['u_id'];
 require "initial.php";
+@$u_id = $_SESSION['u_id'];
 $actual_link = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 require_once "../langs/" . $_SESSION['lang'] . ".php" ;
 require_once "includes/currency-rate.php";
-
-
-
 
 ?>
 <!DOCTYPE html>

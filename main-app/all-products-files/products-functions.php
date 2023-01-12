@@ -252,10 +252,10 @@ function convertPrice($rate,$unit_price){
 
     if($rate == 1){
         $mul = $rate * $unit_price;
-        $out = "$ ".number_format($mul,2,'.',',');
+        $out = "<u>".number_format($mul,2,'.',',')."</u>&nbsp".$_SESSION['currency'];
     }else{
         $mul = $rate * $unit_price;
-        $out = number_format($mul,2,'.',',')." QAR";
+        $out = "<u> ".number_format($mul,2,'.',',')."</u>&nbsp".$_SESSION['currency'];
     }
     
     return $out;

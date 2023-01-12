@@ -7,6 +7,8 @@ require_once "../langs/" . $_SESSION['lang'] . ".php" ;
 require_once "includes/currency-rate.php";
 
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,7 +143,7 @@ require_once "includes/currency-rate.php";
                       <div class="header-menu">
                         <ul>
                           <?php
-                            echo displayCurrency($currency);
+                            echo displayCurrency($currency,$user_currency_set);
                           ?>
                         </ul>
                       </div><!-- End .header-menu -->

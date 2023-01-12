@@ -3,6 +3,7 @@
 session_start();
 require "../db_connnection.php";
 require "products-functions.php";
+require "currency-set.php";
 if(isset($_SESSION['u_id'])){
 	$user_id = $_SESSION['u_id'];
 }else{
@@ -18,7 +19,7 @@ if(mysqli_num_rows($run_get_Cartlist) > 0){
 		
 		$pro_id = $row['product_id'];
 		$c_qty 	= $row['qty'];
-		$c_id = $row['ID'];
+		$c_id = $row['ID'];		
 		$p_amt = $row['unit_price'];
     $total_amount = $row['total'];
 		$p_s = 1;
@@ -54,7 +55,7 @@ if(mysqli_num_rows($run_get_Cartlist) > 0){
 	            </h3>
 	        </div>
 	    </td>
-	    <td class="price-col" id="cart-id" data-cart_id="'.$c_id.'">'.$p_amt.'</td>
+	    <td class="price-col" id="cart-id" data-cart_id="'.$c_id.'">'.convertPrice($cur_rate,$p_amt).'</td>
 	    
 	    <td class="quantity-col">	     
 	      	<div class="number">
@@ -69,7 +70,7 @@ if(mysqli_num_rows($run_get_Cartlist) > 0){
 	    </td>
 	    <td class="total-col text-center" id="total-col">
 	    	<input type="text" id="total-amount" value="'.$total_amount.'" hidden />
-	    		'.$total_amount.'
+	    		'.convertPrice($cur_rate,$total_amount).'
 	    </td>
 	    
 	    <td class="remove-col">

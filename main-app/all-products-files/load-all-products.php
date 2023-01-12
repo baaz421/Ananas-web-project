@@ -2,6 +2,7 @@
 session_start();
 require "../db_connnection.php";
 require "products-functions.php";
+require "currency-set.php";
 require "../../m-admin/deals-ajax-files/deals-functions.php";
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -14,9 +15,6 @@ if(isset($_SESSION['u_id'])){
 }else{
 	$user_id ="";
 }
-
-
-
 
 // <span class="product-label label-new">New</span>
 // <span class="product-label label-sale">30% off</span>
@@ -53,13 +51,13 @@ if(isset($_POST["limit"], $_POST["start"])){
 					$token_amt = $deal_check['unit_price'];// unit price
 					$label = "<span class='product-label label-new'>ON DEAL</span>";
 					$p_bar = zoneProgress($deal_id,$conn,$date);
-					$prod_price = "Unit Price: ".convertPrice($cur_rate,$token_amt);
+					$prod_price = "Unit Price:&nbsp&nbsp ".convertPrice($cur_rate,$token_amt);
 					$c_disable = $cart_disable;
 					// $p_bar = progressBarHtml();
 				}else{
 					$label = "<span class='product-label label-top'>UPCOMING DEAL</span>";
 					$p_bar = "";
-					$prod_price = "Market Price: ".convertPrice($cur_rate,$p_amt);
+					$prod_price = "Market Price:&nbsp&nbsp ".convertPrice($cur_rate,$p_amt);
 					$c_disable = "isDisabled";
 					$deal_id = 0;
 				}
@@ -67,7 +65,7 @@ if(isset($_POST["limit"], $_POST["start"])){
 		}else{
 				$label = "<span class='product-label label-top'>UPCOMING DEAL</span>";
 				$p_bar = "";
-				$prod_price = "Market Price: ".$p_amt;
+				$prod_price = "Market Price:&nbsp&nbsp ".convertPrice($cur_rate,$p_amt);
 				$c_disable = "isDisabled";
 				$deal_id = 0;
 			}

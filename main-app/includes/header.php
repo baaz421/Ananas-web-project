@@ -218,7 +218,7 @@ if($_SESSION['lang'] == "ar"){
             <div class="header-menu">
               <ul>
                 <?php
-                  echo displayCurrency($currency);
+                  echo displayCurrency($currency,$user_currency_set);
                 ?>
               </ul>
             </div><!-- End .header-menu -->

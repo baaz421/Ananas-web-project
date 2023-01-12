@@ -1,6 +1,6 @@
 <?php
 // currency-rate.php
-$time = time();
+// $time = time();
 $today_date = date("Y-m-d")." 24:00:00";
 $expiry = TodayRemainingTime($today_date);
 
@@ -18,28 +18,56 @@ if(isset($_SESSION['u_id'])){
 			setcookie("currency",$currency,$expiry,"/");
 			$_SESSION['currency_rate'] 	= $currency_rate;
 			$_SESSION['currency'] 			= $currency;
-			echo "set new cookie and new session";
 		}else{
 			$currency_rate 							= $_COOKIE['currency_rate'];
 			$n_currency 								= $_COOKIE['currency'];
 			$_SESSION['currency_rate'] 	= $currency_rate;
 			$_SESSION['currency'] 			= $n_currency;
-			echo "set old cookie and old session";
 		}
-	echo "set user id";
-	// $_SESSION['currency'] = $currency;
-}elseif(isset($_GET['curType']) && $_SESSION['currency_rate'] != $_GET['curType'] && !empty($_GET['curType'])){
-	if($_GET['curType'] == "USD"){
-		echo "get set USD";
-	}else{
-		echo "get set else currency";
-	}
-	
+	$user_currency_set = $currency;
 }else{
 	$_SESSION['currency'] = "USD";
-	$currency = $_SESSION['currency'];
-	echo "nothing set ";
+	$user_currency_set = "USD";
 }
+
+if(isset($_GET['curType']) && $_SESSION['currency'] != $_GET['curType'] && !empty($_GET['curType'])){
+	if($_GET['curType'] == "USD"){
+		$currency_name = $_GET['curType'];
+		$currency_rate = 1;
+		setcookie("currency_rate",$currency_rate,$expiry,"/");
+		setcookie("currency",$currency_name,$expiry,"/");
+		$_SESSION['currency_rate'] 	= $currency_rate;
+		$_SESSION['currency'] 			= $currency_name;
+	}else{
+		$currency_name = $_GET['curType'];
+		$currency_rate = CallCurrencyAPI($currency_name);
+		setcookie("currency_rate",$currency_rate,$expiry,"/");
+		setcookie("currency",$currency_name,$expiry,"/");
+		$_SESSION['currency_rate'] 	= $currency_rate;
+		$_SESSION['currency'] 			= $currency_name;
+	}
+}
+
+if(isset($_SESSION['currency_rate']) || isset($_COOKIE['currency_rate'])){
+    $cur_rate = isset($_SESSION['currency_rate']) ? $_SESSION['currency_rate'] : $_COOKIE['currency_rate'];
+    $currency = $_SESSION['currency'];
+}else{
+    $cur_rate = 1;
+    $currency = $_SESSION['currency'];
+}
+
+// if(isset($_SESSION['currency']) || isset($_COOKIE['cur'])){
+//     $cur_name = isset($_SESSION['currency']) ? $_SESSION['currency'] : $_COOKIE['cur'];
+//     $cur_link = "?curType=$cur_name";
+// }else{
+//     $cur_name = "Currency";
+//     $cur_link = "#";
+// }
+// if(isset($_SESSION['currency']) || isset($_COOKIE['curRate'])){
+//     $cur_rate = isset($_SESSION['cur_rate']) ? $_SESSION['cur_rate'] : $_COOKIE['curRate'];
+// }else{
+//     $cur_rate = 1;
+// }
 
 
 // changing currency from user 
@@ -86,13 +114,11 @@ function CallCurrencyAPI($want){
 	return $want;
 }
 
-
 // function to display currency tab or button 
-function displayCurrency($currency){
-	if($currency != "USD"){
+function displayCurrency($currency,$user_set){
+	if($currency == "USD" && $user_set != "USD"){
     $list_show = "
-      <li><a href='?curType={$currency}'>{$currency}</a></li>
-      <li><a href='?curType=USD'>USD</a></li>";                        
+      <li><a href='?curType={$user_set}'>{$user_set}</a></li>";                        
   }else{
   	$list_show ="<li><a href='?curType=USD'>USD</a></li>";
   }

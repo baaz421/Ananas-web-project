@@ -190,23 +190,21 @@ $exp_date = explode(" ",$current_date);
 
 		                <div class="form-group row">
 		                	<div class="col-sm-6">
-		                        <label for="u-price">Unit Amount (Per Deal)</label>
-		                        <input type="number" class="form-control" id="u-price" name="u-price" required>
-		                        <div class="invalid-feedback">
-							      Please Enter Unit Amount
-							    </div>
+	                        <label for="u-price">Unit Amount (Per Deal)</label>
+	                        <input type="number" class="form-control" id="u-price" name="u-price" min="0" step="0.01" required>
+	                        <div class="invalid-feedback">Please Enter Unit Amount</div>
 		                    </div>
 		                    <div class="col-sm-6">
-		                        <label for="e-amount">Estimate Amount</label>
-		                        <input type="number" class="form-control" id="e-amount" name="e-amount" required >
-		                    </div>
+	                        <label for="e-amount">Estimate Amount</label>
+	                        <input type="number" class="form-control" id="e-amount" name="e-amount" min="0" step="0.01" required >
+	                        <div class="invalid-feedback">Please Enter Estimate Amount</div>
+	                    </div>
 		                </div>
 
 		                
 		                <?php
 		                // tooltip text for explane
-		                $tooltip_text = "<ul><li>If you select amount, deal need to reach till estimate amount if not reach deal will be close according to date which site fixed.</li>
-		                  <li>if you select date & time, deal will be finish according to entered date and time, in this case wheather estimate amount not reach what you enterd even though deal will be close.</li></ul>"
+		                $tooltip_text = "If you select amount, deal need to reach till estimate amount if not reach deal will be close according to date which site fixed.if you select date & time, deal will be finish according to entered date and time, in this case wheather estimate amount not reach what you enterd even though deal will be close."
 		                ?>
 
 		                <div class="form-group row">
@@ -230,7 +228,7 @@ $exp_date = explode(" ",$current_date);
 						    </div>
 		                  </div>
 		                  <div class="col-sm-3 mt-3" id="redDiv1">
-		                    <input type="number" class="form-control w-100"  id="red-amount"  name="red-amount" placeholder="Estimate Amount" readonly>
+		                    <input type="number" class="form-control w-100"  id="red-amount"  name="red-amount" placeholder="Estimate Amount" min="0" step="0.01" readonly>
 		                    <div class="invalid-feedback">
 						      Please Enter Amount
 						    </div>

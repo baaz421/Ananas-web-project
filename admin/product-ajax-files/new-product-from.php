@@ -75,7 +75,7 @@ require_once "../header.php";
 	                  <div class="col-sm-9">
 	                    <div class="row">
 	                      <div class="col-md-3">
-	                        <input type="number" name="market-price" id="market-price" placeholder="Market price" class="form-control" required>
+	                        <input type="number" name="market-price" id="market-price" placeholder="Market price" class="form-control" min="0" step="0.01" required>
 	                      </div>
 	                    </div>
 	                  </div>

@@ -8,7 +8,7 @@ include 'header.php';
   <!-- =================  add product modal starts ====================--->
     <div>
       <!-- <a href="product-ajax-files/add-new-product-img.php"><button type="button" class="btn btn-info shadow mb-3 mt-3 rounded">+ ADD NEW PRODUCT</button></a> -->
-      <a href="product-ajax-files/create-new-product-id.php"><button type="button" class="btn btn-info shadow mb-3 mt-3 rounded">+ ADD NEW PRODUCT</button></a>
+      <!-- <a href="product-ajax-files/create-new-product-id.php"><button type="button" class="btn btn-info shadow mb-3 mt-3 rounded">+ ADD NEW PRODUCT</button></a> -->
     </div>
   <!-- =================  add product modal close ====================--->
 

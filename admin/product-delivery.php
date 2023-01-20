@@ -1,7 +1,6 @@
 <?php
 // product-delivery.php
 include 'header.php';
-
 ?>
 <div class="content-inner">
   <!-- Page Header-->

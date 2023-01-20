@@ -16,6 +16,7 @@ session_start();
                 $_SESSION['a_password'] = $admin_password;
                 $_SESSION['a_id'] = $fetch['AID'];
                 $_SESSION['a_country'] = $fetch['a_country'];
+                $_SESSION['a_country_code'] = $fetch['a_country_code'];
                 //$status = $fetch['vstatus'];
                 // if($status == 'verified'){
                 //   $_SESSION['email'] = $email;

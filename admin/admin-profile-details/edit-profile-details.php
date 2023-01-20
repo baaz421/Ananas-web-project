@@ -15,6 +15,8 @@ session_start();
 	$admin_phone 		=str_replace(' ', '', $a_phone);
 	$admin_phone_code 	=mysqli_real_escape_string($conn, $_POST['admin-r-phonecode']);
 	$admin_country 		=mysqli_real_escape_string($conn, $_POST['admin-r-contryname']);
+	$twoalph_country    = strtoupper($_POST['admin-r-twoalph']);
+  $admin_country_code = CountryCurrencyCode($conn,$twoalph_country);
 
 	$admin_dateofbirth 	=mysqli_real_escape_string($conn, $_POST['admin-r-birthdate']);
 	$date_format 		= str_replace('-', '-', $admin_dateofbirth);
@@ -34,6 +36,7 @@ session_start();
    a_phone 				='{$admin_phone}',	
    a_phonecode 		= {$admin_phone_code},
    a_country 			='{$admin_country}',
+   a_country_code	='{$admin_country_code}',
    a_dateofbirth 	='{$newDate_format}',
    a_updatetime		='{$update_time}'
    WHERE AID 			= {$admin_id}";
@@ -44,6 +47,12 @@ session_start();
 		echo 0;
 	}
 
-
+function CountryCurrencyCode($conn,$iso2){
+  $sql = "SELECT * FROM countries WHERE iso = '{$iso2}'";
+  $run = mysqli_query($conn, $sql);
+  $get = mysqli_fetch_assoc($run);
+  $output = $get['currency'];
+  return $output;
+}
 
 ?>

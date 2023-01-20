@@ -12,14 +12,16 @@ session_start();
 	$admin_phone 		=mysqli_real_escape_string($conn, $_POST['admin-r-phone']);
 	$admin_phone_code 	=mysqli_real_escape_string($conn, $_POST['admin-r-phonecode']);
 	$admin_country 		=mysqli_real_escape_string($conn, $_POST['admin-r-contryname']);
-
+    $admin_country_2ios =mysqli_real_escape_string($conn, $_POST['admin-r-twoalph']);
 	$admin_dateofbirth 	=mysqli_real_escape_string($conn, $_POST['admin-r-birthdate']);
 	$date_format 		= str_replace('-', '-', $admin_dateofbirth);
 	$newDate_format 	= date("d-m-Y", strtotime($date_format));
-
 	$create_time 		= $date;
 	$update_time 		= null;
 	$admin_status 		= 1;
+    $twoalph_country    = strtoupper($admin_country_2ios);
+    $admin_country_code = CountryCurrencyCode($conn,$twoalph_country);
+    // echo $admin_country_2ios."this is code";
 
     if($admin_gender == "male"){
         $pic = "male-avatar.jpg";
@@ -37,8 +39,8 @@ session_start();
         $encpass = password_hash($admin_password, PASSWORD_BCRYPT);
         $vcode = rand(999999, 111111);
         $vstatus = "notverified";
-        $insert_data = "INSERT INTO admin (a_username,a_fullname,a_email,a_gender,a_password,a_phone,a_phonecode,a_country,a_vcode,a_vstatus,a_status,a_dateofbirth,a_createtime,a_updatetime,a_profilepic)
-                        values('$admin_username', '$admin_name', '$admin_email', '$admin_gender', '$encpass', '$admin_phone', '$admin_phone_code', '$admin_country','$vcode', '$vstatus','$admin_status', '$newDate_format', '$create_time', '$update_time','$pic')";
+        $insert_data = "INSERT INTO admin (a_username,a_fullname,a_email,a_gender,a_password,a_phone,a_phonecode,a_country,a_country_code,a_vcode,a_vstatus,a_status,a_dateofbirth,a_createtime,a_updatetime,a_profilepic)
+                        values('$admin_username', '$admin_name', '$admin_email', '$admin_gender', '$encpass', '$admin_phone', '$admin_phone_code', '$admin_country', '$admin_country_code', '$vcode', '$vstatus','$admin_status', '$newDate_format', '$create_time', '$update_time','$pic')";
         // $data_check = mysqli_query($conn, $insert_data);
 
         if(mysqli_query($conn, $insert_data)){
@@ -49,9 +51,10 @@ session_start();
             // $sms = send_sms($number,$message);
             // $mail = send_mail($admin_email, $subject, $message); 
             // if($mail || $sms){
-                $_SESSION['a_email']    = $admin_email;
-                $_SESSION['a_password'] = $admin_password;
-                $_SESSION['a_id']       = $last_id;
+                $_SESSION['a_email']        = $admin_email;
+                $_SESSION['a_password']     = $admin_password;
+                $_SESSION['a_id']           = $last_id;
+                $_SESSION['a_country_code'] = $admin_country_code;
                 echo 0;
                 // header('location: ../index.php');
                 exit();
@@ -63,4 +66,13 @@ session_start();
         }
     }
 
+
+
+function CountryCurrencyCode($conn,$iso2){
+  $sql = "SELECT * FROM countries WHERE iso = '{$iso2}'";
+  $run = mysqli_query($conn, $sql);
+  $get = mysqli_fetch_assoc($run);
+  $output = $get['currency'];
+  return $output;
+}
 ?>

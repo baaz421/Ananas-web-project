@@ -111,11 +111,9 @@ if(mysqli_num_rows($result)>0){
 		                  $output .="
 		                  <td>
 		                  	$view_button
-		                  	$deal_cancel_button 
-		                  	<a href='deals.php?pid={$row["ID"]}' $a_styel>
-		                  	<button class='btn btn-sm btn-primary mb-2' data-did='{$row["ID"]}' id='{$row["ID"]}' $b_dis >$deal_text</button>
-		                  	$spinner
-		                  	
+		                  	$deal_cancel_button
+		               
+		                  	$spinner		                  	
 		                  </td>
 
 		                  <td>
@@ -187,5 +185,8 @@ echo $output;
 	echo "<h3> Records not found ....</h3>";
 
 }
+/* deal button code*/
+// <a href='deals.php?pid={$row["ID"]}' $a_styel>
+// <button class='btn btn-sm btn-primary mb-2' data-did='{$row["ID"]}' id='{$row["ID"]}' $b_dis >$deal_text</button></a>
 
 ?>

@@ -202,7 +202,7 @@ $admin_data_pic = $admin_data['a_profilepic'];
                       <input type="text" class="form-control" id="admin-r-name" name="admin-r-name" value="<?php echo $admin_data['a_fullname']; ?>" required="Please Enter Full Name">
                   </div><!-- End .form-group -->
                   <div class="form-group">
-                      <label for="admin-r-username">User name *</label>
+                      <label for="admin-r-username">Company name *</label>
                       <input type="text" class="form-control" id="admin-r-username" name="admin-r-username" value="<?php echo $admin_data['a_username']; ?>" required="Please Enter User Name">
                   </div><!-- End .form-group -->
                   <div class="form-group">
@@ -246,6 +246,7 @@ $admin_data_pic = $admin_data['a_profilepic'];
                       <span id="valid-msg" class="hide">✓ Valid</span>
                       <span id="error-msg" class="hide"></span>
                       <input type="text" class="form-control error" id="ccodez" name="admin-r-phonecode" hidden >
+                      <input type="text" class="form-control" id="twoalph" name="admin-r-twoalph" hidden >
                       <input type="text" class="form-control" id="cname" name="admin-r-contryname"  hidden>
                   </div><!-- End .form-group -->
 
@@ -442,6 +443,7 @@ $(document).ready(function(){
 		          errorMsg.classList.remove("hide");
 		          }
 		        }
+				console.log($("#twoalph").val());
 		      });
 
 		    // on keyup / change flag: reset
@@ -450,14 +452,14 @@ $(document).ready(function(){
 
 		// submit form update
 
-		$("#admin-r-username").keydown(function(k){
-	      			if(k.keyCode == 32){
-	      				$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>Spaces Not allowed in username.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
-	        			$("#success-message").slideUp();
-	        			setTimeout(function(){$("#error-message").fadeOut("slow")}, 3000);
-	        			k.preventDefault();
-	      			}
-	      		});
+		// $("#admin-r-username").keydown(function(k){
+	  //     			if(k.keyCode == 32){
+	  //     				$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>Spaces Not allowed in username.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+	  //       			$("#success-message").slideUp();
+	  //       			setTimeout(function(){$("#error-message").fadeOut("slow")}, 3000);
+	  //       			k.preventDefault();
+	  //     			}
+	  //     		});
 
 			$("#save-changes").on("click",function(e){
 
@@ -487,7 +489,7 @@ $(document).ready(function(){
 	            $("#success-message").html("<div class='alert alert-dismissible fade show alert-success ' role='alert'>Successfully updated details.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
 	            $("#error-message").slideUp();
 	            setTimeout(function() {$("#success-message").fadeOut("slow")}, 3000);  
-	            setTimeout(function() {location.reload();}, 3000);
+	            setTimeout(function() {location.replace("admin-profile.php");}, 3000);
 	                  //$('#submit-product').trigger("reset");
 	                  //location.replace("admin-login-system-ajax/admin-insert-data.php");
 	               }else{

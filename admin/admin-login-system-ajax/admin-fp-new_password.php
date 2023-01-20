@@ -28,7 +28,8 @@ if(isset($_POST['admin-new-password-submit'])){
 			$_SESSION['a_email'] 		= $admin_email;
 			$_SESSION['a_password'] = $fetch['a_password'];
 			$_SESSION['a_id'] 			= $fetch['AID'];
-			$_SESSION['a_country'] 	= $fetch['a_country'];
+      $_SESSION['a_country']  = $fetch['a_country'];
+			$_SESSION['a_country_code'] 	= $fetch['a_country_code'];
 			header("location: ../");
 		}else{
 			$error_message = "Sorry!. Something went wrong.";

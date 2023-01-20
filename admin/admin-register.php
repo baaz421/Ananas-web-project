@@ -103,7 +103,7 @@
 														<input type="text" class="form-control" id="admin-r-name" name="admin-r-name" required="Please Enter Full Name">
 												</div><!-- End .form-group -->
 												<div class="form-group">
-														<label for="admin-r-username">User name *</label>
+														<label for="admin-r-username">Company name *</label>
 														<input type="text" class="form-control" id="admin-r-username" name="admin-r-username" required="Please Enter User Name">
 												</div><!-- End .form-group -->
 												<div class="form-group">
@@ -131,6 +131,7 @@
 														<span id="valid-msg" class="hide">✓ Valid</span>
 														<span id="error-msg" class="hide"></span>
 														<input type="text" class="form-control error" id="ccodez" name="admin-r-phonecode" hidden >
+														<input type="text" class="form-control" id="twoalph" name="admin-r-twoalph" hidden >
 														<input type="text" class="form-control" id="cname" name="admin-r-contryname"  hidden>
 												</div><!-- End .form-group -->
 												<div class="form-group">
@@ -303,6 +304,8 @@ $(document).ready(function(){
 						errorMsg.classList.remove("hide");
 					}
 				}
+				// console.log($("#twoalph").val());
+      // console.log($("#ccodez").val());
 			});
 
 		// on keyup / change flag: reset

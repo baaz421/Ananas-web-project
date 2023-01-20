@@ -164,7 +164,7 @@ require_once "admin-function.php";
             <li><a href="<?php echo $file_back; ?>view-all-deals.php"> <i class="icon-presentation"></i>View Deals</a></li>            
             <li><a href="<?php echo $file_back; ?>deal-setting.php"> <i class="icon-bill"></i>Deal Setting</a></li>
             <li><a href="<?php echo $file_back; ?>product-delivery.php"> <i class="icon-bill"></i>Product Delivery</a></li>
-            <li><a href="<?php echo $file_back; ?>coupon.php"> <i class="icon-bill"></i>Coupon's</a></li>
+            <!-- <li><a href="<?php echo $file_back; ?>coupon.php"> <i class="icon-bill"></i>Coupon's</a></li> -->
           </ul><span class="heading">Extras</span>
           <ul class="list-unstyled">
             <li> <a href="<?php echo $file_back; ?>admin-profile.php"> <i class="icon-screen"></i>My Profile </a></li>

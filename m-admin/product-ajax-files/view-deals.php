@@ -80,7 +80,7 @@ if(mysqli_num_rows($running_res) > 0){
 		// amounts collected from user individual zones and members
 		if($row_run['zone'] == "red"){
 			$amount = $row_run['red_am'];
-			$red_price = "<span class='text-danger'><u>{$amount}.00</u></span><br>";
+			$red_price = "<span class='text-danger'><u>{$amount}</u></span><br>";
 			$orange_price ="";
 			$green_price = "";
 
@@ -89,8 +89,8 @@ if(mysqli_num_rows($running_res) > 0){
 			$green_member = "";
 		}elseif($row_run['zone'] == "orange"){
 			$amount = $row_run['oran_am'];
-			$red_price = "<span class='text-danger'><u>{$row_run['red_am']}.00</u></span><br>";
-			$orange_price = "<span class='text-warning'><u>{$amount}.00</u></span><br>";
+			$red_price = "<span class='text-danger'><u>{$row_run['red_am']}</u></span><br>";
+			$orange_price = "<span class='text-warning'><u>{$amount}</u></span><br>";
 			$green_price = "";
 
 			$red_member = "<span class='text-danger'><u>{$red_m}</u></span><br>";
@@ -98,9 +98,9 @@ if(mysqli_num_rows($running_res) > 0){
 			$green_member = "";
 		}else{
 			$amount = $row_run['green_am'];
-			$red_price = "<span class='text-danger'><u>{$row_run['red_am']}.00</u></span><br>";
-			$orange_price = "<span class='text-warning'><u>{$row_run['oran_am']}.00</u></span><br>";
-			$green_price = "<span class='text-success'><u>{$amount}.00</u></span><br>";
+			$red_price = "<span class='text-danger'><u>{$row_run['red_am']}</u></span><br>";
+			$orange_price = "<span class='text-warning'><u>{$row_run['oran_am']}</u></span><br>";
+			$green_price = "<span class='text-success'><u>{$amount}</u></span><br>";
 
 			$red_member = "<span class='text-danger'><u>{$red_m}</u></span><br>";
 			$orange_member = "<span class='text-warning'><u>{$orange_m}</u></span><br>";
@@ -114,9 +114,9 @@ if(mysqli_num_rows($running_res) > 0){
 							<th>{$deal_id}</th>
 							<td><img src='../../All-Products-images/{$fetch_pro['image_0']}' class='rounded img-thumbnail' width='50px' height='50px' ></td>
 							<td>{$fetch_pro['product_name']}</td>
-							<td>{$row_run['m_value']}.00</td>
-							<td>{$row_run['e_value']}.00</td>
-							<td>{$row_run['unit_price']}.00</td>
+							<td>{$row_run['m_value']}</td>
+							<td>{$row_run['e_value']}</td>
+							<td>{$row_run['unit_price']}</td>
 							<td>
 								$red_price
 								$orange_price
@@ -200,7 +200,7 @@ if(mysqli_num_rows($running_res) > 0){
 							<td>{$row_run['e_value']}</td>
 							<td>{$row_run['unit_price']}</td>
 							<td><a href='#' id='winner_id' data-u_id='{$row_run['winner_id']}'>{$row_run['winner_id']}</a></td>
-							<td>{$row_run['green_am']}.00</td>
+							<td>{$row_run['green_am']}</td>
 							<td>{$members}</td>
 							<td>{$date_create}</td>
 							<td>{$row_run['update_time']}</td>							

@@ -46,16 +46,16 @@ include 'header.php';
 		        	<h3 class="h6">Sort</h3>
 		        	<ul class="nav nav-pills card-header-pills ml-2">
 					      <li class="nav-item">
-					        <a class="nav-link" href="#">Both Confirm</a>
+					        <a class="nav-link" href="#" id="both-confirm">Both Confirm</a>
 					      </li>
 					      <li class="nav-item">
-					        <a class="nav-link" href="#">Both Pending</a>
+					        <a class="nav-link" href="#" id="both-pending">Both Pending</a>
 					      </li>
 					      <li class="nav-item">
-					        <a class="nav-link" href="#">User Pending</a>
+					        <a class="nav-link" href="#" id="user-pending">User Pending</a>
 					      </li>
 					      <li class="nav-item">
-					        <a class="nav-link" href="#">Vender Pending</a>
+					        <a class="nav-link" href="#" id="vendor-pending">Vender Pending</a>
 					      </li>
 					    </ul>
 		        </div>
@@ -117,7 +117,24 @@ include 'header.php';
 						}
 					});
 				}	
+			});
 
+		//live search
+			$(document).on("click", "#email-send", function(){
+				var search_term = $(this).val();
+				if(search_term == ""){
+					$("#search_val").trigger("reset"); 
+					loadTable();
+				}else{
+					$.ajax({
+						url : "product-delivery-ajax/ajax-live-search.php",
+						type : "POST",
+						data :  {search:search_term},
+						success : function(data){
+							$("#table-data").html(data);
+						}
+					});
+				}	
 			});
 		
 		//send email to user and vendor

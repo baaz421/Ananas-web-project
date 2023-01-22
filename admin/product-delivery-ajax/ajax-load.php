@@ -71,7 +71,7 @@ if(mysqli_num_rows($result)>0){
 		    $pro_image    = $pro_img_path.$pro_img_name;
 		    $host 				= $_SERVER['HTTP_HOST'];
     		$portal 			= $_SERVER['REQUEST_SCHEME'];
-		    if($host != "http"){
+		    if($portal == "http"){
 		    	$link= $portal."://".$host."/molla/admin/product-ajax-files/edit-product.php?pid=".$pro_id;
 		    }else{
 		    	$link= $portal."://".$host."/admin/product-ajax-files/edit-product.php?pid=".$pro_id;

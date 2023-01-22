@@ -31,34 +31,8 @@ function send_sms($num,$msg){
         echo"msg sent successfully to $num";
     }
 //========= sending sms function close here ===========//
+    
     $num = "919110703891";
     $msg = "testing msg hi baaz";
 
     // echo send_sms($num,$msg);
-
-// new API For SMS COuntry
-
-$ch = curl_init();
-
-curl_setopt($ch, CURLOPT_URL, "https://restapi.smscountry.com/v0.1/Accounts/JOssJkM6H5PPrK0Mnfm8/SMSes/
-");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-curl_setopt($ch, CURLOPT_HEADER, FALSE);
-
-curl_setopt($ch, CURLOPT_POST, TRUE);
-
-curl_setopt($ch, CURLOPT_POSTFIELDS, "{
-  \"Text\": \"$msg\",
-  \"Number\": \"$num\",
-  \"SenderId\": \"SMSCountry\",
-  \"Tool\": \"JOssJkM6H5PPrK0Mnfm8\"
-}");
-
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-  "Content-Type: application/json"
-));
-
-$response = curl_exec($ch);
-curl_close($ch);
-
-var_dump($response);

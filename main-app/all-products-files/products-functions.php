@@ -62,7 +62,7 @@ function progressBarHtml(){
 function check_img_db($img_name,$pro_img_src){
     $img_path = $pro_img_src;
     $image_src = $img_path.$img_name;
-    if($img_name == "null"){
+    if($img_name == "null" || $img_name == null){
         $small_imgs = "";
     }else{
         $small_imgs ="
@@ -86,7 +86,7 @@ function nextProduct($p_id,$conn){
     }    
 }
 
-// pre product function
+// previous product function
 function preProduct($p_id,$conn){
     $pre_p = "SELECT * FROM products WHERE p_status = 1 AND ID < '{$p_id}' ORDER BY ID DESC LIMIT 1";
     $run_pre_p = mysqli_query($conn,$pre_p);
@@ -168,56 +168,50 @@ function searchForPid($id, $array) {
 
 // Disable wishlist button
 function DisableWishlistButton($user_id,$p_id,$conn){
-    if($user_id != ""){
-        $check_wishlist = "SELECT product_id FROM wishlist WHERE user_id = '{$user_id}'";
-        $run_check_wishlist = mysqli_query($conn, $check_wishlist);
-        $row_data = array();
-        while($row_2 = mysqli_fetch_array($run_check_wishlist))
-        $row_data[] = $row_2;
-        $check_pro = searchForPid($p_id,$row_data);
-        if(mysqli_num_rows($run_check_wishlist) > 0){
-            if($check_pro != ""){
-                $w_disable = "isDisabled";
-                
-            }else{
-                $w_disable ="";
-                
-            }
-        }else{
-                $w_disable ="";
-                                
-        }
+  if($user_id != ""){
+    $check_wishlist = "SELECT product_id FROM wishlist WHERE user_id = '{$user_id}'";
+    $run_check_wishlist = mysqli_query($conn, $check_wishlist);
+    $row_data = array();
+    while($row_2 = mysqli_fetch_array($run_check_wishlist))
+    $row_data[] = $row_2;
+    $check_pro = searchForPid($p_id,$row_data);
+    if(mysqli_num_rows($run_check_wishlist) > 0){
+      if($check_pro != ""){
+        $w_disable = "isDisabled";                
+      }else{
+        $w_disable ="";                
+      }
     }else{
-        $w_disable ="";
+      $w_disable ="";                                
     }
-    return $w_disable;
+  }else{
+    $w_disable ="";
+  }
+  return $w_disable;
 }
 
 // Disable cart button
 function DisableCartButton($user_id,$p_id,$conn){
-    if($user_id != ""){
-        $check_cart = "SELECT product_id FROM cart WHERE user_id = '{$user_id}'";
-        $run_check_cart = mysqli_query($conn, $check_cart);
-        $row_data = array();
-        while($row_2 = mysqli_fetch_array($run_check_cart))
-        $row_data[] = $row_2;
-        $check_pro = searchForPid($p_id,$row_data);
-        if(mysqli_num_rows($run_check_cart) > 0){
-            if($check_pro != ""){
-                $c_disable = "isDisabled";
-                
-            }else{
-                $c_disable ="";
-                
-            }
-        }else{
-                $c_disable ="";
-                                
-        }
+  if($user_id != ""){
+    $check_cart = "SELECT product_id FROM cart WHERE user_id = '{$user_id}'";
+    $run_check_cart = mysqli_query($conn, $check_cart);
+    $row_data = array();
+    while($row_2 = mysqli_fetch_array($run_check_cart))
+    $row_data[] = $row_2;
+    $check_pro = searchForPid($p_id,$row_data);
+    if(mysqli_num_rows($run_check_cart) > 0){
+      if($check_pro != ""){
+        $c_disable = "isDisabled";                
+      }else{
+        $c_disable ="";                
+      }
     }else{
-        $c_disable ="";
+      $c_disable ="";                                
     }
-    return $c_disable;
+  }else{
+    $c_disable ="";
+  }
+  return $c_disable;
 }
 
 // get product data by its id

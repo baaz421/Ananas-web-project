@@ -29,22 +29,22 @@ $sql_participators = "SELECT * FROM participators WHERE deal_id = $deal_id AND s
   }
   return $users;
 }
-// $get_ids_of_user = get_user_ids_for_email($deal_id,$conn);
-// $sno = 0;
-// foreach ($get_ids_of_user as $key => $value) {
-//   $user_detail = Get_User_Email_And_Name($value,$conn);
-//   $user_name = $user_detail['name'];
-//   $user_email = $user_detail['email'];
-//   $sno += 1;
-//   echo $sno."user Ids = ".$value." and name is".$user_name."<br>";
-// }
-
-$sql = 'SELECT m_admin.a_username AS m_name, m_admin.a_country AS m_country, users.name, users.country, deal.a_id, admin.a_username, admin.a_country, deal.winner_id, deal.DID, deal.create_time, deal.update_time FROM deal LEFT JOIN admin ON deal.a_id = admin.AID INNER JOIN users ON deal.winner_id = users.id LEFT JOIN m_admin ON deal.a_id = m_admin.AID ORDER BY deal.DID DESC'; 
-// echo $sql;
-$run = mysqli_query($conn, $sql);
-$a = array();
-while($row = mysqli_fetch_assoc($run)){
-$a[] = $row;
+$get_ids_of_user = get_user_ids_for_email($deal_id,$conn);
+$sno = 0;
+foreach ($get_ids_of_user as $key => $value) {
+  $user_detail = Get_User_Email_And_Name($value,$conn);
+  $user_name = $user_detail['name'];
+  $user_email = $user_detail['email'];
+  $sno += 1;
+  echo $sno."user Ids = ".$value." and name is".$user_name."<br>";
 }
-echo "<pre>";
-print_r($a);
+
+// $sql = 'SELECT m_admin.a_username AS m_name, m_admin.a_country AS m_country, users.name, users.country, deal.a_id, admin.a_username, admin.a_country, deal.winner_id, deal.DID, deal.create_time, deal.update_time FROM deal LEFT JOIN admin ON deal.a_id = admin.AID INNER JOIN users ON deal.winner_id = users.id LEFT JOIN m_admin ON deal.a_id = m_admin.AID ORDER BY deal.DID DESC'; 
+// // echo $sql;
+// $run = mysqli_query($conn, $sql);
+// $a = array();
+// while($row = mysqli_fetch_assoc($run)){
+// $a[] = $row;
+// }
+// echo "<pre>";
+// print_r($a);

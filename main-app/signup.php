@@ -11,34 +11,22 @@ if(@$_GET['continue'] == ""){
 <!-- ========css styling starts here =============-->
 <style type="text/css">
     .pass_show{position: relative} 
-
     .pass_show .ptxt { 
-
     position: absolute; 
-
     top: 50%; 
-
     right: 10px; 
-
     z-index: 1; 
-
     color: #193586; 
-
     margin-top: 5px; 
-
     cursor: pointer; 
-
     transition: .3s ease all; 
-
     } 
     .pass_show .ptxt:hover{color: #333333;} 
 
     /*for phone number validation css*/
-
     #valid-msg {
           color: #00C900;
       } 
-
       .hide {
           display: none;
       }

@@ -185,7 +185,7 @@ $(document).ready(function(){
 				});
 			}
 
-			});
+		});
 
 	//verified or not verified 
 	$(document).on("click", "#verify-button", function(){

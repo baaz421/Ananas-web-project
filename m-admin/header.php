@@ -66,6 +66,18 @@ require_once "admin-function.php";
     <link href="<?php echo $file_back; ?>css/cropper.css" rel="stylesheet"/>
     <link href="<?php echo $file_back; ?>css/dropzoneCropper.css" rel="stylesheet"/>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style type="text/css">
+      .myAlert-bottom{
+        position: fixed;
+        z-index:99999;
+        /*top: 5px;*/
+        bottom: 5px;
+        left:2%;
+        width: 96%;
+      }
+    </style>
+
   </head>
   <body>
     <div class="page">

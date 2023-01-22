@@ -4,7 +4,7 @@ ob_start();
 include "includes/header.php";
 
 if($_SESSION['u_email'] == false){
-  header('Location: ../login.php');
+  header('Location: login.php');
 }else{
   $user_email = $_SESSION['u_email'];
 }

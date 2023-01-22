@@ -3,6 +3,10 @@
 include 'header.php';
 
 ?>
+<!-- ERROR MESSAGE DIV-->
+  <div id="error-message"></div>
+  <div id="success-message"></div>
+<!-- ERROR MESSAGE DIV CLOSE-->
 <div class="content-inner">
   <!-- Page Header-->
   <header class="page-header">
@@ -62,13 +66,10 @@ include 'header.php';
 		    </div>
 		  </div>
 		</div>
-
 </div>
-
-
-
 </div>
     </div>
+
     <!-- JavaScript files-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/jquery/jquery.js"></script>
@@ -80,46 +81,83 @@ include 'header.php';
 <script type="text/javascript">
 	$(document).ready(function(){
 		// load table data
-		function loadTable(page){
-			$.ajax({
-				url : "product-delivery-ajax/ajax-load.php",
-				type : "POST",
-				data : {page_no:page},
-				success : function(data){
-					$("#table-data").html(data); 
+			function loadTable(page){
+				$.ajax({
+					url : "product-delivery-ajax/ajax-load.php",
+					type : "POST",
+					data : {page_no:page},
+					success : function(data){
+						$("#table-data").html(data); 
+					}
+				});
 				}
-			});
-			}
-		loadTable();
+			loadTable();
 
 		//pagination
-		$(document).on("click","#pagination a",function(e){
-			e.preventDefault();
-			var page_id =$(this).attr("id");
-			//console.log(page_id);
-			loadTable(page_id);
-		});
+			$(document).on("click","#pagination a",function(e){
+				e.preventDefault();
+				var page_id =$(this).attr("id");
+				//console.log(page_id);
+				loadTable(page_id);
+			});
 
 		//live search
-		$("#search_val").on("keyup",function(){
-			var search_term = $(this).val();
-			if(search_term == ""){
-				$("#search_val").trigger("reset"); 
-				loadTable();
-			}else{
-				$.ajax({
-					url : "product-delivery-ajax/ajax-live-search.php",
-					type : "POST",
-					data :  {search:search_term},
-					success : function(data){
-						$("#table-data").html(data);
-					}
-
-				});
-			}	
+			$("#search_val").on("keyup",function(){
+				var search_term = $(this).val();
+				if(search_term == ""){
+					$("#search_val").trigger("reset"); 
+					loadTable();
+				}else{
+					$.ajax({
+						url : "product-delivery-ajax/ajax-live-search.php",
+						type : "POST",
+						data :  {search:search_term},
+						success : function(data){
+							$("#table-data").html(data);
+						}
+					});
+				}	
 
 			});
 		
+		//send email to user and vendor
+		$(document).on("click", "#email-send", function(){
+			if(confirm("Do you real want to send an email to user and vendor? ")){
+				var winner_id = $(this).data("w-id");
+				$.ajax({
+					url : "product-delivery-ajax/send-email-user-vendor.php",
+					type : "POST",
+					data : {w_id:winner_id},
+					beforeSend: function (){
+            $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary' role='alert'>Sending Email please wait.....<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+						$("#success-message").slideUp();
+          },
+					success : function(data){
+						if(data == 1){
+							$("#success-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-success' role='alert'>Email sent to both successfully!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+							$("#error-message").slideUp();
+							setTimeout(function(){$("#success-message").fadeOut("slow")}, 4000);
+						}else if(data == 2){
+							$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert'>Email Failed to send for vendor .<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+							$("#success-message").slideUp();
+							setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+						}else if(data == 3){
+							$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert'>Email Failed to send for user.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+							$("#success-message").slideUp();
+							setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+						}else if(data == 4){
+							$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert'>Email Failed to send both.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+							$("#success-message").slideUp();
+							setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+						}else{
+							$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert'>Sorry something went wrong, Please try again.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+							$("#success-message").slideUp();
+							setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+						}						
+					}
+				});
+			}
+		});
 	});
 </script>
 

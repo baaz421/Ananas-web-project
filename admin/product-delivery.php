@@ -2,6 +2,10 @@
 // product-delivery.php
 include 'header.php';
 ?>
+<!-- ERROR MESSAGE DIV-->
+  <div id="error-message"></div>
+  <div id="success-message"></div>
+<!-- ERROR MESSAGE DIV CLOSE-->
 <div class="content-inner">
   <!-- Page Header-->
   <header class="page-header">
@@ -68,6 +72,7 @@ include 'header.php';
 
 </div>
     </div>
+    
     <!-- JavaScript files-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/jquery/jquery.js"></script>
@@ -118,6 +123,41 @@ include 'header.php';
 			}	
 
 			});
+		// dispatch product and send email to user
+		$(document).on("click", "#dispatch", function(){
+			if(confirm("Do you real want to dispatch this product? ")){
+				var winner_id = $(this).data("wid");
+				$.ajax({
+					url : "product-delivery-ajax/dispatch-product.php",
+					type : "POST",
+					data : {w_id:winner_id},
+					beforeSend: function (){
+            $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary' role='alert'>Dispatching the product please wait.....<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+						$("#success-message").slideUp();
+          },
+					success : function(data){
+						if(data == 1){
+							$("#success-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-success' role='alert'>Successfully Dispatched the product!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+							$("#error-message").slideUp();
+							setTimeout(function(){$("#success-message").fadeOut("slow")}, 4000);
+							loadTable();
+						}else if(data == 2){
+							$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert'>Dispatching Failed.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+							$("#success-message").slideUp();
+							setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+						}else if(data == 3){
+							$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert'>Confirmation Email Failed to send.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+							$("#success-message").slideUp();
+							setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+						}else{
+							$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert'>Sorry something went wrong, Please try again.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+							$("#success-message").slideUp();
+							setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+						}						
+					}
+				});
+			}
+		});
 		
 	});
 </script>

@@ -92,6 +92,8 @@ if(isset($_SESSION['u_email'])){
     <!-- Favicon-->
     <link rel="shortcut icon" href="<?php echo $file_back.$fav_img; ?>">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
 
     <!-- new link for jquery crop image -->
     <!-- <link rel="stylesheet" href="css/dropzoneCropper.css" />
@@ -101,7 +103,16 @@ if(isset($_SESSION['u_email'])){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <!-- <link rel="stylesheet" href="https://unpkg.com/dropzone/dist/dropzone.css" /> -->
     <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
-    
+    <style type="text/css">
+      .myAlert-bottom{
+        position: fixed;
+        z-index:99999;
+        /*top: 5px;*/
+        bottom: 5px;
+        left:2%;
+        width: 96%;
+      }
+    </style>
     
 
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>

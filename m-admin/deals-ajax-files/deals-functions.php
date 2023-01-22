@@ -197,7 +197,7 @@ function zoneProgress($deal_id,$conn,$date){
                   
                   // inserting into winner table.
                   if(mysqli_query($conn,$update_winner_id)){
-                    $winner_sql = "INSERT INTO winner (user_id, admin_id, deal_id, start_date, end_date, user_confirm, vendor_confirm, status, created_date) VALUES ('$winner_id','$admin_id','$d_id','$create_time','{$date}',1,1,1,'{$date}')";
+                    $winner_sql = "INSERT INTO winner (user_id, admin_id, deal_id, start_date, end_date, user_confirm, vendor_confirm, status, created_date) VALUES ('$winner_id','$admin_id','$d_id','$create_time','$date',1,1,0,'$date')";
                     mysqli_query($conn,$winner_sql);
                   }
                 }
@@ -258,7 +258,7 @@ function zoneProgress($deal_id,$conn,$date){
 
                   // inserting into winner table.
                   if(mysqli_query($conn,$update_winner_id)){
-                    $winner_sql = "INSERT INTO winner (user_id, admin_id, deal_id, start_date, end_date, user_confirm, vendor_confirm, status, created_date) VALUES ('$winner_id','$admin_id','$d_id','$create_time','{$date}',1,1,1,'{$date}')";
+                    $winner_sql = "INSERT INTO winner (user_id, admin_id, deal_id, start_date, end_date, user_confirm, vendor_confirm, status, created_date) VALUES ('$winner_id','$admin_id','$d_id','$create_time','{$date}',1,1,0,'{$date}')";
                     mysqli_query($conn,$winner_sql);
                   }
                 }
@@ -269,6 +269,5 @@ function zoneProgress($deal_id,$conn,$date){
         break;
     }
   }
-
   return progressBar($prog_percen,$prog_color);
 }

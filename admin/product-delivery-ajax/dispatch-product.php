@@ -18,7 +18,7 @@ if(isset($_POST['w_id'])){
 	$user_subject	= "Product Confirmation Notification";
 	$host = $_SERVER['HTTP_HOST'];
 	$portal= $_SERVER['REQUEST_SCHEME'];
-	if($host != "http"){
+	if($portal == "http"){
 	  $link= $portal."://".$host."/molla/main-app/product-received-successfully.php?wid=".$w_id;
 	}else{
 	  $link= $portal."://".$host."/main-app/product-received-successfully.php?wid=".$w_id;

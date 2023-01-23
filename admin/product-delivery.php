@@ -54,7 +54,7 @@ include 'header.php';
 					        <a class="nav-link" href="#">User Pending</a>
 					      </li>
 					      <li class="nav-item">
-					        <a class="nav-link" href="#">Vender Pending</a>
+					        <a class="nav-link" href="#">Vendor Pending</a>
 					      </li>
 					    </ul>
 		        </div>

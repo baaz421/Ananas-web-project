@@ -73,6 +73,7 @@ if(mysqli_num_rows($result)>0){
 		                  	$sql_deal_zone = "SELECT * FROM deal WHERE p_id = {$row['ID']} AND deal_status = 1";
 		                  	$deal_zone_res = mysqli_query($conn, $sql_deal_zone);
 		                  	$get_zone = mysqli_fetch_assoc($deal_zone_res);
+		                  	$deal_id = $get_zone['DID'];
 		                  	if($get_zone['zone'] == "red"){
 		                  		$color_circle ="red";
 		                  	}elseif($get_zone['zone'] == "orange"){
@@ -86,7 +87,7 @@ if(mysqli_num_rows($result)>0){
 		                  	$deal_text = "Running";
 		                  	$spinner = "<button class='btn btn-outline-info mb-2 pb-0 pt-1 pr-2 pl-2' ><i class='fa fa-refresh fa-spin' style='color:{$color_circle}'></i></button>";
 		                  	if($get_zone['zone'] == "red"){
-		                  		$deal_cancel_button = "<button type='button' class='btn btn-sm btn-primary mb-2' data-dcid='{$row["ID"]}' id='deal-cancel' >Cancel</button>";
+		                  		$deal_cancel_button = "<button type='button' class='btn btn-sm btn-primary mb-2' data-dcid='{$deal_id}' id='deal-cancel' >Cancel</button>";
 		                  	}else{
 		                  		$deal_cancel_button = "";
 		                  	}
@@ -108,7 +109,7 @@ if(mysqli_num_rows($result)>0){
 		                  	<a href='deals.php?pid={$row["ID"]}' $a_styel>
 		                  	<button class='btn btn-sm btn-primary mb-2' data-did='{$row["ID"]}' id='{$row["ID"]}' $b_dis >$deal_text</button>
 		                  	$spinner
-		                  	
+		                  	</a>
 		                  </td>
 
 		                  <td>
@@ -117,8 +118,7 @@ if(mysqli_num_rows($result)>0){
 		                  	</button>
 		                  </td>
 		                  <td>
-		                  	<button type='button' class='btn btn-sm btn-info mb-2' $s_d_><a class='text-white' href='product-ajax-files/edit-product.php?pid={$row["ID"]}' >Edit</a></button>
-												<button type='button' class='btn btn-sm btn-danger mb-2' data-id='{$row["ID"]}' id='del' $s_d_ >Delete</button>
+		                  	<button type='button' class='btn btn-sm btn-info mb-2' $s_d_><a class='text-white' href='product-ajax-files/edit-product.php?pid={$row["ID"]}' $a_styel>Edit</a></button>
 						 					</td>
 		                </tr>";
 		              }

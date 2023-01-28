@@ -1,21 +1,19 @@
 <?php 
 include "../db_connnection.php";
-$id_pro = $_POST["deal_pro_Id"];
+$deal_id = $_POST["deal_pro_Id"];
 $status_value_one = 1;
 $status_value_zero = 0;
 $current_date = $date;
 
 
-$sql_check ="SELECT * FROM deal WHERE p_id = {$id_pro} AND deal_status = 1";
+$sql_check ="SELECT * FROM deal WHERE DID = $deal_id";
 $result =mysqli_query($conn,$sql_check) or die("Query failed..!");
 
 $deal_data = mysqli_fetch_assoc($result);
 
 if($deal_data['zone'] == "red"){
-
-	$deal_id = $deal_data['DID'];
-
-	$sql ="UPDATE deal SET deal_status = '{$status_value_zero}', update_time = '{$current_date}' WHERE DID = {$deal_id}";
+	$id_pro = $deal_data['p_id'];
+	$sql ="UPDATE deal SET zone = 'cancelled', deal_status = '{$status_value_zero}', update_time = '{$current_date}' WHERE DID = {$deal_id}";
 
 		if(mysqli_query($conn,$sql)){
 			$sql_update_pro = "UPDATE products SET deal_check ='{$status_value_zero}' WHERE ID = {$id_pro}";

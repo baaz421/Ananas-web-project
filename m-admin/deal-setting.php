@@ -84,8 +84,24 @@ loadOrangeDealFileds();
 	});
 	}
 loadGreenDealFileds();
-
-
+  $(document).on("keyup", "#o-p", function(){
+  	var oran_vale = $(this).val();
+  	console.log(oran_vale);
+  	if(oran_vale > 100){
+  		$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>Orange Percentage should be less than 100%.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+			$("#success-message").slideUp();
+			// setTimeout(function() {$("#error-message").fadeOut("slow")}, 3000);
+  	}
+  });
+  $(document).on("keyup", "#g-p", function(){
+  	var oran_vale = $(this).val();
+  	console.log(oran_vale);
+  	if(oran_vale > 100){
+  		$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>Green Percentage should be less than 100%.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+			$("#success-message").slideUp();
+			// setTimeout(function() {$("#error-message").fadeOut("slow")}, 3000);
+  	}
+  });
   // update orange data 
   $(document).on("click", "#o_update", function(o){
 	// $("#o_update").on("click",function(o){
@@ -96,6 +112,10 @@ loadGreenDealFileds();
 		var o_m 	= $("#o-m").val();
 		if(o_p == "" || o_t == ""){
 			$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>All fields are required please don't leave blank .<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+			$("#success-message").slideUp();
+			setTimeout(function() {$("#error-message").fadeOut("slow")}, 3000);
+		}else if(o_p > 100){
+			$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>Orange Percentage should be less than 100%.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
 			$("#success-message").slideUp();
 			setTimeout(function() {$("#error-message").fadeOut("slow")}, 3000);
 		}else{
@@ -132,6 +152,10 @@ loadGreenDealFileds();
 		var g_m 	= $("#g-m").val();
 		if(g_p == "" || g_t == ""){
 			$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>All fields are required please don't leave blank .<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+			$("#success-message").slideUp();
+			setTimeout(function() {$("#error-message").fadeOut("slow")}, 3000);
+		}if(g_p > 100){
+			$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger' role='alert'>Green Percentage should be less than 100%.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
 			$("#success-message").slideUp();
 			setTimeout(function() {$("#error-message").fadeOut("slow")}, 3000);
 		}else{

@@ -34,7 +34,7 @@ $output = '<div class="col-lg-12">
 		          <form class="form-inline col-lg-12" id="orange-form">
 		            <div class="form-group col-lg-3">
 		              <small class="form-group-text" >Percentage</small>
-		              <input id="o-p" type="number" placeholder="Percentage" value='.$o_p.' class="mb-2 form-control w-100">
+		              <input id="o-p" type="number" placeholder="Percentage" value='.$o_p.' class="mb-2 form-control w-100" min="0" max="99" step="0.01">
 		            </div>
 		            <div class="form-group col-lg-3">
 		              <small class="form-group-text" >days</small>

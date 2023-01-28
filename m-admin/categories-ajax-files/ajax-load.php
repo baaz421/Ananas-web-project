@@ -42,7 +42,6 @@ if(mysqli_num_rows($result)>0){
 		                  <td ><button type='button' class='btn btn-sm btn-$color' data-sid ='{$row["ID"]}' id='status-button' >$status<span class='badge'></span></button></td>
 		                  <td>
 		                  	<button type='button' class='btn btn-sm btn-info' data-eid='{$row["ID"]}' id='eid'>Edit</button>
-							<button type='button' class='btn btn-sm btn-danger' data-id='{$row["ID"]}' id='del' >Delete</button>
 						  </td>
 		                </tr>";
 		              }

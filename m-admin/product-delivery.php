@@ -169,7 +169,7 @@ include 'header.php';
 						}else{
 							$("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-danger' role='alert'>Sorry something went wrong, Please try again.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
 							$("#success-message").slideUp();
-							setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+							// setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
 						}						
 					}
 				});

@@ -61,23 +61,6 @@ if($method_of_deal == "Amount"){
 	$red_method = "time";
 }
 
-//echo for view the data which coming from post data 
-// echo "variables data coming from post method.<br>";
-// echo 	$unit_price 	."--".
-// 		$estimate_price	."--".
-// 		$method_of_deal ."--".
-// 		$red_date 		."--".
-// 		$market_value 	."--".
-// 		$admin_id 		."--".
-// 		$product_id 	."--".
-// 		$admin_country 	."--".
-// 		$deal_zone		."--".
-// 		$red_method 	."--".
-// 		$orange_method 	."--".
-// 		$green_method	."--".
-// 		$current_date."<br>";
-//		
-
 if(isset($_POST['confirm-deal'])){
 	$deal_sql_insert = "
 		INSERT INTO deal(
@@ -108,8 +91,6 @@ if(isset($_POST['confirm-deal'])){
 }else{
 	header('location: products.php');
 }
-
-//echo $deal_sql_insert;
 
 
 

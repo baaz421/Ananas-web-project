@@ -2,6 +2,7 @@
 // join-deal-final-stage.php
 require_once "../db_connnection.php";
 include('../../smtp/simple.php');
+require "../../m-admin/deals-ajax-files/deals-functions.php";
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -41,6 +42,7 @@ if(isset($_POST['user_id']) && $_POST['user_id'] != null && isset($_POST['checko
         foreach ($combine_deals_qtys as $d_id => $d_qty) {
           $check_dealTable_updated = CheckZone($d_id,$conn,$d_qty,$percentage);
           $unit_price_singal = get_unit_price($d_id,$conn,$percentage);
+          zoneProgress($d_id,$conn,$date);
           $s_f_p = 1;
             if($check_dealTable_updated == "error"){
               echo "error";//data not updated or server down

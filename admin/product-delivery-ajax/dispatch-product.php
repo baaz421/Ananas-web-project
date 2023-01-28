@@ -16,13 +16,7 @@ if(isset($_POST['w_id'])){
 	$user_email= $user_data['email'];
 	// sending user email  process
 	$user_subject	= "Product Confirmation Notification";
-	$host = $_SERVER['HTTP_HOST'];
-	$portal= $_SERVER['REQUEST_SCHEME'];
-	if($portal == "http"){
-	  $link= $portal."://".$host."/molla/main-app/product-received-successfully.php?wid=".$w_id;
-	}else{
-	  $link= $portal."://".$host."/main-app/product-received-successfully.php?wid=".$w_id;
-	}
+	$link= "https://ananas.com.co/main-app/product-received-successfully.php?wid=".$w_id;
 	$user_format 	= WinnerConfirmation($conn,$deal_id,$link);
 	$user_mail 		= smtp_mailer($user_email, $user_subject, $user_format);
 	if($user_mail == 0){

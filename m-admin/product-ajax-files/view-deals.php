@@ -192,6 +192,7 @@ if(mysqli_num_rows($running_res) > 0){
 		if($row_run['zone'] == "completed" ){
 		$date_create = date("d-m-Y h:i A",strtotime($row_run['create_time']));
 		$members = $row_run['total_m_red']+$row_run['total_m_oran']+$row_run['total_m_green'];
+		$total_amount = $row_run['red_am']+$row_run['oran_am']+$row_run['green_am'];
 		$output_running ="<tr>
 							<th>{$row_run['DID']} </th>
 							<td><img src='../../All-Products-images/{$fetch_pro['image_0']}' class='rounded img-thumbnail' width='50px' height='50px' ></td>
@@ -200,7 +201,7 @@ if(mysqli_num_rows($running_res) > 0){
 							<td>{$row_run['e_value']}</td>
 							<td>{$row_run['unit_price']}</td>
 							<td><a href='#' id='winner_id' data-u_id='{$row_run['winner_id']}'>{$row_run['winner_id']}</a></td>
-							<td>{$row_run['green_am']}</td>
+							<td>{$total_amount}</td>
 							<td>{$members}</td>
 							<td>{$date_create}</td>
 							<td>{$row_run['update_time']}</td>							

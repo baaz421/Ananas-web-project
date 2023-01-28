@@ -11,13 +11,21 @@ require_once "../db_connnection.php";
         if(mysqli_num_rows($res) > 0){
             $fetch = mysqli_fetch_assoc($res);
             $fetch_pass = $fetch['password'];
+            $status     = $fetch['u_status'];
 
             if(password_verify($user_password, $fetch_pass)){
-                $_SESSION['u_email']        = $user_email;
-                $_SESSION['u_password']     = $user_password;
-                $_SESSION['u_id']           = $fetch['id'];
-                $_SESSION['u_country']      = $fetch['country'];
-                $_SESSION['u_name']         = $fetch['name'];
+                if($status == 0){
+                    echo 4; // blocked user
+                }else{
+                    $_SESSION['u_email']        = $user_email;
+                    $_SESSION['u_password']     = $user_password;
+                    $_SESSION['u_id']           = $fetch['id'];
+                    $_SESSION['u_country']      = $fetch['country'];
+                    $_SESSION['u_name']         = $fetch['name'];
+                    echo 3;
+                    exit();
+                }
+                
 
                 //$status = $fetch['vstatus'];
                 // if($status == 'verified'){
@@ -30,8 +38,7 @@ require_once "../db_connnection.php";
                 //     header('location: dashboard.php');
                 // }
                 //header("location: ../index.php");
-                echo 3;
-                exit();
+                
             }else{
                 echo 1; // "Incorrect email or password!";
             }

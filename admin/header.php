@@ -211,7 +211,6 @@ if(isset($_SESSION['u_email'])){
           <ul class="list-unstyled">
             <li class="active"><a href="<?php echo $file_back; ?>index.php"> <i class="icon-home"></i>Home </a></li>
             <li><a href="<?php echo $file_back; ?>products.php"> <i class="icon-interface-windows"></i>Products</a></li>
-            <li><a href="<?php echo $file_back; ?>categories.php"> <i class="icon-list-1"></i>Categories</a></li>
             <li><a href="<?php echo $file_back; ?>users.php"> <i class="icon-user"></i>Users</a></li>
             <!-- <li><a href="<?php echo $file_back; ?>coupon.php"> <i class="icon-bill"></i>Coupon's</a></li> -->
             <li><a href="<?php echo $file_back; ?>product-delivery.php"> <i class="icon-bill"></i>Product Delivery</a></li>

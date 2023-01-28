@@ -2,6 +2,12 @@
 $title = "Products";
 include 'header.php';
 
+if($user_status == "verified"){
+  $add_product_button = '<a href="product-ajax-files/create-new-product-id.php"><button type="button" class="btn btn-info shadow mb-3 mt-3 rounded">+ ADD NEW PRODUCT</button></a>';
+}else{
+  $add_product_button= "";
+}
+
 ?>
 
 <!-- =============================body starts ===================================-->
@@ -9,7 +15,8 @@ include 'header.php';
   <!-- =================  add product modal starts ====================--->
     <div>
       <!-- <a href="product-ajax-files/add-new-product-si.php"><button type="button" class="btn btn-info shadow mb-3 mt-3 rounded">+ ADD NEW PRODUCT</button></a> -->
-      <a href="product-ajax-files/create-new-product-id.php"><button type="button" class="btn btn-info shadow mb-3 mt-3 rounded">+ ADD NEW PRODUCT</button></a>
+      <?php echo $add_product_button; ?>
+      
     </div>
   <!-- =================  add product modal close ====================--->
 
@@ -95,7 +102,6 @@ $(document).ready(function(){
         }
 
       });
-
   //show modal box
     // $(document).on("click", "#eid", function(){
     //   $("#modal").show();

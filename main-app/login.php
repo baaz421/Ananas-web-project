@@ -145,18 +145,21 @@ $(document).ready(function(){
             		$("#error-message").slideUp();
 			 	},
 			 	success : function(data){
-			 		if(data == 3){
+		 		if(data == 3){
 			 		$("#success-message").html("<div class='alert alert-dismissible fade show alert-success mt-1 rounded' role='alert'>Successfully Logedin.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
-            		$("#error-message").slideUp();	
-            		$('#submit-user-login').trigger("reset");
-            		location.replace("<?php echo $linkTo; ?>");
+	        		$("#error-message").slideUp();	
+	        		$('#submit-user-login').trigger("reset");
+	        		location.replace("<?php echo $linkTo; ?>");
             	}else if(data == 1){
             		$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded' role='alert'>Incorrect Password.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
             		$("#success-message").slideUp();
-			 		}else{
-			 			$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded ' role='alert'>Email Doesn't match OR Incorrect Email OR It's look like you're not yet a member! Click on the bottom to Register.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
-            			$("#success-message").slideUp();
-			 		}
+		 		}else if(data == 4){
+            		$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded' role='alert'>Sorry you can't login, You blocked by Admin!.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+            		$("#success-message").slideUp();
+		 		}else{
+		 			$("#error-message").html("<div class='alert alert-dismissible fade show alert-danger mt-1 rounded ' role='alert'>Email Doesn't match OR Incorrect Email OR It's look like you're not yet a member! Click on the bottom to Register.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+        			$("#success-message").slideUp();
+		 		}
 			 	}
 			 });
 		}

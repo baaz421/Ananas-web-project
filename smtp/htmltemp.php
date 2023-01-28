@@ -713,6 +713,8 @@ function DealConfirmEmail(array $user_detail,$conn,$product_image_path = "https:
   $deal_ids      = $fetch_checkout_data['deal_ids'];
   $av_bal        = $fetch_checkout_data['available_bal'];
   $created_date  = $fetch_checkout_data['created_date'];
+  $year          = date("Y",strtotime($created_date));
+
 
   // coverting date and display join date
   if($created_date == ""){
@@ -873,8 +875,8 @@ function DealConfirmEmail(array $user_detail,$conn,$product_image_path = "https:
                             <span style="font-size: 15px;">'.$join_date.'</span>
                           </td>
                           <td width="30%" style="font-family: Arial, Helvetica, sans-serif; padding:5px; text-align: left;">
-                            <span style="color: #666666;">Deal Join No:</span><br>
-                            <span style="font-size: 15px;">2022CID'.$checkout_id.'</span>
+                            <span style="color: #666666;">Deal No:</span><br>
+                            <span style="font-size: 15px;">'.$year.'CID'.$checkout_id.'</span>
                           </td>
                         </tr>
                        </tbody>
@@ -913,13 +915,13 @@ function DealConfirmEmail(array $user_detail,$conn,$product_image_path = "https:
                         </td>
                         <td width="45%" style="vertical-align: top; font-weight: bold; padding-top: 13px;"><a href="'.$link.'" target="_blank" style="text-decoration: none; color: black"><span>'.$p_name.'</span></a>
 
-                          <div class="product-qty"><span style="color: #666666; font-weight: lighter;">Deal ID : 2022'.$deal_id.'</span></div>
+                          <div class="product-qty"><span style="color: #666666; font-weight: lighter;">Deal ID :'.$year.$deal_id.'</span></div>
                         </td>
                         <td width="15%" style="text-align: right; vertical-align: top; padding-top: 13px; font-style: italic; color: #111111;">
                           <span>'.$u_price.' X '.$c_qty.'</span>
                         </td>
                         <td width="20%" style="text-align: right; vertical-align: top; font-weight: bold; padding-top: 13px; color: #111111;">
-                          <span>'.$to_price.'.00</span>
+                          <span>'.$to_price.'</span>
                         </td>
                       </tr>';
                         }// inside while loop if condition
@@ -934,26 +936,16 @@ function DealConfirmEmail(array $user_detail,$conn,$product_image_path = "https:
                       <table width="100%" style="font-family: Arial, Helvetica, sans-serif; font-size: 13px">
                         <tbody>
                           <tr style="height: 40px;">
-                            <td width="60%"> </td>
-                            <td width="20%" style="color: #666666;">Subtotal</td>
-                            <td width="20%" align="right" style="padding: 0 10px 0 0; color: #111111;">'.$sub_total.'.00</td>
-                          </tr>
-                          <tr style="height: 40px;">
-                            <td> </td>
-                            <td style="color: #666666;">Discount('.$percentage.'%)</td>
-                            <td align="right" style="padding: 0 10px 0 0; color: green;">-'.$dis_amt.'.00</td>
-                          </tr>
-                          <tr style="height: 40px;">
                             <td> </td>
                             <td style="font-weight: bold; border-top: 1px solid #BABABAFF; border-bottom: 1px solid #BABABAFF; color: #111111;">Total</td>
-                            <td align="right" style="padding: 0 10px 0 0; font-weight: bold; border-top: 1px solid #BABABAFF; border-bottom: 1px solid #BABABAFF; color: #111111;">'.$total_amount.'.00</td>
+                            <td align="right" style="padding: 0 10px 0 0; font-weight: bold; border-top: 1px solid #BABABAFF; border-bottom: 1px solid #BABABAFF; color: #111111;">'.$total_amount.'</td>
                           </tr>
                         </tbody>
                       </table>
                       <hr style="height: 1px; background-color: #BABABAFF; border: none; margin-bottom: 15px;">
 
-                  <p style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #111111;">From your wallet<u style="color: red; font-weight: bold;">'.$total_amount.'.00</u> Amount have been deducted.</p>
-                  <p style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #111111;">You’r current available wallet balance : <u style="color: green; font-weight: bold;">'.$av_bal.'.00</u> Amount.</p>
+                  <p style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #111111;">From your wallet<u style="color: red; font-weight: bold;">'.$total_amount.'</u> Amount have been deducted.</p>
+                  <p style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #111111;">You’r current available wallet balance : <u style="color: green; font-weight: bold;">'.$av_bal.'</u> Amount.</p>
                   <p style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold; color: #111111;">Thanks for Dealing with us And Ananas wish you a good luck!</p>
                 </div>
               </td>
@@ -2590,7 +2582,7 @@ function vendorConfirmation($conn,$deal_id){
             </tr>
             <tr>
               <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 10px 30px; color: #666666; font-family: Lato, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 800; line-height: 25px;" colspan="3">
-                We will shift to your payment once winner confirmed the product received.
+                We will shift to your payment soon to your acoount.
               </td>
             </tr>
           </table>

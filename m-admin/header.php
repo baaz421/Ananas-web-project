@@ -76,6 +76,7 @@ require_once "admin-function.php";
         left:2%;
         width: 96%;
       }
+      
     </style>
 
   </head>
@@ -104,17 +105,11 @@ require_once "admin-function.php";
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Search-->
-                <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
-
-                <!-- Languages dropdown    -->
-                <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="<?php echo $file_back; ?>img/flags/16/US.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
-                  <ul aria-labelledby="languages" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="<?php echo $file_back; ?>img/flags/16/US.png" alt="English" class="mr-2">English</a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="<?php echo $file_back; ?>img/flags/16/QA.png" alt="English" class="mr-2">Arabic                                         </a></li>
-                  </ul>
+                <li class="nav-item d-flex align-items-center">
+                  <a id="search" href="#">
+                    <i class="icon-search"></i>
+                  </a>
                 </li>
-                <!-- Main page site page    -->
-                <li class="nav-item"><a href="<?php echo $file_back; ?>index.php" class="nav-link logout"> <span class="d-none d-sm-inline">Home</span><i class="fa fa-home"></i></a></li>
                 <!-- Logout    -->
                 <li class="nav-item"><a href="<?php echo $file_back; ?>logout.php" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
               </ul>
@@ -175,6 +170,7 @@ require_once "admin-function.php";
             <li><a href="<?php echo $file_back; ?>all-admins.php"> <i class="fa fa-address-book-o"></i>Admin's</a></li>
             <li><a href="<?php echo $file_back; ?>view-all-deals.php"> <i class="icon-presentation"></i>View Deals</a></li>            
             <li><a href="<?php echo $file_back; ?>deal-setting.php"> <i class="icon-bill"></i>Deal Setting</a></li>
+            <li> <a href="<?php echo $file_back; ?>banners.php"> <i class="icon-screen"></i>Banner's</a></li>
             <li><a href="<?php echo $file_back; ?>product-delivery.php"> <i class="icon-bill"></i>Product Delivery</a></li>
             <!-- <li><a href="<?php echo $file_back; ?>coupon.php"> <i class="icon-bill"></i>Coupon's</a></li> -->
           </ul><span class="heading">Extras</span>

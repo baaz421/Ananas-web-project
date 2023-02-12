@@ -8,7 +8,7 @@ include 'header.php';
   <!-- Page Header-->
   <header class="page-header">
     <div class="container-fluid">
-      <h2 class="no-margin-bottom">All Users Details</h2>
+      <h2 class="no-margin-bottom">All Admin/Vendor Details</h2>
     </div>
   </header>
   <!-- Forms Section-->
@@ -19,7 +19,7 @@ include 'header.php';
 					  <div class="modal-dialog modal-dialog-centered">
 						    <div class="modal-content">
 						       	<div class="card-header d-flex align-items-center">
-						          	<h3 class="h4">Add new Categories</h3>
+						          	<h3 class="h4">Edit Admin/Vendor Info</h3>
 						        </div>
 						        <div class="card-body">
 						          	<form class="form-inline">
@@ -55,7 +55,7 @@ include 'header.php';
 			          		</div>
 			        	</div>
 			        	<div class="card-header d-flex align-items-center">
-			          		<h3 class="h4">View all Users<span class="badge badge-secondary"></span></h3>
+			          		<h3 class="h4">View all Admin/Vendor<span class="badge badge-secondary"></span></h3>
 			        	</div>
 			        	<div class="card-body" id="table-data">
 			          		<!-- ajax categories data table load here -->

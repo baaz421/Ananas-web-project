@@ -52,7 +52,7 @@ if(mysqli_num_rows($result)>0){
 						if(mysqli_num_rows($run_check_pro_deal) > 0){
 							$border = "";
 						}else{
-							$border = " border-success ";
+							$border = " border-success";
 						}
 
 		              	$output .="<tr>

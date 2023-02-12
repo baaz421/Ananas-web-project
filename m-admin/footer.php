@@ -23,11 +23,10 @@ if(in_array($file_directry,$ex_link)){
     <script src="<?php echo $file_back; ?>vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="<?php echo $file_back; ?>js/charts-home.js"></script>
     <script src="<?php echo $file_back; ?>js/dropzone.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+    <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
     <!-- Main File-->
     <script src="<?php echo $file_back; ?>js/front.js"></script>
-
     
   </body>
 </html>

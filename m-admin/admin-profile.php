@@ -317,8 +317,10 @@ $admin_data_pic = $admin_data['a_profilepic'];
 <?php
 include 'footer.php';
 ?>
-<script src="https://unpkg.com/dropzone@6.0.0-beta.2/dist/dropzone.js"></script>
-<script src="https://unpkg.com/cropperjs@1.5.12/dist/cropper.js"></script>
+
+<script src="https://unpkg.com/dropzone"></script>
+<script src="https://unpkg.com/cropperjs"></script>
+
 <script src="build/js/intlTelInput.js"></script>
 <script type="text/javascript">
 

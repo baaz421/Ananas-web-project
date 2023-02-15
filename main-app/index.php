@@ -660,11 +660,7 @@ function matchCountryCurrency($c_id,$conn){
 				</div>
 				<!-- ERROR MESSAGE DIV CLOSE-->
 				
-				<script type="text/javascript">
-					$(document).ready(function(){
-
-					});
-				</script>
+			
 
 				<?php
 				include "includes/indexFooter.php"
@@ -673,3 +669,7 @@ function matchCountryCurrency($c_id,$conn){
 
 			<script src="home-page-ajax/whishlist-ajax.js"></script>
 				<script src="home-page-ajax/add-to-cart-ajax.js"></script>
+
+			<script type="text/javascript">
+					
+				</script>

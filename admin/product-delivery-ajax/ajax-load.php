@@ -131,6 +131,7 @@ if(mysqli_num_rows($result)>0){
 			}
 	                
 	$output .=" </tbody> </table> </div>";
+
 	// ======================================
 	$previous=$page - 1;
 	if($previous == 0){

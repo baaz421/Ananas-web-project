@@ -50,6 +50,15 @@ if(isset($_GET['wid']) && !empty($_GET['wid'])){
 	header('Location: ../');
 }
 
+if(isset($_SESSION['u_id'])){
+	$dashboard_btn = '<a href="dashboard" class="btn btn-outline-primary-2 btn-minwidth-lg mt-1">
+    			<span>DASHBOARD</span>
+    			<i class="icon-long-arrow-right"></i>
+    	</a>';
+}else{
+	$dashboard_btn = "";
+}
+
 
 ?>
 <style type="text/css">
@@ -169,6 +178,7 @@ if(isset($_GET['wid']) && !empty($_GET['wid'])){
   			<span><?php echo $_404['btohg']; ?></span>
   			<i class="icon-long-arrow-right"></i>
   		</a>
+  		<?php echo $dashboard_btn; ?>
   	</div><!-- End .container -->
 	</div><!-- End .error-content text-center -->
 </main><!-- End .main -->

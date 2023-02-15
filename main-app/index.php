@@ -659,8 +659,7 @@ function matchCountryCurrency($c_id,$conn){
 				<div id="success-message">
 				</div>
 				<!-- ERROR MESSAGE DIV CLOSE-->
-				<script src="home-page-ajax/whishlist-ajax.js"></script>
-				<script src="home-page-ajax/add-to-cart-ajax.js"></script>
+				
 				<script type="text/javascript">
 					$(document).ready(function(){
 
@@ -671,3 +670,6 @@ function matchCountryCurrency($c_id,$conn){
 				include "includes/indexFooter.php"
 
 			?>
+
+			<script src="home-page-ajax/whishlist-ajax.js"></script>
+				<script src="home-page-ajax/add-to-cart-ajax.js"></script>

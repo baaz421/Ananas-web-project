@@ -65,13 +65,12 @@ include 'header.php';
 		</div>
 	</section>
 </div>
-</div>
-</div>
+
+	<?php
+	include 'footer.php';
+	?>
 <!-- JavaScript files-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/jquery/jquery.js"></script>
-<script src="vendor/popper.js/umd/popper.min.js"> </script>
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	// load table data

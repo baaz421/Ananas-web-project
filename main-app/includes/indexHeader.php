@@ -146,16 +146,16 @@ require_once "includes/currency-rate.php";
                       </div><!-- End .header-menu -->
                     </div><!-- End .header-dropdown -->
                   </li>
-                  <li>                                       
+                  <!-- <li> -->
                     <?php
-                      if($_SESSION['lang'] == "ar"){
-                        $langname ='<a href="?lang=en">'.$english['english'].'</a>';
-                      }else{
-                        $langname ='<a href="?lang=ar">'.$english['arabic'].'</a>';
-                      }
-                      echo $langname;
+                      // if($_SESSION['lang'] == "ar"){
+                      //   $langname ='<a href="?lang=en">'.$english['english'].'</a>';
+                      // }else{
+                      //   $langname ='<a href="?lang=ar">'.$english['arabic'].'</a>';
+                      // }
+                      // echo $langname;
                     ?>
-                  </li>
+                  <!-- </li> -->
                     <?php 
                       if(@$_SESSION['u_email'] == false){
                     ?>
@@ -180,8 +180,8 @@ require_once "includes/currency-rate.php";
                     </a>
                       <div class="dropdown-menu">
                         <a class="dropdown-item" href="dashboard">Dashboard</a>
-                        <a class="dropdown-item" href="#">View My Orders</a>
-                        <a class="dropdown-item" href="#">My Profile</a>
+                        <a class="dropdown-item" href="dashboard/running-deals.php">View My Orders</a>
+                        <a class="dropdown-item" href="dashboard/profile.php">My Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="logout.php">Sign out</a>
                       </div>

@@ -7,11 +7,14 @@ $ex_link = explode("/", $uri);
 // file root or directry name declare here
 
 $file_directry_user_amount_ajax       ="user-amount-ajax";
+$file_directry_user_ajax_files        ="user-ajax-files";
 
 
 
 // provide condition above directry root for file back
 if(in_array($file_directry_user_amount_ajax,$ex_link)){
+  $file_back= "../";
+}else if(in_array($file_directry_user_ajax_files,$ex_link)){
   $file_back= "../";
 }else{
   $file_back= "";

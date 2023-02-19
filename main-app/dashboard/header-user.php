@@ -11,6 +11,28 @@ if($_SESSION['u_email'] == false){
 }
 
 ?>
+
+<?php
+  $sql_user_details = "SELECT * FROM users WHERE id = $u_id";
+  $run_sql_user_details = mysqli_query($conn, $sql_user_details);
+  $fetch_data = mysqli_fetch_assoc($run_sql_user_details);
+  $name         = $fetch_data['name'];
+  $email        = $fetch_data['email'];
+  $countrycode  = $fetch_data['countrycode'];
+  $country      = $fetch_data['country'];
+  $mobile       = $fetch_data['mobile'];
+  $dob          = $fetch_data['dob'];
+  $profile_pic  = $fetch_data['profile_pic'];
+  $createtime   = $fetch_data['createtime'];
+
+  if($profile_pic === null){
+    $profile_image = "images/avatar.jpg";
+    $old_pic = "";
+  }else{
+    $profile_image = "user-ajax-files/user-profile-images/".$profile_pic;
+    $old_pic = $profile_pic;
+  }
+?>
 <!-- header-user.php -->
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +51,11 @@ if($_SESSION['u_email'] == false){
   <!-- Plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+  <link rel="stylesheet" href="css/vertical-layout-light/style.css?v=4">
+  <link rel="stylesheet" href="../build/css/intlTelInput.css">
+    <link rel="stylesheet" href="https://unpkg.com/dropzone/dist/dropzone.css" />
+    <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
+
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.ico" />
   <style type="text/css">
@@ -37,7 +63,7 @@ if($_SESSION['u_email'] == false){
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 99999;
     width: 100%;
     height: 100%;
     background-color: black;
@@ -81,6 +107,7 @@ if($_SESSION['u_email'] == false){
 </style>
 </head>
 <body>
+  
 
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
@@ -93,7 +120,7 @@ if($_SESSION['u_email'] == false){
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
           <span class="icon-menu"></span>
         </button>
-        <ul class="navbar-nav mr-lg-2">
+       <!--  <ul class="navbar-nav mr-lg-2">
           <li class="nav-item nav-search d-none d-lg-block">
             <div class="input-group">
               <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
@@ -104,9 +131,9 @@ if($_SESSION['u_email'] == false){
               <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
             </div>
           </li>
-        </ul>
+        </ul> -->
         <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
               <i class="icon-bell mx-0"></i>
               <span class="count"></span>
@@ -153,20 +180,20 @@ if($_SESSION['u_email'] == false){
                 </div>
               </a>
             </div>
-          </li> <!--  notification end here -->
+          </li> --> <!--  notification end here -->
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="images/faces/face28.jpg" alt="profile"/>
+              <img src="<?php echo $profile_image ?>" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item" href="profile.php">
                 <i class="ti-id-badge text-primary"></i>
                 My profile
               </a>
-              <a class="dropdown-item" href="settings.php">
+              <!-- <a class="dropdown-item" href="settings.php">
                 <i class="ti-settings text-primary"></i>
                 Settings
-              </a>
+              </a> -->
               <a class="dropdown-item" href="../logout.php">
                 <i class="ti-power-off text-primary"></i>
                 Logout
@@ -191,7 +218,7 @@ if($_SESSION['u_email'] == false){
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-          <li class="nav-item">
+         <!--  <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
               <i class="ti-location-pin menu-icon"></i>
               <span class="menu-title">Adress</span>
@@ -202,7 +229,7 @@ if($_SESSION['u_email'] == false){
                 <li class="nav-item"><a class="nav-link" href="form.php">Billing Adress</a></li>
               </ul>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
               <i class="ti-layout-list-thumb menu-icon"></i>
@@ -230,8 +257,12 @@ if($_SESSION['u_email'] == false){
               <span class="menu-title">Main site</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../logout.php">
+              <i class="ti-power-off menu-icon"></i>
+              <span class="menu-title">Logout</span>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- partial -->
-
-

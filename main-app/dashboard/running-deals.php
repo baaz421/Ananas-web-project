@@ -96,15 +96,7 @@ $run_get_deal_info = mysqli_query($conn,$get_deal_info);
    </div>
  </div>
  <!-- content-wrapper ends -->
- <!-- partial:partials/_footer.html -->
- <footer class="footer">
-  <div class="d-sm-flex justify-content-center justify-content-sm-between">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022.<a href="../" target="_blank">Ananas.com.co</a>. All rights reserved.</span>
-    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Baaz Designer <i class="ti-heart text-danger ml-1"></i></span>
-  </div>
-</footer>
-<!-- partial -->
-</div>
+ </div>
 <!-- main-panel ends -->
 <?php
 include "footer-user.php";

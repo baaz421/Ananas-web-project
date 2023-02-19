@@ -11,8 +11,13 @@ function DateDisplayWithTime($date){
 	return $b;
 }
 
-function current_bal($u_id, $conn)
-{
+function joinDate($date){
+  $a = strtotime($date);
+  $b = date("l, dS F Y",$a);
+  return $b;
+}
+
+function current_bal($u_id, $conn){
 	$check_u_cb = "SELECT * FROM current_balance WHERE u_id ='$u_id'";
 	$run_check_u_cb = mysqli_query($conn,$check_u_cb);
 	if(mysqli_num_rows($run_check_u_cb) > 0){

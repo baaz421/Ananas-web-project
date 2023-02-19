@@ -14,7 +14,7 @@ if(isset($_POST["page_no"])){
 
 $offset =($page - 1)*$limit_per_page;
 
-$sql ="SELECT * FROM banners ORDER BY b_id DESC LIMIT {$offset},{$limit_per_page}";
+$sql ="SELECT * FROM banners WHERE b_proccess = 0 ORDER BY b_id DESC LIMIT {$offset},{$limit_per_page}";
 $result =mysqli_query($conn,$sql) or die("Query failed..!");
 $output = "";
 if(mysqli_num_rows($result)>0){

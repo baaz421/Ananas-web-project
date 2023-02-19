@@ -668,7 +668,7 @@ function matchCountryCurrency($c_id,$conn){
 			?>
 
 			<script src="home-page-ajax/whishlist-ajax.js"></script>
-				<script src="home-page-ajax/add-to-cart-ajax.js"></script>
+				<script src="home-page-ajax/add-to-cart-ajax.js?v=1"></script>
 
 			<script type="text/javascript">
 					

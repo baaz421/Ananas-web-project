@@ -225,12 +225,12 @@ if($_SESSION['lang'] == "ar"){
           </div><!-- End .header-dropdown -->
           <div>
               <?php
-                if($_SESSION['lang'] == "ar"){
-                    $langname ='<a href="?lang=en">'.$english['english'].'</a>';
-                }else{
-                    $langname ='<a href="?lang=ar">'.$english['arabic'].'</a>';
-                }
-                echo "&nbsp &nbsp &nbsp &nbsp".$langname;
+                // if($_SESSION['lang'] == "ar"){
+                //     $langname ='<a href="?lang=en">'.$english['english'].'</a>';
+                // }else{
+                //     $langname ='<a href="?lang=ar">'.$english['arabic'].'</a>';
+                // }
+                // echo "&nbsp &nbsp &nbsp &nbsp".$langname;
               ?>
           </div><!-- End .header-dropdown -->
           <div class="ml-5">

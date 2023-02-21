@@ -2,8 +2,8 @@
 //completed-deal.php
 include "header-user.php";
 
-echo $_SESSION['u_name'];
-echo $_SESSION['u_id'];
+// echo $_SESSION['u_name'];
+// echo $_SESSION['u_id'];
 function sumAmount($conn,$u_id,$d_id){
   $sum_info = "SELECT unit_price FROM participators WHERE user_id = $u_id AND status = 0 AND deal_id = $d_id";
   $run_sum_info = mysqli_query($conn,$sum_info);

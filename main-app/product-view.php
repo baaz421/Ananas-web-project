@@ -572,27 +572,19 @@ jdD.preventDefault();
 // add to cart from top
 $(document).on("click","#add-to-cart, #add-to-cart-qview",function(ca){
     if(this.id == "add-to-cart"){
-        if($(this).hasClass("isDisabled")){
-            notActiveDealMsg();
-        }else{
         var button = $(this);
         var p_id = $("#p-id").val();
         var user_id = $("#u-id").val();
         var deal_id = $("#deal-id").val();
         var qty = $("#qty").val();
-        AddToCartProductView(button,p_id,deal_id,user_id,qty);
-        }   
+        AddToCartProductView(button,p_id,deal_id,user_id,qty);  
     }else if(this.id == "add-to-cart-qview"){
-        if($(this).hasClass("isDisabled")){
-            notActiveDealMsg();
-        }else{
             var button = $(this);
             var p_id = $(this).data("p_id");
             var user_id = $("#u-id").val();
             var deal_id = $("#deal-id").val();
             var qty = 1;
-            AddToCartProductView(button,p_id,deal_id,user_id,qty);            
-        }
+            AddToCartProductView(button,p_id,deal_id,user_id,qty);
     }
   ca.preventDefault();  
 });
@@ -605,6 +597,7 @@ $("#cart-buttom-1").click(function(wb){
         var button_b = $(this);
         var p_id_b = $(this).data("pro_id");
         var d_id_b = $(this).data("deal_id");
+        console.log(d_id_b);
         var user_id_b = $("#u-id").val();
         var qty = 1;
         AddToCartProductView(button_b,p_id_b,d_id_b,user_id_b,qty);
@@ -613,55 +606,43 @@ $("#cart-buttom-1").click(function(wb){
 });
 
 $("#cart-buttom-2").click(function(wb){
-    if($(this).hasClass("isDisabled")){
-        notActiveDealMsg();        
-    }else{
         var button_b = $(this);
         var p_id_b = $(this).data("pro_id");
         var d_id_b = $(this).data("deal_id");
+        console.log(d_id_b);
         var user_id_b = $("#u-id").val();
         var qty = 1;
         AddToCartProductView(button_b,p_id_b,d_id_b,user_id_b,qty);
-    }
     wb.preventDefault();
 });
 $("#cart-buttom-3").click(function(wb){
-    if($(this).hasClass("isDisabled")){
-        notActiveDealMsg();        
-    }else{
         var button_b = $(this);
         var p_id_b = $(this).data("pro_id");
         var d_id_b = $(this).data("deal_id");
+        console.log(d_id_b);
         var user_id_b = $("#u-id").val();
         var qty = 1;
         AddToCartProductView(button_b,p_id_b,d_id_b,user_id_b,qty);
-    }
     wb.preventDefault();
 });
 $("#cart-buttom-4").click(function(wb){
-    if($(this).hasClass("isDisabled")){
-        notActiveDealMsg();        
-    }else{
         var button_b = $(this);
         var p_id_b = $(this).data("pro_id");
         var d_id_b = $(this).data("deal_id");
+        console.log(d_id_b);
         var user_id_b = $("#u-id").val();
         var qty = 1;
         AddToCartProductView(button_b,p_id_b,d_id_b,user_id_b,qty);
-    }
     wb.preventDefault();
 });
 $("#cart-buttom-5").click(function(wb){
-    if($(this).hasClass("isDisabled")){
-        notActiveDealMsg();        
-    }else{
         var button_b = $(this);
         var p_id_b = $(this).data("pro_id");
         var d_id_b = $(this).data("deal_id");
+        console.log(d_id_b);
         var user_id_b = $("#u-id").val();
         var qty = 1;
         AddToCartProductView(button_b,p_id_b,d_id_b,user_id_b,qty);
-    }
     wb.preventDefault();
 });
 
@@ -696,9 +677,14 @@ function AddToCartProductView(bc_button,Product_ID,dealId,User_ID,qty){
       var deal_id = dealId;
       var user_id = User_ID;
       var c_qty  = qty;
-      console.log(p_id +"--"+ user_id);
+      var check_deal_status = $.isNumeric(deal_id);
+      console.log(check_deal_status);
+      // console.log(p_id +"--"+ user_id);
         if(user_id == ""){
             $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-info mt-1 mb-2 rounded' role='alert'>Please Login to Add to Cart. click here <span class='text-uppercase font-weight-bold text-reset text-white'>&nbsp&nbsp&nbsp&nbsp<a href='login.php?continue=<?php echo $actual_link; ?>'>login</a></span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+            $("#success-message").slideUp();
+        }else if(check_deal_status == false){
+            $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary mt-1 mb-2 rounded' role='alert'>Sorry this is not active deal, Wait till its on deal. <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
             $("#success-message").slideUp();
         }else{
             $.ajax({

@@ -16,7 +16,7 @@ include "header-user.php";
                   <tr>
                     <th>S.no</th>
                     <th>ID</th>
-                    <th>Amount</th>
+                    <th>USD</th>
                     <th>Method</th>
                     <th>Date</th>
                   </tr>

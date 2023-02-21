@@ -17,6 +17,18 @@ function matchCountryCurrency($c_id,$conn){
 	$c_name = $fetch['currency'];
 	return $c_name;
 }
+function matchUserCurrency($id,$conn){
+	if($id == ""){
+		$user_currency = "USD";
+	}else{
+		$sql ="SELECT * FROM users WHERE id = $id";
+		$run = mysqli_query($conn, $sql);
+		$fetch = mysqli_fetch_assoc($run);
+		$user_currency = $fetch['currency'];	
+	}
+	
+	return $user_currency;
+}
 
 
 ?>
@@ -42,7 +54,8 @@ function matchCountryCurrency($c_id,$conn){
 						<?php
 							while($banner = mysqli_fetch_assoc($run_sql_get_banner)) {
 								$view_country = matchCountryCurrency($banner['b_country'],$conn);
-								if($_SESSION['currency'] == $view_country){
+								$view_user_country = matchUserCurrency($user_id,$conn);
+								if($view_user_country == $view_country){
 
 						?>
 							<div class="intro-slide">
@@ -83,7 +96,7 @@ function matchCountryCurrency($c_id,$conn){
 				<div class="row">
 					<div class="col-xl-9 col-xxl-10">
 						<!-- ==== how its works starts here ==== -->
-						<h2 class="title mb-4 text-center" >HOW IT WORKS ?<?php echo $_SESSION['currency']?></h2><!-- End .title text-center -->
+						<h2 class="title mb-4 text-center" >HOW IT WORKS ?</h2><!-- End .title text-center -->
 						<div class="row justify-content-center">
 							<div class="col-6 col-lg-3">
 								<div class="icon-box icon-box-circle text-center">

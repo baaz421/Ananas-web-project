@@ -16,11 +16,13 @@ if(isset($_SESSION['u_id'])){
 			setcookie("currency",$currency,$expiry,"/");
 			$_SESSION['currency_rate'] 	= $currency_rate;
 			$_SESSION['currency'] 		= $currency;
+			// echo "cookie not set";
 		}else{
 			$currency_rate 		= $_COOKIE['currency_rate'];
 			$n_currency 		= $_COOKIE['currency'];
 			$_SESSION['currency_rate'] 	= $currency_rate;
 			$_SESSION['currency'] 		= $n_currency;
+			// echo "cookie set";
 		}
 	$user_currency_set = $currency;
 }else{
@@ -36,6 +38,7 @@ if(isset($_GET['curType']) && $_SESSION['currency'] != $_GET['curType'] && !empt
 		setcookie("currency",$currency_name,$expiry,"/");
 		$_SESSION['currency_rate'] 	= $currency_rate;
 		$_SESSION['currency'] 			= $currency_name;
+			// echo "usd is set";
 	}else{
 		$currency_name = $_GET['curType'];
 		$currency_rate = CallCurrencyAPI($currency_name);
@@ -43,6 +46,7 @@ if(isset($_GET['curType']) && $_SESSION['currency'] != $_GET['curType'] && !empt
 		setcookie("currency",$currency_name,$expiry,"/");
 		$_SESSION['currency_rate'] 	= $currency_rate;
 		$_SESSION['currency'] 			= $currency_name;
+			// echo "new currency set";
 	}
 }
 
@@ -78,9 +82,10 @@ function CallCurrencyAPI($want){
 	$err = curl_error($curl);
 	curl_close($curl);
 
-	if (!$err){
-		// print_r($result);
+	if (!$err && !isset($result['error'])){
 		$want = $result['new_amount'];
+	}else{
+		$want = $_SESSION['currency_rate'];
 	}
 	return $want;
 }

@@ -70,7 +70,7 @@ if(isset($_SESSION['u_email'])){
             <div class="card card-tale">
               <div class="card-body">
                 <p class="mb-4">Current Balance</p>
-                <p class="fs-30 mb-2"><?php echo current_bal($u_id,$conn); ?></p>
+                <p class="fs-30 mb-2"><?php echo current_bal($u_id,$conn); ?> USD</p>
                 <p><a href="add-amount.php" class="text-white"><u>Deposite More.</u></a></p>
               </div>
             </div>

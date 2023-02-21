@@ -17,7 +17,7 @@ if(isset($_POST['p_id']) && isset($_POST['u_id'])){
 	}else{
 		$qty  = 1;	
 	}
-
+	echo $d_id;
 	// check cart tabel if already product added
 	$check_cart = "SELECT product_id FROM cart WHERE user_id = '{$u_id}'";
 	$run_check_cart = mysqli_query($conn, $check_cart);
@@ -31,29 +31,34 @@ if(isset($_POST['p_id']) && isset($_POST['u_id'])){
 	$run_deal_unit_sql = mysqli_query($conn, $deal_unit_sql);
 	$get_data = mysqli_fetch_assoc($run_deal_unit_sql);
 	$unit_price = $get_data['unit_price'];
+	$deal_status = $get_data['deal_status'];
 
 	$total = $qty * $unit_price;
 
-	if(mysqli_num_rows($run_check_cart) > 0){
-		if($check_pro == ""){			
+
+		if(mysqli_num_rows($run_check_cart) > 0){
+			if($check_pro == ""){			
+				$add_to_cart = "INSERT INTO cart (user_id, product_id, deal_id, qty, unit_price, total, time) VALUES ('{$u_id}','{$p_id}','{$d_id}','$qty','{$unit_price}','{$total}','$time')";
+				$run_add_to =mysqli_query($conn, $add_to_cart);
+				if($run_add_to){
+					echo 1;
+					exit();
+				}
+			}else{
+					echo 2;
+					exit;
+				}
+
+		}else{
 			$add_to_cart = "INSERT INTO cart (user_id, product_id, deal_id, qty, unit_price, total, time) VALUES ('{$u_id}','{$p_id}','{$d_id}','$qty','{$unit_price}','{$total}','$time')";
 			$run_add_to =mysqli_query($conn, $add_to_cart);
 			if($run_add_to){
 				echo 1;
 				exit();
 			}
-		}else{
-				echo 2;
-				exit;
-			}
-
-	}else{
-		$add_to_cart = "INSERT INTO cart (user_id, product_id, deal_id, qty, unit_price, total, time) VALUES ('{$u_id}','{$p_id}','{$d_id}','$qty','{$unit_price}','{$total}','$time')";
-		$run_add_to =mysqli_query($conn, $add_to_cart);
-		if($run_add_to){
-			echo 1;
-			exit();
 		}
-	}
+	
+
+	
 
 }

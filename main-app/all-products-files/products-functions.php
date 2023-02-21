@@ -19,7 +19,7 @@ return'
             </div>
 
             <div class="product-action action-icon-top">
-                <a href="#" class="btn-product btn-cart '.$c_disable.'" id="add-to-cart" data-p_id="'.$p_id.'" data-d_id="'.$deal_id.'"></a>
+                <a class="btn-product btn-cart '.$c_disable.'" id="add-to-cart" data-p_id="'.$p_id.'" data-d_id="'.$deal_id.'"></a>
                 <a href="'.$link.'" class="btn-product btn-quickview" id="quickView" title="Quick view"></a>
             </div>
         </figure>

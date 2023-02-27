@@ -14,7 +14,7 @@ $run_get_deal_info = mysqli_query($conn,$get_deal_info);
           <div class="card-body">
             <h4 class="card-title">Your Running Deals</h4>
             <p class="card-description">
-              <a href="../productsvall.php">Add More Deals</a>
+              <a href="../productsvall.php">Join More Deals</a>
             </p>
             <div class="table-responsive">
               <table class="table table-striped">

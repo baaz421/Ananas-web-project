@@ -3,11 +3,16 @@
 ob_start();
 
 include "includes/header.php";
+
 if(isset($_SESSION['u_id'])){
     $user_id = $_SESSION['u_id'];
+    $country_iso = $_SESSION['u_iso'];
+    $country_product = "AND country = '$country_iso'";
 }else{
-    $user_id = "";
+    $user_id ="";
+    $country_product = "";
 }
+
 include "all-products-files/load-singal-product.php";
 
 // enable (or) Disable join button 
@@ -289,7 +294,7 @@ if (!isset($get_zone)){
                     }
                 }' data-load = "below-products">
                 <?php
-                    $query = "SELECT * FROM products WHERE p_status = '1' ORDER BY RAND() LIMIT 5";
+                    $query = "SELECT * FROM products WHERE p_status = '1' $country_product ORDER BY RAND() LIMIT 5";
                     $result = mysqli_query($conn, $query);
                     $w_id = 1;
                         while($row = mysqli_fetch_array($result)){

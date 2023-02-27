@@ -17,7 +17,7 @@ if(isset($_POST['p_id']) && isset($_POST['u_id'])){
 	}else{
 		$qty  = 1;	
 	}
-	echo $d_id;
+	// echo $d_id;
 	// check cart tabel if already product added
 	$check_cart = "SELECT product_id FROM cart WHERE user_id = '{$u_id}'";
 	$run_check_cart = mysqli_query($conn, $check_cart);

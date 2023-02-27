@@ -11,8 +11,11 @@ error_reporting(E_ALL);
 
 if(isset($_SESSION['u_id'])){
 	$user_id = $_SESSION['u_id'];
+	$country_iso = $_SESSION['u_iso'];
+	$country_product = "AND d_country = '$country_iso'";
 }else{
 	$user_id ="";
+	$country_product = "";
 }
 
 
@@ -24,7 +27,9 @@ if(isset($_SESSION['u_id'])){
 if(isset($_POST["limit"], $_POST["start"])){
 	$zone = $_POST['z_name'];
  	
- 	$sql = "SELECT * FROM deal WHERE zone = '{$zone}' AND deal_status = 1 ORDER BY zone DESC LIMIT ".$_POST["start"].", ".$_POST["limit"]."";
+ 	$sql = "SELECT * FROM deal WHERE zone = '{$zone}' AND deal_status = 1 $country_product ORDER BY zone DESC LIMIT ".$_POST["start"].", ".$_POST["limit"]."";
+ 	// echo $sql;
+
  	$result = mysqli_query($conn, $sql);
 
 	 	while($row = mysqli_fetch_assoc($result)){

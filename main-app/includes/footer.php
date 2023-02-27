@@ -150,7 +150,6 @@ function loadCartTable(){
   		url : "all-products-files/load-sub-total-cart.php",
   		success: function(data){
   			$("#sub-total-display").text(data);
-  			console.log(data);
   		}
   	});
   }

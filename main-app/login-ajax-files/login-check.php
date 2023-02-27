@@ -22,6 +22,7 @@ require_once "../db_connnection.php";
                     $_SESSION['u_id']           = $fetch['id'];
                     $_SESSION['u_country']      = $fetch['country'];
                     $_SESSION['u_name']         = $fetch['name'];
+                    $_SESSION['u_iso']         = $fetch['iso'];
                     echo 3;
                     exit();
                 }

@@ -33,7 +33,7 @@ function CountQty($conn,$u_id,$d_id){
           <div class="card-body">
             <h4 class="card-title">Completed Deals</h4>
             <p class="card-description">
-              <a href="../productsvall.php">Add More Deals</a>
+              <a href="../productsvall.php">Join More Deals</a>
             </p>
             <div class="table-responsive">
               <table class="table table-striped">

@@ -44,16 +44,23 @@ if(mysqli_num_rows($run_get_wishlist) > 0){
 			$run_check_pro_deal = mysqli_query($conn, $check_pro_deal);
 				if(mysqli_num_rows($run_check_pro_deal) > 0){
 					while($deal_check = mysqli_fetch_assoc($run_check_pro_deal)){
+						$disable_cart_btn = DisableCartButton($user_id,$p_id,$conn);
 						if($deal_check['deal_status'] == 1){
-							$status = "<span class='out-of-stock'>ON DEAL</span>";
+							$deal_id = $deal_check['DID'];
+							$status = "<span class='in-stock'>ON DEAL</span>";
+							$cart_btn ="
+								<button class='btn btn-block btn-outline-primary-2 $disable_cart_btn' id='add-cart-wish' data-deal_id='$deal_id' data-p_id='$p_id'>
+									<i class='icon-cart-plus'></i>ADD TO CART
+								</button>";
 						}else{
-							$status = "<span class='in-stock'>UPCOMING</span>";
+							$status = "<span class='out-of-stock'>UPCOMING</span>";
+							$cart_btn="";
 						}
 					}
 				}else{
 					$status = "<span class='in-stock'>UPCOMING</span>";
 				}
-			echo wishlistTable($link,$img_src,$p_name,$status,$w_id);
+			echo wishlistTable($link,$img_src,$p_name,$status,$w_id,$cart_btn);
 		}
 		
 	}

@@ -11,9 +11,13 @@ error_reporting(E_ALL);
 
 if(isset($_SESSION['u_id'])){
 	$user_id = $_SESSION['u_id'];
+	$country_iso = $_SESSION['u_iso'];
+	$country_product = "AND country = '$country_iso'";
 }else{
 	$user_id ="";
+	$country_product = "";
 }
+
 
 // <span class="product-label label-new">New</span>
 // <span class="product-label label-sale">30% off</span>
@@ -23,7 +27,7 @@ if(isset($_SESSION['u_id'])){
 if(isset($_POST["limit"], $_POST["start"])){
 
  	$cat_id = $_POST['cat_id'];
- 	$query = "SELECT * FROM products WHERE p_status = '1' AND category_id = $cat_id  ORDER BY ID DESC LIMIT ".$_POST["start"].", ".$_POST["limit"]."";
+ 	$query = "SELECT * FROM products WHERE p_status = '1' AND category_id = $cat_id $country_product  ORDER BY ID DESC LIMIT ".$_POST["start"].", ".$_POST["limit"]."";
  	$result = mysqli_query($conn, $query);
 	 	while($row = mysqli_fetch_array($result)){
 

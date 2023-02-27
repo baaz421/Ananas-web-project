@@ -55,6 +55,7 @@ if(isset($_POST['u_email'])){
                 $_SESSION['u_id'] = mysqli_insert_id($conn);
                 $_SESSION['u_email'] = $email;
                 $_SESSION['u_password'] = $password;
+                $_SESSION['u_iso'] = $u_iso2;
                 // $_SESSION['currency'] = $currency;
                 echo 3;
                 exit();

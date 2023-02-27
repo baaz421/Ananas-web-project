@@ -101,7 +101,7 @@ function preProduct($p_id,$conn){
 
 // wishlist table code 
 
-function wishlistTable($link,$img_src,$p_name,$status,$w_id){
+function wishlistTable($link,$img_src,$p_name,$status,$w_id,$show_cart_button){
 return '
 <tr>
     <td class="product-col">
@@ -119,7 +119,7 @@ return '
     </td>
     <td class="stock-col">'.$status.'</td>
     <td class="action-col">
-        <button class="btn btn-block btn-outline-primary-2"><i class="icon-cart-plus"></i>HOLD IT</button>
+        '.$show_cart_button.'
     </td>
     <td class="remove-col"><button class="btn-remove" id="remove-wishlist" data-w_id="'.$w_id.'"><i class="icon-close"></i></button></td>
 </tr>
@@ -228,15 +228,15 @@ function GetDealData($conn, $deal_id){
 }
 
 // get deal data by it status and zone
-function GetDealDataByZone($conn, $zone, $limit = 5){
-    $sql = "SELECT * FROM deal WHERE deal_status = 1 AND zone = '{$zone}' LIMIT {$limit}";
+function GetDealDataByZone($conn, $zone, $country ,$limit = 5){
+    $sql = "SELECT * FROM deal WHERE deal_status = 1 AND zone = '{$zone}' $country LIMIT {$limit}";
     $run = mysqli_query($conn, $sql);
     return $run;
 }
 
 // get ending deal data less than 1 day
-function GetEndDealData($conn, $zone, $limit = 2){
-    $sql = "SELECT * FROM deal WHERE zone = '{$zone}' AND e_time_green != null LIMIT {$limit}";
+function GetEndDealData($conn, $zone, $country,$limit = 2){
+    $sql = "SELECT * FROM deal WHERE zone = '{$zone}' AND e_time_green != null $country LIMIT {$limit}";
     $run = mysqli_query($conn, $sql);
     return $run;
 }

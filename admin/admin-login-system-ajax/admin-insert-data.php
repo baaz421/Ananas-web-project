@@ -40,7 +40,7 @@ session_start();
         $vcode = rand(999999, 111111);
         $vstatus = "notverified";
         $insert_data = "INSERT INTO admin (a_username,a_fullname,a_email,a_gender,a_password,a_phone,a_phonecode,a_country,a_country_code,a_vcode,a_vstatus,a_status,a_dateofbirth,a_createtime,a_updatetime,a_profilepic)
-                        values('$admin_username', '$admin_name', '$admin_email', '$admin_gender', '$encpass', '$admin_phone', '$admin_phone_code', '$admin_country', '$admin_country_code', '$vcode', '$vstatus','$admin_status', '$newDate_format', '$create_time', '$update_time','$pic')";
+                        values('$admin_username', '$admin_name', '$admin_email', '$admin_gender', '$encpass', '$admin_phone', '$admin_phone_code', '$admin_country', '$admin_country_2ios', '$vcode', '$vstatus','$admin_status', '$newDate_format', '$create_time', '$update_time','$pic')";
         // $data_check = mysqli_query($conn, $insert_data);
 
         if(mysqli_query($conn, $insert_data)){
@@ -54,7 +54,7 @@ session_start();
                 $_SESSION['a_email']        = $admin_email;
                 $_SESSION['a_password']     = $admin_password;
                 $_SESSION['a_id']           = $last_id;
-                $_SESSION['a_country_code'] = $admin_country_code;
+                $_SESSION['a_country_code'] = $admin_country_2ios;
                 echo 0;
                 // header('location: ../index.php');
                 exit();

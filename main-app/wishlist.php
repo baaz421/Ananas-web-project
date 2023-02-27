@@ -4,10 +4,14 @@ ob_start();
 include "includes/header.php";
 if($_SESSION['u_email'] == false){
   header('Location: login.php');
-
+}
+if(isset($_SESSION['u_id'])){
+    $user_id = $_SESSION['u_id'];
+}else{
+    $user_id = "";
 }
 ?>
-
+<input type="text" id="u-id" value="<?php echo $user_id; ?>" hidden>
 <main class="main">
 	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
 		<div class="container">
@@ -114,6 +118,62 @@ $(document).on("click", "#remove-wishlist", function(){
      });
 
 });
+// load cart number count
+function loadCartNumberWish(){
+    $.ajax({
+        url: "all-products-files/cart-number-display.php",
+        success:function(data){
+            $("#cart-num").text(data);
+        }
+    });
+}
+// Load cart drowdown menu for header
+function loadDropdownCartWish(){
+     $.ajax({
+        url: "all-products-files/dropdown-cart-show.php",
+        success:function(data){
+            $("#show-dropdown-cart").html(data);
+        }
+    });
+}
+
+// add to cart from whishlish 
+    $(document).on("click","#add-cart-wish",function(cart){
+      var button = $(this);
+      var p_id = $(this).data("p_id");
+      var d_id = $(this).data("deal_id");
+      var user_id = $("#u-id").val();
+      console.log(p_id +"--"+ user_id+"--"+d_id);
+        if(user_id == ""){
+            $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-info mt-1 mb-2 rounded' role='alert'>Please Login to Add to Cart. click here <span class='text-uppercase font-weight-bold text-reset text-white'>&nbsp&nbsp&nbsp&nbsp<a href='login.php?continue=<?php echo $actual_link; ?>'>login</a></span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+            $("#success-message").slideUp();
+        }else{
+            $.ajax({
+                url: "all-products-files/add-to-Cart.php",
+                method:"POST",
+                data:{p_id:p_id, d_id:d_id, u_id:user_id},
+                success:function(data){
+                    if(data == 1){
+                     $("#success-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-success mt-1 mb-2 rounded' role='alert'>successfully added to Cart.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+                     $("#error-message").slideUp();
+                     setTimeout(function(){$("#success-message").fadeOut("slow")}, 4000);
+                     button.addClass("isDisabled");
+                     loadCartNumberWish();
+                     loadDropdownCartWish();
+                    }else{
+                     $("#error-message").html("<div class='myAlert-bottom alert alert-dismissible fade show alert-primary mt-1 mb-2 rounded' role='alert'>it's already added to Cart .<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>").slideDown();
+                     $("#success-message").slideUp();
+                     setTimeout(function(){$("#error-message").fadeOut("slow")}, 4000);
+                     button.addClass("isDisabled");
+                    }
+                  
+                }
+            });
+        }
+
+      cart.preventDefault();
+    });
+
 
 });
 </script>

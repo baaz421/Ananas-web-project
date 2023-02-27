@@ -1,6 +1,7 @@
 <?php
 // include data base file 
 include "db_connnection.php";
+session_start();
 
 // get data by post method with this variable
 $unit_price 	= mysqli_real_escape_string($conn, $_POST['u-price']);
@@ -9,11 +10,12 @@ $method_of_deal = $_POST['d-method'];
 $market_value 	= $_POST['market-value'];
 $product_id 	= $_POST['product_id'];
 $admin_id 		= $_POST['admin-id'];
-$admin_country 	= $_POST['admin-country'];
+$admin_country 	= $_SESSION['a_country_code'];
 $deal_zone 		= "red";
 $deal_status 	= 1;
 $current_date 	= $date;
 $zero 			= 0;
+
 
 //date condition if its null or not and  convert from form to data
 $red_date_from_form = mysqli_real_escape_string($conn, $_POST['red-date']);

@@ -7,15 +7,11 @@ session_start();
 	$admin_name 		=mysqli_real_escape_string($conn, $_POST['admin-r-name']);
 	$admin_username 	=mysqli_real_escape_string($conn, $_POST['admin-r-username']);
 	$admin_email 		=mysqli_real_escape_string($conn, $_POST['admin-r-email']);
-	$admin_gender 		=mysqli_real_escape_string($conn, $_POST['admin-r-gender']);
 	$admin_password		=mysqli_real_escape_string($conn, $_POST['admin-r-password']);
 	$admin_phone 		=mysqli_real_escape_string($conn, $_POST['admin-r-phone']);
 	$admin_phone_code 	=mysqli_real_escape_string($conn, $_POST['admin-r-phonecode']);
 	$admin_country 		=mysqli_real_escape_string($conn, $_POST['admin-r-contryname']);
     $admin_country_2ios =mysqli_real_escape_string($conn, $_POST['admin-r-twoalph']);
-	$admin_dateofbirth 	=mysqli_real_escape_string($conn, $_POST['admin-r-birthdate']);
-	$date_format 		= str_replace('-', '-', $admin_dateofbirth);
-	$newDate_format 	= date("d-m-Y", strtotime($date_format));
 	$create_time 		= $date;
 	$update_time 		= null;
 	$admin_status 		= 1;
@@ -23,11 +19,8 @@ session_start();
     $admin_country_code = CountryCurrencyCode($conn,$twoalph_country);
     // echo $admin_country_2ios."this is code";
 
-    if($admin_gender == "male"){
-        $pic = "male-avatar.jpg";
-    }else{
-        $pic = "female-avatar.jpg";
-    }
+    $pic = "avatar.jpg";
+
 
     $email_check = "SELECT * FROM admin WHERE a_email = '$admin_email'";
     $res_check = mysqli_query($conn, $email_check);
@@ -39,8 +32,8 @@ session_start();
         $encpass = password_hash($admin_password, PASSWORD_BCRYPT);
         $vcode = rand(999999, 111111);
         $vstatus = "notverified";
-        $insert_data = "INSERT INTO admin (a_username,a_fullname,a_email,a_gender,a_password,a_phone,a_phonecode,a_country,a_country_code,a_vcode,a_vstatus,a_status,a_dateofbirth,a_createtime,a_updatetime,a_profilepic)
-                        values('$admin_username', '$admin_name', '$admin_email', '$admin_gender', '$encpass', '$admin_phone', '$admin_phone_code', '$admin_country', '$admin_country_2ios', '$vcode', '$vstatus','$admin_status', '$newDate_format', '$create_time', '$update_time','$pic')";
+        $insert_data = "INSERT INTO admin (a_username,a_fullname,a_email,a_password,a_phone,a_phonecode,a_country,a_country_code,a_vcode,a_vstatus,a_status,a_createtime,a_updatetime,a_profilepic)
+                        values('$admin_username', '$admin_name', '$admin_email', '$encpass', '$admin_phone', '$admin_phone_code', '$admin_country', '$twoalph_country', '$vcode', '$vstatus','$admin_status', '$create_time', '$update_time','$pic')";
         // $data_check = mysqli_query($conn, $insert_data);
 
         if(mysqli_query($conn, $insert_data)){
@@ -55,6 +48,7 @@ session_start();
                 $_SESSION['a_password']     = $admin_password;
                 $_SESSION['a_id']           = $last_id;
                 $_SESSION['a_country_code'] = $admin_country_2ios;
+                $_SESSION['a_country']      = $twoalph_country;
                 echo 0;
                 // header('location: ../index.php');
                 exit();

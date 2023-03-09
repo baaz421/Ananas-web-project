@@ -74,8 +74,14 @@ require_once "../header.php";
 	                  <label class="col-sm-3 form-control-label">Market Price</label>
 	                  <div class="col-sm-9">
 	                    <div class="row">
-	                      <div class="col-md-3">
-	                        <input type="number" name="market-price" id="market-price" placeholder="Market price" class="form-control" min="0" step="0.01" required>
+	                      <div class="col-md-4">
+	                      	<div class="input-group mb-3">
+													  <div class="input-group-prepend">
+													    <span class="input-group-text">USD</span>
+													  </div>
+													  <input type="number" name="market-price" id="market-price" placeholder="Market price" class="form-control" min="0" step="0.01" required>
+													</div>
+	                        
 	                      </div>
 	                    </div>
 	                  </div>

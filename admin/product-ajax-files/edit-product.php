@@ -152,7 +152,7 @@ $product_images_key = array(
             </div>
             <div class="card-header d-flex align-items-center">
 
-              <h3 class="h4">Enter all fields for edit products<span class="redtext">hello</span>
+              <h3 class="h4">Enter all fields for edit products
               </h3>
             </div>
 
@@ -189,7 +189,7 @@ $product_images_key = array(
 							$remove_img1		= "remove_img";
 							// ==================== function for image upload ====================//
 							function uploadImageView($product_image_name,$path,$upload_image,$uploaded_image,$image_coloum_name,$send_img,$modal,$sample_image,$preview,$crop,$remove_img){
-									if($product_image_name == ""){
+									if($product_image_name == null){
 										$add_more_img = "../img/add-more.png";
 										$Display_Product_image = "
 											<div class='column '>

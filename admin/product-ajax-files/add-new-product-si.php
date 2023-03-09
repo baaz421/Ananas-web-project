@@ -150,7 +150,7 @@ $product_images_key = array(
             </div>
             <div class="card-header d-flex align-items-center">
 
-              <h3 class="h4">Enter all fields for edit products<span class="redtext">hello</span>
+              <h3 class="h4">Enter all fields for edit products
               </h3>
             </div>
 
@@ -163,7 +163,7 @@ $product_images_key = array(
 	        <div class="card-body">
 	        	<div class="row">
 	        		<div class="col-sm-12" >
-	        			<p>Click on image to change or remove - <?php echo $_SESSION['last_id'] ?> </p>
+	        			<p>Click on image to change or remove</p>
 	        			<input type="text" name="pid" id="pid" value="<?php echo $pro_id; ?>" hidden>
 	        		</div>	
 

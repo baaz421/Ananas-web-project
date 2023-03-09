@@ -48,9 +48,15 @@ if(isset($_SESSION['u_email'])){
                 Please enter the amount value for deposite , Thank you...
               </p>
               <form class="form-inline" id="deposite-form">
-                <input type="number" class="form-control mb-2 mr-sm-2" id="u-deposite" name="u-deposite" placeholder="Enter Amount Here" step="any">
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend" style="height: 46px;">
+                    <div class="input-group-text bg-primary text-dark font-weight-bold">USD</div>
+                  </div>
+                  <input type="number" class="form-control mb-2 mr-sm-2" id="u-deposite" name="u-deposite" placeholder="Enter Amount Here" step="any">
+                </div>
+                
                 <input type="number" id="u-id" value="<?php echo $u_id; ?>" hidden>
-                <button type="submit" class="btn btn-primary mb-2" name="u-d-pay" id="u-d-pay" <?php echo $disable; ?>>Deposite</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-0" name="u-d-pay" id="u-d-pay" <?php echo $disable; ?>>Deposite</button>
               </form>
               <p class="text-danger">*note don't add decimal numbers or dot!</p>
             </div>

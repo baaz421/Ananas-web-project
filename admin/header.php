@@ -26,7 +26,7 @@ if(!isset($_SESSION['a_id'])){
   $get_admin_pic = mysqli_fetch_assoc($run_get_img);
   $a_pro_pic =  $get_admin_pic['a_profilepic'];
   $vstatus   =  $get_admin_pic['a_vstatus'];
-  if($a_pro_pic == "male-avatar.jpg" || $a_pro_pic == "female-avatar.jpg" ){
+  if($a_pro_pic == "avatar.jpg" ){
     $fav_img  = "admin-profile-details/admin-profile-images/logo-icon.png";
   }else{
     $fav_img = "admin-profile-details/admin-profile-images/".$a_pro_pic;
@@ -149,13 +149,6 @@ if(isset($_SESSION['u_email'])){
                 <!-- Search-->
                 <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
 
-                <!-- Languages dropdown    -->
-                <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="<?php echo $file_back; ?>img/flags/16/US.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
-                  <ul aria-labelledby="languages" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="<?php echo $file_back; ?>img/flags/16/US.png" alt="English" class="mr-2">English</a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="<?php echo $file_back; ?>img/flags/16/QA.png" alt="English" class="mr-2">Arabic                                         </a></li>
-                  </ul>
-                </li>
                 <!-- Main page site page    -->
                 <li class="nav-item"><a href="<?php echo $file_back; ?>index.php" class="nav-link logout"> <span class="d-none d-sm-inline">Home</span><i class="fa fa-home"></i></a></li>
                 <!-- Logout    -->
@@ -182,21 +175,15 @@ if(isset($_SESSION['u_email'])){
             }
           }
           
-            if($admin_profilepic == "male-avatar.jpg"){
-              $pic = $file_back."img/male-avatar.jpg";
-            }elseif($admin_profilepic == "female-avatar.jpg"){
-              $pic = $file_back."img/female-avatar.jpg";
+            if($admin_profilepic == "avatar.jpg"){
+              $pic = $file_back."img/avatar.jpg";
             }else{
               $img_path = $file_back."admin-profile-details/admin-profile-images/";
               $img_name_path = $img_path.$admin_profilepic;
               if(file_exists($img_name_path)){
                   $pic = $file_back."admin-profile-details/admin-profile-images/$admin_profilepic";
                 }else{
-                  if($gender == 'male'){
-                    $pic = $file_back."img/male-avatar.jpg";
-                  }else{
-                    $pic = $file_back."img/female-avatar.jpg";
-                  }
+                  $pic = $file_back."img/avatar.jpg";
                 }
             }
           ?>

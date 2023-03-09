@@ -111,17 +111,6 @@
 														<input type="email" class="form-control" id="admin-r-email" name="admin-r-email" required>
 												</div><!-- End .form-group -->
 												<div class="form-group">
-														<label for="admin-r-gender">Select Gender * &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="radio" name="admin-r-gender" id="inlineRadio1" value="male" required>
-															<label class="form-check-label" for="inlineRadio1">Male</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="radio" name="admin-r-gender" id="inlineRadio2" value="female" required>
-															<label class="form-check-label" for="inlineRadio2">Female</label>
-														</div>
-												</div><!-- End .form-group -->
-												<div class="form-group">
 														<label for="admin-r-password">Password *</label>
 														<input type="password" class="form-control" id="admin-r-password" name="admin-r-password" required >
 												</div><!-- End .form-group -->
@@ -133,10 +122,6 @@
 														<input type="text" class="form-control error" id="ccodez" name="admin-r-phonecode" hidden >
 														<input type="text" class="form-control" id="twoalph" name="admin-r-twoalph" hidden >
 														<input type="text" class="form-control" id="cname" name="admin-r-contryname"  hidden>
-												</div><!-- End .form-group -->
-												<div class="form-group">
-														<label for="register-password">Date Of Birth *</label>
-														<input type="date" id="admin-r-birthdate" name="admin-r-birthdate" min="1950-01-01" max="2003-12-31" class="form-control" >
 												</div><!-- End .form-group -->
 
 												<div class="form-footer">

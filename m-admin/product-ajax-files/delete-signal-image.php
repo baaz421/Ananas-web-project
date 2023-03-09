@@ -5,7 +5,7 @@ include "../db_connnection.php";
 
 $p_id 		= $_POST["p_id"];
 $image_name = $_POST["image_name"];
-$null		= "null";
+$null		= "";
 $path_img ="../../All-Products-images/";
 if(isset($_POST["image_name"]) AND isset($_POST['p_id'])){
 

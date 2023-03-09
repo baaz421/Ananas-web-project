@@ -10,21 +10,15 @@ $gender_pic = $admin_data['a_gender'];
 $admin_data_pic = $admin_data['a_profilepic'];
 
 
-	if($admin_data_pic == "male-avatar.jpg"){
-		$pic = "img/male-avatar.jpg";
-	}elseif($admin_data_pic == "feamle-avatar.jpg"){
-		$pic = "img/female-avatar.jpg";
+	if($admin_data_pic == "avatar.jpg"){
+		$pic = "img/avatar.jpg";
 	}else{
   	$img_path = "admin-profile-details/admin-profile-images/";
     $img_name_path = $img_path.$admin_data_pic;
     if(file_exists($img_name_path)){
         $pic = "admin-profile-details/admin-profile-images/$admin_data_pic";
       }else{
-        if($gender_pic == 'male'){
-          $pic = "img/male-avatar.jpg";
-        }else{
-          $pic = "img/female-avatar.jpg";
-        }
+        $pic = "img/male-avatar.jpg";
       }
 	}
 
@@ -210,33 +204,6 @@ $admin_data_pic = $admin_data['a_profilepic'];
                       <input type="email" class="form-control" id="admin-r-email" name="admin-r-email" value="<?php echo $admin_data['a_email']; ?>"  required>
                   </div><!-- End .form-group -->
                   <div class="form-group">
-                      <label for="admin-r-gender">Select Gender * &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-                      <?php
-	                      if($admin_data['a_gender'] == "male"){
-	                      	$genderm = "checked";
-	                      }else{
-	                      	$genderm = "";
-	                      }
-
-	                      if($admin_data['a_gender'] == "female"){
-	                      	$genderf = "checked";
-	                      }else{                      	
-	                      	$genderf = "";
-	                      }
-
-                       ?>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="admin-r-gender" id="inlineRadio1" value="male" required <?php echo $genderm; ?>>
-                        <label class="form-check-label" for="inlineRadio1">Male</label>
-                      </div>
-
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="admin-r-gender" id="inlineRadio2" value="female" required <?php echo $genderf; ?>>
-                        <label class="form-check-label" for="inlineRadio2">Female</label>
-                      </div>
-
-                  </div><!-- End .form-group -->
-                  <div class="form-group">
                   		<?php
 	                  		$p_code = $admin_data['a_phonecode'];
 	                  		$p_number = $admin_data['a_phone'];
@@ -248,16 +215,6 @@ $admin_data_pic = $admin_data['a_profilepic'];
                       <input type="text" class="form-control error" id="ccodez" name="admin-r-phonecode" hidden >
                       <input type="text" class="form-control" id="twoalph" name="admin-r-twoalph" hidden >
                       <input type="text" class="form-control" id="cname" name="admin-r-contryname"  hidden>
-                  </div><!-- End .form-group -->
-
-                  <div class="form-group">
-	                  	<?php
-		                  	$dob = $admin_data['a_dateofbirth'];
-		                  	$con_dob = strtotime($dob);
-		                  	$dob_dis = date("Y-m-d",$con_dob);
-	                  	?>
-                      <label for="register-password">Date Of Birth *</label>
-                      <input type="date" id="admin-r-birthdate" name="admin-r-birthdate" value="<?php echo $dob_dis;  ?>" min="1950-01-01" max="2003-12-31" class="form-control" >
                   </div><!-- End .form-group -->
 
                   <div class="form-footer">

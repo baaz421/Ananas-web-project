@@ -12,53 +12,43 @@ include 'header.php';
   <!-- Dashboard Counts Section-->
   <section class="dashboard-counts no-padding-bottom">
     <div class="container-fluid">
+      <div class="row bg-white text-center">
+        <h1 class="w-100 font-weight-light">All Runing Deals</h1>
+      </div>
       <div class="row bg-white has-shadow">
         <!-- Item -->
         <div class="col-xl-3 col-sm-6">
           <div class="item d-flex align-items-center">
-            <div class="icon bg-violet"><i class="icon-user"></i></div>
-            <div class="title"><span>New<br>Clients</span>
-              <div class="progress">
-                <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
-              </div>
+            <div class="icon bg-danger"><i class="bi bi-arrow-clockwise text-white"></i></div>
+            <div class="title"><span>Red<br>Zone</span>
             </div>
-            <div class="number"><strong>25</strong></div>
+            <div class="number" id="red"><strong></strong></div>
           </div>
         </div>
         <!-- Item -->
         <div class="col-xl-3 col-sm-6">
           <div class="item d-flex align-items-center">
-            <div class="icon bg-red"><i class="icon-padnote"></i></div>
-            <div class="title"><span>Work<br>Orders</span>
-              <div class="progress">
-                <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
-              </div>
+            <div class="icon bg-warning"><i class="bi bi-arrow-clockwise text-white"></i></div>
+            <div class="title"><span>Orange<br>zone</span>
             </div>
-            <div class="number"><strong>70</strong></div>
+            <div class="number" id="orange"><strong></strong></div>
           </div>
         </div>
         <!-- Item -->
         <div class="col-xl-3 col-sm-6">
           <div class="item d-flex align-items-center">
-            <div class="icon bg-green"><i class="icon-bill"></i></div>
-            <div class="title"><span>New<br>Invoices</span>
-              <div class="progress">
-                <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
-              </div>
+            <div class="icon bg-success"><i class="bi bi-arrow-clockwise text-white"></i></div>
+            <div class="title"><span>Green<br>zone</span>
             </div>
-            <div class="number"><strong>40</strong></div>
+            <div class="number" id="green"><strong></strong></div>
           </div>
         </div>
-        <!-- Item -->
         <div class="col-xl-3 col-sm-6">
           <div class="item d-flex align-items-center">
-            <div class="icon bg-orange"><i class="icon-check"></i></div>
-            <div class="title"><span>Open<br>Cases</span>
-              <div class="progress">
-                <div role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-orange"></div>
-              </div>
+            <div class="icon bg-success"><i class="bi bi-check-circle text-white"></i></div>
+            <div class="title"><span>Completed<br>Deals</span>
             </div>
-            <div class="number"><strong>50</strong></div>
+            <div class="number" id="Completed"><strong></strong></div>
           </div>
         </div>
       </div>
@@ -71,16 +61,16 @@ include 'header.php';
         <!-- Statistics -->
         <div class="statistics col-lg-3 col-12">
           <div class="statistic d-flex align-items-center bg-white has-shadow">
-            <div class="icon bg-red"><i class="fa fa-tasks"></i></div>
-            <div class="text"><strong>234</strong><br><small>Applications</small></div>
+            <div class="icon bg-primary"><i class="fa fa-tasks"></i></div>
+            <div class="text" id="total-deals"><strong></strong><br><small>Total Deals</small></div>
           </div>
           <div class="statistic d-flex align-items-center bg-white has-shadow">
-            <div class="icon bg-green"><i class="fa fa-calendar-o"></i></div>
-            <div class="text"><strong>152</strong><br><small>Interviews</small></div>
+            <div class="icon bg-danger"><i class="bi bi-dash-circle"></i></div>
+            <div class="text" id="total-failed"><strong>152</strong><br><small>Failed Deals</small></div>
           </div>
           <div class="statistic d-flex align-items-center bg-white has-shadow">
-            <div class="icon bg-orange"><i class="fa fa-paper-plane-o"></i></div>
-            <div class="text"><strong>147</strong><br><small>Forwards</small></div>
+            <div class="icon bg-warning"><i class="bi bi-x-octagon"></i></div>
+            <div class="text" id="total-canceled"><strong>147</strong><br><small>Canceled Deals</small></div>
           </div>
         </div>
         <!-- Line Chart            -->
@@ -180,16 +170,62 @@ include 'header.php';
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-6">
-          <p>Your company &copy; 2017-2020</p>
+          <p>Ananas &copy; <?php echo date('Y',strtotime($date)); ?></p>
         </div>
         <div class="col-sm-6 text-right">
-          <p>Design by <a href="https://bootstrapious.com/p/admin-template" class="external">Bootstrapious</a></p>
-          <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+          <p>Design by <a href="#" class="external">BAAZ DESIGNER</a></p>
         </div>
       </div>
     </div>
   </footer>
 </div>
 <?php
+$x = 1;
+$y = [];
+while($x <= 12){
+  $y[] = $x;
+  $x++;
+}
+$a = json_encode($y);
+// echo $a;
+?>
+
+<?php
 include 'footer.php';
 ?>
+<script type="text/javascript">
+
+  var labelRed    = "Failed";
+  var labelOrange = "Cancelled";
+  var labelGreen  = "Completed";
+  // var line_chart_label = <?php echo $a; ?>;
+  var line_chart_label = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var line_chart_red_data =    [0,0,10];
+  var line_chart_orange_data = [0,0,2];
+  var line_chart_green_data =  [0,0,5];
+
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+  function loadRunningDeals(){
+    $.ajax({
+      url: "dashboard-ajax/running-deals.php",
+      success: function(data){
+        console.log(data);
+        var array_data = JSON.parse(data);
+        $("#red strong").text(array_data.red);
+        $("#orange strong").text(array_data.orange);
+        $("#green strong").text(array_data.green);
+        $("#Completed strong").text(array_data.totalCompleted);
+
+        $("#total-deals strong").text(array_data.totalDeals);        
+        $("#total-failed strong").text(array_data.totalFailed);
+        $("#total-canceled strong").text(array_data.totalCanceled);
+
+
+      }
+    });
+  }
+  loadRunningDeals();
+})
+</script>

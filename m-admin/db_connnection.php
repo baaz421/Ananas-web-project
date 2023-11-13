@@ -16,6 +16,7 @@ $file_directry_admins_ajax    ="all-country-admins";
 $file_directry_coupons_ajax   ="coupons-ajax-files";
 $file_directry_pro_delivery   ="product-delivery-ajax";
 $file_directry_Banner_ajax    ="banner-ajax-files";
+$file_directry_Dashboard_ajax ="dashboard-ajax";
 
 
 
@@ -38,6 +39,8 @@ if(in_array($file_directry_product,$ex_link)){
 }elseif (in_array($file_directry_pro_delivery,$ex_link)) {
   $file_back= "../";
 }elseif (in_array($file_directry_Banner_ajax,$ex_link)) {
+  $file_back= "../";
+}elseif (in_array($file_directry_Dashboard_ajax,$ex_link)) {
   $file_back= "../";
 }else{
   $file_back= "";

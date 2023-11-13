@@ -260,6 +260,7 @@ function zoneProgress($deal_id,$conn,$date){
           }          
         }
       break;
+      
     }
   }
   return progressBar($prog_percen,$prog_color);

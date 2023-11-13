@@ -100,7 +100,7 @@ function matchUserCurrency($id,$conn){
 		<div class="row">
 			<div class="col-xl-9 col-xxl-10">
 				<!-- ==== how its works starts here ==== -->
-				<h2 class="title mb-4 text-center" >HOW IT WORKS ?</h2><!-- End .title text-center -->
+				<h2 class="title mb-4 text-center" >HOW IT WORKS ? Follow These Steps!</h2><!-- End .title text-center -->
 				<div class="row justify-content-center">
 					<div class="col-6 col-lg-3">
 						<div class="icon-box icon-box-circle text-center">

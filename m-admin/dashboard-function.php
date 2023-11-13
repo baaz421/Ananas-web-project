@@ -1,0 +1,2 @@
+<?php
+// dashboard-function.php
